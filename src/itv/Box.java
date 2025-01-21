@@ -4,7 +4,7 @@ import util.GestorIO;
 import util.Interval;
 
 /**
- * @author Irene Payá, Álvaro Carrión, Alejando Soler
+ * @author Irene Payá, Álvaro Carrión, Alejando Soler :)
  */
 public class Box {
 
