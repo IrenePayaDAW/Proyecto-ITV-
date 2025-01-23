@@ -8,7 +8,7 @@ import util.Interval;
  */
 public class Box {
 
-    private final Interval LIMITE = new Interval(0, 5);
+    private final Interval LIMITE = new Interval(1, 6);
     private FaseRevision[] fases;
 
     public Box() {
@@ -98,13 +98,13 @@ public class Box {
     public FaseRevision[] getFaseRevision() {
         return this.fases;
     }
+
     /**
      * Comprueba si la primera fase del box está libre
      * @return boolean
      */
-    public boolean primeraFaseLibre(){
-        return this.fases[0].estaLibre();
-    }
+
+
     /**
      * Comprueba que la matricula que pasa por parámetro no está dentro de las fases que tiene el box que llama al método
      * @param matricula
@@ -132,10 +132,19 @@ public class Box {
         }
         teclado.out("\n");
     }
+ 
+     /** COMPRUEBA SI LA FASE 0 DEL BOX ESTÁ LIBRE
+     * @return boolean (Está o no la fase libre)
+     */
+    public boolean boxLibre() {
+        return this.fases[0].estaLibre();
+    }
     /**
-     * Asigna el vehículo pasado como parámetro a la 1ª fase del box
+     * ASIGNA UN VEHICULO AL BOX (LA PRIMERA FASE DE UN BOX)
+     * @param vehiculo (DE LA COLA)
      */
     public void asignarVehiculo(Vehiculo vehiculo){
-        this.fases[0].setVehiculo(vehiculo);
+        this.fases[0].asignarVehiculoFase(vehiculo);
+
     }
 }
