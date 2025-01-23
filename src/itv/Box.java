@@ -99,16 +99,11 @@ public class Box {
         return this.fases;
     }
     /**
-     * Comprueba si las fases del box están libres
+     * Comprueba si la primera fase del box está libre
      * @return boolean
      */
-    public boolean boxLibre() {
-        for (int i = 0; i < this.fases.length; i++) {
-            if (this.fases[i].estaLibre()) {
-                return true;
-            }
-        }
-        return false;
+    public boolean primeraFaseLibre(){
+        return this.fases[0].estaLibre();
     }
     /**
      * Comprueba que la matricula que pasa por parámetro no está dentro de las fases que tiene el box que llama al método
@@ -136,5 +131,11 @@ public class Box {
             }
         }
         teclado.out("\n");
+    }
+    /**
+     * Asigna el vehículo pasado como parámetro a la 1ª fase del box
+     */
+    public void asignarVehiculo(Vehiculo vehiculo){
+        this.fases[0].setVehiculo(vehiculo);
     }
 }

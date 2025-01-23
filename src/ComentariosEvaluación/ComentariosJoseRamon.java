@@ -21,18 +21,18 @@ public class ComentariosJoseRamon {
     
     4. Demana el box. Valida que el valor que s'introdueix és correcte (1-6) i torna a demanar el valor fins que siga correcte.
     "Siempre dice que es incorreccto: Selecciona una opción: 4 Dime un número de box para consultar su estado (1 - 6): 2 Número de box inválido. Debe estar entre 1 y 6. Volver a insertar: 1 Número de
-    box inválido. Debe estar entre 1 y 6. Volver a insertar:"
+    box inválido. Debe estar entre 1 y 6. Volver a insertar:" (CORREGIDO)
     
     Disseny de classes. Descomposició modular i en classes de l'aplicació.
     "Os recomiendo que analicéis si algunos métodos muy pequeños pueden desaparecer o (más habitual) métodos grandes se pueden modularizar. Por ejemplo el método inicio me parece gigante. Hay acciones
-    distintas como mostrar el menú, leer la opción. Luego el código de cada case se podría llevar en ocasiones a otros métodos como desplazar las matriculas y otras operaciones. En general falta algo
+    distintas como mostrar el menú, leer la opción. Luego el código de cada clase se podría llevar en ocasiones a otros métodos como desplazar las matriculas y otras operaciones. En general falta algo
     más de encapsulación y que muchas tareas se encarguen las propias clases individuales y no la clase taller, por ejemplo es raro que se haga "boxes[i].getFaseRevision()[0].estaLibre()" (y otras veces
     accedeis por "getPrimeraFase") en vez de que la propia clase "box" tenga el método "estaLibre" porque tenemos que evitar acceder a los componentes internos, al igual 
     que "boxes[i].getFaseRevision()[0].asignarVehiculoFase(v)" o en la clase Cola el método "getCola" que precisamente no usáis porque la idea es no tener que tocar las partes internas (en este caso
-    el array) y que se haga siempre por medio de sus métodos."
+    el array) y que se haga siempre por medio de sus métodos." (CORREGIDO en la clase Taller)
     
     GENERAL - Quan s'introdueix l'opció 6 el programa no acaba.
     "En la clase Taller no tiene ningún sentido la etiqueta programaITV ni el break de la línea 170. Es redundante. Como la opción es 6 ya no se cumplirá la condición del while y saldrá. No funciona bien
-    cuando previamente se ha usado una opción correcta. Por ejemplo si ejecutas la opción 5, luego la 6 dice "Fin del programa"! pero sigue esperando datos."
+    cuando previamente se ha usado una opción correcta. Por ejemplo si ejecutas la opción 5, luego la 6 dice "Fin del programa"! pero sigue esperando datos." (CORREGIDO)
     */
 }
