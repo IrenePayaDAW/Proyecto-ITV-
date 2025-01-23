@@ -12,6 +12,7 @@ public class Taller {
     private Box[] boxes;
     private Cola colaPrincipal;
     private String[] matriculasCochesEnTaller;//incluido ahora por mi
+    private Interval numBoxes = new Interval(1,6);
 
     public Taller() {
         boxes = new Box[6];
@@ -104,29 +105,23 @@ public class Taller {
                         inicio();
                         break;
                     case 2:
+                        int eleccionBox;
                         if (this.colaPrincipal.estaVacia()) {
                             teclado.out("La cola está vacía.\n");
-                        } else {
-                            int contadorBoxesOcupados = 0;
-                            for (int i = 0; i < boxes.length; i++) {
-                                if (!boxes[i].getPrimeraFase().estaLibre()) {
-                                    contadorBoxesOcupados++;
-                                    if (contadorBoxesOcupados == 6) {
-                                        teclado.out("El vehículo no puede entrar en ningun box, ya que todas las primeras fases se encuentran ocupadas.\n");
-                                        inicio();
-                                    }
-                                }
+                        } else { //TIENE QUE PEDIR EL BOX DONDE SE QUIERE ASIGNAR EL VEHÍCULO
+                            teclado.out("Cual box quieres selecionar (1 - 6)");
+                            eleccionBox = teclado.inInt();
+                            while(!numBoxes.inclou(eleccionBox)){
+                                teclado.out("Error, los boxes están entre 1 y 6.");
+                                eleccionBox = teclado.inInt();
+                            };
+                            if(boxes[eleccionBox - 1].boxLibre()){
+                                teclado.out("Vehiculo introduccido en el box "+eleccionBox);
+                                boxes[eleccionBox - 1].asignarVehiculo(colaPrincipal.extraerVehiculo());
+                            } else {
+                                teclado.out("El box está ocupado");
                             }
-                            Vehiculo v = colaPrincipal.extraerVehiculo();
-                            for (int i = 0; i < boxes.length; i++) {
-                                if (boxes[i].getFaseRevision()[0].estaLibre()) {
-                                    boxes[i].getFaseRevision()[0].asignarVehiculoFase(v);
-                                    break;
-                                }
-
-                            }
-                            teclado.out("El vehículo: Matrícula = " + v.getMatricula() + " ha accedido al box correctamente.\n");
-                        }
+                        }//(CORREGIDO)
                         inicio();
                         break;
                     case 3:
