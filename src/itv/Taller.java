@@ -1,6 +1,8 @@
 package itv;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import util.GestorIO;
 import util.Interval;
 
@@ -12,7 +14,7 @@ public class Taller {
     private Box[] boxes;
     private Cola colaPrincipal;
     private String[] matriculasCochesEnTaller;//incluido ahora por mi
-    private Interval numBoxes = new Interval(1,6);
+    private Interval numBoxes = new Interval(1, 6);
 
     public Taller() {
         boxes = new Box[6];
@@ -21,6 +23,55 @@ public class Taller {
         }
         colaPrincipal = new Cola();
         matriculasCochesEnTaller = new String[1];//incluido ahora por mi
+    }
+
+    /**
+     * Recoge todos los datos del vehículo
+     *
+     * @return vehículo
+     */
+    public static Vehiculo registrarVehiculo() {
+        GestorIO teclado = new GestorIO();
+        String matricula;
+        Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
+        boolean esValida;
+        TipoVehiculo tipo;
+        int cilindros = 0;
+        double CC = 0.;
+
+        do {
+            teclado.out("Introduce la matrícula del coche (formato 1234ABC): ");
+            matricula = teclado.inString().toUpperCase().trim();
+
+            Matcher matcher = patron.matcher(matricula);
+            esValida = matcher.matches();
+
+            if (!esValida) {
+                teclado.out("Matrícula inválida. Debe contener 4 números seguidos de 3 letras.");
+            }
+        } while (!esValida);
+
+        String modeloVehiculo;
+
+        teclado.out("Introduce el modelo de vehículo: ");
+        modeloVehiculo = teclado.inString().trim();
+
+        tipo = TipoVehiculo.menuEnum();
+
+        boolean estadoVehiculo = false;
+
+        while (cilindros < 0){
+        teclado.out("Introduce el número de cilindros que tiene el vehículo: ");
+        cilindros = teclado.inInt();
+        }
+
+        while (CC < 0){
+        teclado.out("Introduce los centimetro cúbicos que tiene el vehículo: ");
+        CC = teclado.inInt();
+        }
+        
+        return new Vehiculo(cilindros, CC, matricula, modeloVehiculo, tipo, estadoVehiculo);
+
     }
 
     /**
@@ -112,7 +163,7 @@ public class Taller {
                         Vehiculo vehiculo1 = null;
 
                         while (matriculaRepetida) {
-                            vehiculo1 = Vehiculo.registrarVehiculo();
+                            vehiculo1 = registrarVehiculo();
                             matriculaRepetida = false;
 
                             for (String matricula : matriculasCochesEnTaller) {
@@ -137,12 +188,12 @@ public class Taller {
                         } else { //TIENE QUE PEDIR EL BOX DONDE SE QUIERE ASIGNAR EL VEHÍCULO
                             teclado.out("Cual box quieres selecionar (1 - 6)");
                             eleccionBox = teclado.inInt();
-                            while(!numBoxes.inclou(eleccionBox)){
+                            while (!numBoxes.inclou(eleccionBox)) {
                                 teclado.out("Error, los boxes están entre 1 y 6.");
                                 eleccionBox = teclado.inInt();
                             };
-                            if(boxes[eleccionBox - 1].boxLibre()){
-                                teclado.out("Vehiculo introduccido en el box "+eleccionBox);
+                            if (boxes[eleccionBox - 1].boxLibre()) {
+                                teclado.out("Vehiculo introduccido en el box " + eleccionBox);
                                 boxes[eleccionBox - 1].asignarVehiculo(colaPrincipal.extraerVehiculo());
                             } else {
                                 teclado.out("El box está ocupado");
