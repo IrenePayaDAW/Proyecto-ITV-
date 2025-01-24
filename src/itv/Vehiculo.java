@@ -57,14 +57,7 @@ public class Vehiculo {
         return new Vehiculo(matricula, modeloVehiculo, tipo, estadoVehiculo);
 
     }
-    /**
-     * Comprueba que la matricula no sea igual a la que el vehículo que llama al método
-     * @param matricula
-     * @return boolean
-     */
-    public boolean tieneEstaMatricula(String matricula){
-        return this.matricula.equalsIgnoreCase(matricula);
-    }
+    
     /**
      * Método para asignar a un vehículo el mensaje de que ha terminado todo el proceso de fases
      */

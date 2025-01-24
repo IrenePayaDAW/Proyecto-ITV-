@@ -11,6 +11,7 @@ public class Taller {
 
     private Box[] boxes;
     private Cola colaPrincipal;
+    private Cola colaPagos;
     private String[] matriculasCochesEnTaller;//incluido ahora por mi
     private Interval numBoxes = new Interval(1,6);
 
@@ -21,6 +22,7 @@ public class Taller {
         }
         colaPrincipal = new Cola();
         matriculasCochesEnTaller = new String[1];//incluido ahora por mi
+        colaPagos = new Cola();
     }
 
     /**
@@ -67,7 +69,9 @@ public class Taller {
         teclado.out("3. Mover todos los vehículos de fase dentro de un box\n");
         teclado.out("4. Información del estado de un box concreto\n");
         teclado.out("5. Información general de todos los boxes\n");
-        teclado.out("6. Salir del programa\n\n");
+        teclado.out("6. Calcular y pagar vehiculo revisado\n");
+        teclado.out("7. Calculo de los ingresos\n");
+        teclado.out("8. Salir del programa\n\n");
     }
 
     /**
@@ -157,7 +161,7 @@ public class Taller {
                         boxSeleccionado = teclado.inInt();
                         boxes[boxSeleccionado - 1].avanzarVehiculos();
                         teclado.out("Los vehículos del box " + (boxSeleccionado) + " Han avanzado a la siguiente fase.\n");
-
+                        
                         inicio();
                         break;
                     case 4:
@@ -187,13 +191,27 @@ public class Taller {
                         }
                         inicio();
                         break;
-                    case 6:
+                    case 6: //Calcular y pagar vehiculo revisado
+                        pagoVehiculo();
+                        break;
+                    case 7: //Calculo de los ingresos
+                        ingresos();
+                        break;
+                    case 9:
                         teclado.out("Fin del programa.\n");
                 }
             }
 
         }
 
+    }
+    
+    public int pagoVehiculo(){
+        return 0;
+    }
+    
+    public int ingresos(){
+        return 0;
     }
 
 }

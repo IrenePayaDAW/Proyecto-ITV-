@@ -40,7 +40,7 @@ public class Box {
      */
     public boolean validarMatriculasVehiculosBox(String matricula) {
         for (int i = 0; i < this.fases.length; i++) {
-            if (this.fases[i].getVehiculo().tieneEstaMatricula(matricula)) {
+            if (this.fases[i].validarMatricula(matricula)) {
                 return true;
             }
         }
@@ -91,20 +91,7 @@ public class Box {
             teclado.out("La primera fase ahora está libre para recibir nuevos vehículos.\n");
         }
     }
-    /**
-     * Método para devolver las fases del box
-     * @return (Fases del box)
-     */
-    public FaseRevision[] getFaseRevision() {
-        return this.fases;
-    }
-
-    /**
-     * Comprueba si la primera fase del box está libre
-     * @return boolean
-     */
-
-
+    
     /**
      * Comprueba que la matricula que pasa por parámetro no está dentro de las fases que tiene el box que llama al método
      * @param matricula

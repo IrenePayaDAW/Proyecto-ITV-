@@ -61,4 +61,13 @@ public class FaseRevision {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
+    
+    /**
+     * VERIFICA SI EL COCHE EN ESTA FASE TIENE LA MISMA MATRICULA
+     * @param matricula
+     * @return 
+     */
+    public boolean validarMatricula(String matricula){
+        return this.vehiculo.getMatricula().equalsIgnoreCase(matricula);
+    }
 }

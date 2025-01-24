@@ -36,7 +36,7 @@ public class Cola {
      */
     public boolean validarmMatriculasVehiculosCola(String matricula) {
         for (int i = 0; i < this.vehiculos.length; i++) {
-            if (this.vehiculos[i].tieneEstaMatricula(matricula)) {
+            if (this.vehiculos[i].getMatricula().equalsIgnoreCase(matricula)) {
                 return true;
             }
         }
