@@ -7,17 +7,17 @@ public class ComentariosJoseRamon {
     Qualificació 	6.97 / 10.00
     
     1. Quan totes les dades són correctes i la matrícula no està repetida, insereix el vehícle a la cua inicial.    
-    "Cuando se introduce un vehículo correctamente simplemente indicad en que posición se encuentra dicho vehículo, no mostréis la cola entera (eso se puede hacer en todo caso en la opción 5)"
+    "Cuando se introduce un vehículo correctamente simplemente indicad en que posición se encuentra dicho vehículo, no mostréis la cola entera (eso se puede hacer en todo caso en la opción 5)"((CORREGIDO))
     
     2. Demana el box on introduir el vehicle. Valida que el valor que s'introdueix és correcte (1-6) i torna a demanar el valor fins que siga correcte. 
-    "No pide el box en el que se quiere introducir al vehículo."
+    "No pide el box en el que se quiere introducir al vehículo."(CORREGIDO)
     
     2. Si el box on es vol introduir el cotxe té buida la seua primera fase, s'inserirà el vehicle (el que porta més temps a la cua) a la primera fase d'eixe box, i s'extraurà eixe vehicle de la cua.
     A més es mostrarà un missatge informant de que l'operació ha sigut completada correctament. 
     "Al introducir el vehículo al box sí desaparece de la cola, pero al desplazar los coches de la cola hacéis algo mal de modo que el último se duplica, y si seguís añadiendo coches a la cola os
     quedarán por ahí repetidos: Posición 2: Matricula: 3333CCC Modelo: Ford Tipo: Coche El vehículo con la matrícula 3333CCC aun no ha superado la revisión Posición 3: Matricula: 4444DDD
     Modelo: Mazda Tipo: Furgoneta El vehículo con la matrícula 4444DDD aun no ha superado la revisión Posición 4: Matricula: 4444DDD Modelo: Mazda Tipo: Furgoneta El vehículo con la matrícula 4444DDD
-    aun no ha superado la revisión"
+    aun no ha superado la revisión" ((CORREGIDO))
     
     4. Demana el box. Valida que el valor que s'introdueix és correcte (1-6) i torna a demanar el valor fins que siga correcte.
     "Siempre dice que es incorreccto: Selecciona una opción: 4 Dime un número de box para consultar su estado (1 - 6): 2 Número de box inválido. Debe estar entre 1 y 6. Volver a insertar: 1 Número de

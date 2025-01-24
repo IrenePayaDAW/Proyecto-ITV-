@@ -19,13 +19,14 @@ public class Cola {
         colaVehiculo[colaVehiculo.length - 1] = vehiculo;
         vehiculos = colaVehiculo;
     }
-
+    /**
+     * EXTRAE UN VEHICULO DE LA COLA
+     * @return (EL VEHICULO DE LA COLA)
+     */
     public Vehiculo extraerVehiculo() {
         Vehiculo aux = this.vehiculos[0];
         this.avanzarVehiculos();
         return aux;
-
-        //return aux;
     }
 
     /**
@@ -57,13 +58,12 @@ public class Cola {
         return this.vehiculos;
     } 
     /**
-     * Avanza todos los vehículos una posición
+     * AVANZA TODOS LOS VEHÍCULOS UNA POSICIÓN EN LA COLA
      */
     private void avanzarVehiculos() {
-        for (int i = 0; i < this.vehiculos.length - 1; i++) {
-            this.vehiculos[i] = this.vehiculos[i + 1];
-        }
-    }
+        this.vehiculos = Arrays.copyOfRange(this.vehiculos, 1, this.vehiculos.length);
+    }//(CORREGIDO)
+    
     /**
      * Imprime la cola entera
      */

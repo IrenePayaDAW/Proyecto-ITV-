@@ -56,7 +56,7 @@ public class Taller {
     }
 
     /**
-     * Método para mostra el menu.
+     * Método para mostrar el menu.
      */
     public void mostrarMenu() {
         GestorIO teclado = new GestorIO();
@@ -127,8 +127,6 @@ public class Taller {
 
                         matriculasCochesEnTaller = Arrays.copyOf(matriculasCochesEnTaller, matriculasCochesEnTaller.length + 1);
                         matriculasCochesEnTaller[matriculasCochesEnTaller.length - 1] = vehiculo1.getMatricula();
-
-                        colaPrincipal.mostrarCola(); //BORRAR DESPUES DE HABER COMPROBADO QUE EL RESTO DE COSAS FUNCIONAN
                         inicio();
                         break;
                     case 2:
