@@ -3,7 +3,7 @@ package itv;
 /**
  * @author Irene Payá, Álvaro Carrión, Alejando Soler
  */
-public class TransporteCarga extends Vehiculo {
+public abstract class TransporteCarga extends Vehiculo {
 
     private double PMA;
 
@@ -12,11 +12,11 @@ public class TransporteCarga extends Vehiculo {
         this.PMA = PMA;
     }
 
-    public boolean requiereCargaAdicVehicGran() {
+    protected boolean requiereCargaAdicVehicGran() {
         return this.cilindros >= 10;
     }
 
-    public double calcularCargoPma() {
+    protected double calcularCargoPma() {
         if (this.cilindros < 10) {
             return 3 * this.PMA;
         } else {
@@ -24,7 +24,7 @@ public class TransporteCarga extends Vehiculo {
         }
     }
 
-    public double calcularAdicVehicGrande() {
+    protected double calcularAdicVehicGrande() {
         if (this.cilindros >= 10) {
             return 4 * this.PMA;
         } else {
