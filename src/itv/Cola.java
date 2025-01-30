@@ -77,4 +77,7 @@ public class Cola {
         }
         teclado.out("\n\n");
     }
+    public Vehiculo getPrimerVehiculo(){
+        return this.vehiculos[0];
+    }
 }

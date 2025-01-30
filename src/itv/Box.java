@@ -139,6 +139,15 @@ public class Box {
     public boolean boxLibre() {
         return this.fases[0].estaLibre();
     }
+    
+    public boolean boxLleno(){
+        return !this.fases[fases.length-1].estaLibre();
+    }
+    
+    public Vehiculo getUltimoVehiculo(){
+        return this.fases[fases.length-1].getVehiculo();
+    }
+    
     /**
      * ASIGNA UN VEHICULO AL BOX (LA PRIMERA FASE DE UN BOX)
      * @param vehiculo (DE LA COLA)

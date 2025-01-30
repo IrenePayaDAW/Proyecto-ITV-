@@ -7,16 +7,23 @@ public class TransporteCarga extends Vehiculo {
 
     private double PMA;
 
-    public TransporteCarga(double PMA, int cilindros, double CC, String matricula, String modeloVehiculo, TipoVehiculo tipo, boolean estadoVehiculo) {
+    @Override
+    public double pagoTotal() {
+        return this.calcularCargoPma() + this.calcularAdicVehicGrande();
+    }
+
+    
+    
+    public TransporteCarga(double PMA, int cilindros, double CC, String matricula, String modeloVehiculo, int tipo, boolean estadoVehiculo) {
         super(cilindros, CC, matricula, modeloVehiculo, tipo, estadoVehiculo);
         this.PMA = PMA;
     }
 
-    public boolean requiereCargaAdicVehicGran() {
+    protected boolean requiereCargaAdicVehicGran() {
         return this.cilindros >= 10;
     }
 
-    public double calcularCargoPma() {
+    protected double calcularCargoPma() {
         if (this.cilindros < 10) {
             return 3 * this.PMA;
         } else {
@@ -24,7 +31,7 @@ public class TransporteCarga extends Vehiculo {
         }
     }
 
-    public double calcularAdicVehicGrande() {
+    protected double calcularAdicVehicGrande() {
         if (this.cilindros >= 10) {
             return 4 * this.PMA;
         } else {
