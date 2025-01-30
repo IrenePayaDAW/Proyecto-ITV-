@@ -6,7 +6,7 @@ package itv;
  */
 public class Camion extends TransporteCarga{
     
-    public Camion(double PMA, int cilindros, double CC, String matricula, String modeloVehiculo, TipoVehiculo tipo, boolean estadoVehiculo) {
+    public Camion(double PMA, int cilindros, double CC, String matricula, String modeloVehiculo, int tipo, boolean estadoVehiculo) {
         super(PMA, cilindros, CC, matricula, modeloVehiculo, tipo, estadoVehiculo);
     }
     
@@ -17,4 +17,11 @@ public class Camion extends TransporteCarga{
         double porcentPrecioBase = ((this.cilindros*15)*20)/100;//Porcentaje adicional: + 20% del precio base
         return base + FIJO + porcentPrecioBase;
     }
+
+    @Override
+    public double pagoTotal() {
+        return super.calcularCargoPma() + this.calcularAdicVehicGrande();
+    }
+
+    
 }

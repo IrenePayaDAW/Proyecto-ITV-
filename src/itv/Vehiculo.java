@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alejandro Soler Cruz, Álvaro Carrión Romero e Irene Payá Hernández
  */
-public class Vehiculo {
+public abstract class Vehiculo {
 
     //BORRAR ANTES DE HACER PULL
     protected int cilindros;
@@ -16,10 +16,11 @@ public class Vehiculo {
 
     private final String matricula; //(4 números y 3 letras)
     private final String modeloVehiculo; //modelo del vehículo
-    private final TipoVehiculo tipo; //Tipo de vehículo (coche, microbús, furgoneta, camión)
+    //private final TipoVehiculo tipo; //Tipo de vehículo (coche, microbús, furgoneta, camión)
+    private final int tipo;//Tipo de Vehículo
     boolean estadoVehiculo; //(para señalar si el vehículo es válido/no válido o bien si pasa/no pasa)
 
-    public Vehiculo(int cilindros, double CC, String matricula, String modeloVehiculo, TipoVehiculo tipo, boolean estadoVehiculo) {
+    public Vehiculo(int cilindros, double CC, String matricula, String modeloVehiculo, int tipo, boolean estadoVehiculo) {
         this.cilindros = cilindros;
         this.CC = CC;
         this.matricula = matricula;
@@ -72,7 +73,15 @@ public class Vehiculo {
      * @return (Tipo de Vehículo)
      */
     public String getTipo() {
-        return this.tipo.toString();
+        if (this.tipo == 1){
+            return "Coche";
+        } else if (this.tipo == 2){
+            return "Microbús";
+        } else if (this.tipo == 3){
+            return "Furgoneta";
+        }else {
+            return "Camión";
+        }
     }
 
     /**
@@ -97,4 +106,10 @@ public class Vehiculo {
         teclado.out("Tipo: " + this.getTipo() + "\n");
         this.getEstado();
     }
+    
+    protected int getPrecioBase(){
+        return this.cilindros*15;
+    }
+    
+    public abstract double pagoTotal();
 }
