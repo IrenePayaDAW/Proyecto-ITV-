@@ -14,6 +14,29 @@ public class MicroBus extends TransportePersonas {
         super(cilindros, CC, matricula, modeloVehiculo, plazas, COSTE_PLAZA_ADICIONAL, new Interval(2, 20));
     }
 
+    public Microbus(String matricula, String modeloVehiculo) {
+        super(matricula, modeloVehiculo);
+    }
+     
+    @Override
+    protected int validarPlazas(){
+        int plazas;
+        boolean error;
+        limitesPlazas = new Interval(2, 20);
+
+        do{
+            error = false;
+            teclado.out("Introduce las plazas del microbus: ");
+            plazas = teclado.inInt();
+            if(!limitesPlazas.inclou(plazas)){
+                error = true;
+                teclado.out("Solo puede tener entre 2 y 20 plazas.");
+            }            
+        }while(error);
+        
+        return plazas;
+    }
+    
     @Override
     public String getTipo() {
         return "MicroBus";
@@ -24,4 +47,5 @@ public class MicroBus extends TransportePersonas {
         return this.calcularPrecio();
     }
 }
+
 

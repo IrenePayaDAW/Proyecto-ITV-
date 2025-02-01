@@ -1,5 +1,7 @@
 package vehiculo;
 
+import util.Interval;
+
 /**
  * Classe Camion que representa un vehicle de transport de càrrega.
  * Aplica les tarifes específiques per a camions.
@@ -11,6 +13,10 @@ public class Camion extends TransporteCarga {
         super(cilindros, CC, matricula, modeloVehiculo, PMA);
     }
 
+     public Camion(String matricula, String modeloVehiculo) {
+        super(matricula, modeloVehiculo);
+    }
+     
     @Override
     public double calcularPrecio() {
         double precioBase = super.calcularPrecio();
@@ -28,4 +34,24 @@ public class Camion extends TransporteCarga {
     public double pagoTotal() {
         return this.calcularPrecio();
     }
+    
+     @Override
+    public int validarCilindros() {
+       int cilindros;
+        boolean error;
+        Interval limite = new Interval(8,16);
+        do {
+            error = false;
+            teclado.out("Introduce los cilindros: ");
+            cilindros = teclado.inInt();
+            if (!limite.inclou(cilindros)) {
+                error = true;
+                teclado.out("Solo puede tener entre 8 y 16 cilindros.");
+            }
+        } while (error);
+
+        return cilindros;
+    }
+
 }
+

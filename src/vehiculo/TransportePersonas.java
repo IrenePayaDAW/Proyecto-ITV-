@@ -20,11 +20,25 @@ public abstract class TransportePersonas extends Vehiculo {
         this.limitesPlazas = limitesPlazas;
     }
 
-    private int validarPlazas(int plazas, Interval limites) {
-        if (!limites.inclou(plazas)) {
-            throw new IllegalArgumentException("Nombre de places no vàlid per a aquest tipus de vehicle.");
-        }
-        return plazas;
+    public TransportePersonas(String matricula, String modeloVehiculo) {
+        super(matricula, modeloVehiculo);
+    }
+    
+     public int validarCilindros() {
+        int cilindros;
+        boolean error;
+        Interval limite = new Interval(2,6);
+        do {
+            error = false;
+            teclado.out("Introduce los cilindros: ");
+            cilindros = teclado.inInt();
+            if (!limite.inclou(cilindros)) {
+                error = true;
+                teclado.out("Solo puede tener entre 2 y 6 cilindros.");
+            }
+        } while (error);
+
+        return cilindros;
     }
 
     protected double calcularAdicional() {

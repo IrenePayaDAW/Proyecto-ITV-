@@ -14,6 +14,19 @@ public abstract class TransporteCarga extends Vehiculo {
         this.PMA = validarPMA(PMA);
     }
 
+     public TransporteCarga(String matricula, String modeloVehiculo) {
+        super(matricula, modeloVehiculo);
+    }
+
+    public void registrarVehiculo() {
+        double pma;
+        do {
+            teclado.out("Introduce el PMA del vehículo: ");
+            pma = teclado.inDouble();
+        } while (pma < 0);
+        this.pma = pma;
+    }
+    
     private double validarPMA(double PMA) {
         if (PMA <= 0) {
             throw new IllegalArgumentException("El PMA ha de ser un valor positiu.");
@@ -34,3 +47,4 @@ public abstract class TransporteCarga extends Vehiculo {
         return PMA;
     }
 }
+

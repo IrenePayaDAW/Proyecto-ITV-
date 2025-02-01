@@ -17,18 +17,16 @@ public abstract class Vehiculo {
     public static final int PRECIO_BASE = 15;
 
     public Vehiculo(int cilindros, double CC, String matricula, String modeloVehiculo) {
-        validarCilindros(cilindros);
         this.cilindros = cilindros;
         this.CC = CC;
         this.matricula = matricula;
         this.modeloVehiculo = modeloVehiculo;
         this.estadoVehiculo = false;
     }
-
-    private void validarCilindros(int cilindros) {
-        if (cilindros < 2 || cilindros > 16) {
-            throw new IllegalArgumentException("Nombre de cilindres no vàlid");
-        }
+    
+     public Vehiculo(String matricula, String modeloVehiculo){
+        this.matricula = matricula;
+        this.modeloVehiculo = modeloVehiculo;
     }
 
     public boolean tieneEstaMatricula(String matricula) {
@@ -79,3 +77,7 @@ public abstract class Vehiculo {
     
     public abstract double pagoTotal();
 }
+
+
+
+
