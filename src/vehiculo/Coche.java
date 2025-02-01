@@ -17,7 +17,7 @@ public class Coche extends TransportePersonas {
         super(matricula, modeloVehiculo);
     }
     
-    protected int validarPlazas(){
+    public int validarPlazas(){
         int plazas;
         boolean error;
         limitesPlazas = new Interval(2,7);

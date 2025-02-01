@@ -4,17 +4,18 @@
  */
 package opcion;
 
-import itv.Camion;
-import itv.Coche;
+
 import itv.Cola;
-import itv.Furgoneta;
-import itv.Microbus;
 import itv.Taller;
-import itv.Vehiculo;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import util.GestorIO;
 import util.Interval;
+import vehiculo.Camion;
+import vehiculo.Coche;
+import vehiculo.Furgoneta;
+import vehiculo.MicroBus;
+import vehiculo.Vehiculo;
 
 /**
  *
@@ -66,7 +67,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
                 vehiculo = new Coche(matricula, modelo);
                 break;
             case 2:
-                vehiculo = new Microbus(matricula, modelo);
+                vehiculo = new MicroBus(matricula, modelo);
                 break;
             case 3:
                 vehiculo = new Furgoneta(matricula, modelo);

@@ -15,7 +15,7 @@ public abstract class TransportePersonas extends Vehiculo {
 
     public TransportePersonas(int cilindros, double CC, String matricula, String modeloVehiculo, int plazas, double costePlazasAdicionales, Interval limitesPlazas) {
         super(cilindros, CC, matricula, modeloVehiculo);
-        this.plazas = validarPlazas(plazas, limitesPlazas);
+        this.plazas = plazas;
         this.costePlazasAdicionales = costePlazasAdicionales;
         this.limitesPlazas = limitesPlazas;
     }
@@ -40,6 +40,8 @@ public abstract class TransportePersonas extends Vehiculo {
 
         return cilindros;
     }
+     
+    public abstract int validarPlazas();
 
     protected double calcularAdicional() {
         double extra = 0;

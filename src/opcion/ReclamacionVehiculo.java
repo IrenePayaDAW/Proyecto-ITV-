@@ -4,6 +4,7 @@
  */
 package opcion;
 
+import itv.Taller;
 import vehiculo.Furgoneta;
 import vehiculo.Vehiculo;
 import java.util.regex.Matcher;
@@ -15,8 +16,8 @@ import util.GestorIO;
  * @author acarr
  */
 class ReclamacionVehiculo extends OpcionTaller {
-    public ReclamacionVehiculo() {
-        super(null);
+    public ReclamacionVehiculo(Taller taller) {
+        super("Reclamar vehículo", taller);
     }
 
     @Override

@@ -7,8 +7,8 @@ import util.Interval;
  * Aplica les tarifes específiques per a furgonetes.
  */
 public class Furgoneta extends TransporteCarga {
-    public Furgoneta(double PMA, int cilindros, double CC, String matricula, String modeloVehiculo) {
-        super(cilindros, CC, matricula, modeloVehiculo, PMA);
+    public Furgoneta(double pma, int cilindros, double CC, String matricula, String modeloVehiculo) {
+        super(cilindros, CC, matricula, modeloVehiculo, pma);
     }
 
      public Furgoneta(String matricula, String modeloVehiculo) {

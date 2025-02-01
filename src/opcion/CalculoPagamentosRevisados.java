@@ -11,10 +11,10 @@ import vehiculo.Vehiculo;
  */
 public class CalculoPagamentosRevisados extends Opcion {
     GestorIO teclado = new GestorIO();
-    Taller taller;
-    public CalculoPagamentosRevisados() {
-        super("Calcular y pagar vehículo revisado");
-        taller = new Taller();
+    
+    public CalculoPagamentosRevisados(Taller taller) {
+        super("Calcular y pagar vehículo revisado", taller);
+        
     }
 
 

@@ -76,6 +76,8 @@ public abstract class Vehiculo {
     public abstract double calcularPrecio();
     
     public abstract double pagoTotal();
+    
+    public abstract int validarCilindros();
 }
 
 

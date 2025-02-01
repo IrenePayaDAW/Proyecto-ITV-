@@ -14,12 +14,12 @@ public class MicroBus extends TransportePersonas {
         super(cilindros, CC, matricula, modeloVehiculo, plazas, COSTE_PLAZA_ADICIONAL, new Interval(2, 20));
     }
 
-    public Microbus(String matricula, String modeloVehiculo) {
+    public MicroBus(String matricula, String modeloVehiculo) {
         super(matricula, modeloVehiculo);
     }
      
     @Override
-    protected int validarPlazas(){
+    public int validarPlazas(){
         int plazas;
         boolean error;
         limitesPlazas = new Interval(2, 20);

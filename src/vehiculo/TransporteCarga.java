@@ -7,11 +7,11 @@ import util.GestorIO;
  * Defineix les característiques comunes com el PMA i costos addicionals.
  */
 public abstract class TransporteCarga extends Vehiculo {
-    private double PMA;
+    private double pma;
 
     public TransporteCarga(int cilindros, double CC, String matricula, String modeloVehiculo, double PMA) {
         super(cilindros, CC, matricula, modeloVehiculo);
-        this.PMA = validarPMA(PMA);
+        this.pma = validarPMA(pma);
     }
 
      public TransporteCarga(String matricula, String modeloVehiculo) {
@@ -27,15 +27,15 @@ public abstract class TransporteCarga extends Vehiculo {
         this.pma = pma;
     }
     
-    private double validarPMA(double PMA) {
-        if (PMA <= 0) {
+    private double validarPMA(double pma) {
+        if (pma <= 0) {
             throw new IllegalArgumentException("El PMA ha de ser un valor positiu.");
         }
-        return PMA;
+        return pma;
     }
 
     protected double calcularCargoPma() {
-        return (this.getCilindros() < 10) ? (3 * this.PMA) : (4 * this.PMA);
+        return (this.getCilindros() < 10) ? (3 * this.pma) : (4 * this.pma);
     }
 
     @Override
@@ -44,7 +44,7 @@ public abstract class TransporteCarga extends Vehiculo {
     }
 
     public double getPMA() {
-        return PMA;
+        return pma;
     }
 }
 

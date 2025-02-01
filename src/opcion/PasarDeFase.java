@@ -4,16 +4,18 @@
  */
 package opcion;
 
+import itv.Taller;
+import util.GestorIO;
+
 /**
  *
  * @author acarr
  */
 class PasarDeFase extends OpcionTaller {
-    public PasarDeFase() {
-        super(null);
+    public PasarDeFase(Taller taller) {
+        super("Pasar vehículo de fase", taller);
     }
 
-    @Override
     public void ejecutar(Taller taller) {
         GestorIO teclado = new GestorIO();
         teclado.out("Ingrese el número de box donde desea pasar los vehículos de fase: ");

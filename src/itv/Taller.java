@@ -29,57 +29,24 @@ public class Taller {
         ingresosTotales = 0;
     }
 
-    public static Vehiculo registrarVehiculo() {
+    public static void registrarVehiculo(Vehiculo vehiculo) {
         GestorIO teclado = new GestorIO();
-        String matricula;
-        Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
-        boolean esValida;
-        int tipo, cilindros;
-        double CC, PMA;
+        int cc;
 
-        do {
-            teclado.out("Introduce la matrícula del coche (formato 1234ABC): ");
-            matricula = teclado.inString().toUpperCase().trim();
-            Matcher matcher = patron.matcher(matricula);
-            esValida = matcher.matches();
-            if (!esValida) {
-                teclado.out("Matrícula inválida. Debe contener 4 números seguidos de 3 letras.\n");
-            }
-        } while (!esValida);
+        boolean estadoVehiculo = false;
+        vehiculo.setCilindros(vehiculo.validarCilindros());
+        
+        do{
+        teclado.out("Introduce la potencia que tiene el vehículo: ");
+        cc = teclado.inInt();
+        }while (cc < 0);
+        vehiculo.setCc(cc);
+        vehiculo.registrarVehiculo();
 
-        teclado.out("Introduce el modelo de vehículo: ");
-        String modeloVehiculo = teclado.inString().trim();
-
-        do {
-            teclado.out("Tipos de vehículo:\n1. Coche\n2. Microbus\n3. Furgoneta\n4. Camión\nTipo seleccionado: ");
-            tipo = teclado.inInt();
-        } while (tipo < 1 || tipo > 4);
-
-        teclado.out("Introduce el número de cilindros: ");
-        cilindros = teclado.inInt();
-
-        teclado.out("Introduce la cilindrada en cm³: ");
-        CC = teclado.inDouble();
-
-        switch (tipo) {
-            case 1:
-                teclado.out("Introduce el número de plazas: ");
-                int plazasCoche = teclado.inInt();
-                return new Coche(cilindros, plazasCoche, CC, matricula, modeloVehiculo);
-            case 2:
-                teclado.out("Introduce el número de plazas: ");
-                int plazasMicrobus = teclado.inInt();
-                return new MicroBus(cilindros, plazasMicrobus, CC, matricula, modeloVehiculo);
-            case 3:
-                teclado.out("Introduce el PMA en toneladas: ");
-                PMA = teclado.inDouble();
-                return new Furgoneta(PMA, cilindros, CC, matricula, modeloVehiculo);
-            case 4:
-                teclado.out("Introduce el PMA en toneladas: ");
-                PMA = teclado.inDouble();
-                return new Camion(PMA, cilindros, CC, matricula, modeloVehiculo);
-            default:
-                return null;
-        }
     }
+
+    public Cola getColaPrincipal() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
