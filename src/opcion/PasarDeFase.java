@@ -32,6 +32,6 @@ public class PasarDeFase extends OpcionTaller {
             taller.meterColaPago(taller.extraerVehiculoBox(numeroBox)); 
         }
         taller.avanzarVehiculos(numeroBox);
-        
+        teclado.out("\nHan pasado de fase\n");
     }
 }

@@ -23,6 +23,10 @@ public class CalculoIngresos extends Opcion {
         vehiculosFinalizados = new Vehiculo[0];     
     }
     
+    /**
+     * Inserta un vehiculo a la cola
+     * @param vehiculo 
+     */
     public void insertarVehiculo(Vehiculo vehiculo) {
         Vehiculo[] nuevaCola = Arrays.copyOf(this.vehiculosFinalizados, this.vehiculosFinalizados.length + 1);
         nuevaCola[nuevaCola.length - 1] = vehiculo;
@@ -30,6 +34,9 @@ public class CalculoIngresos extends Opcion {
     }
 
     @Override
+    /**
+     * calcula los ingresos totales
+     */
     public void ejecutar() {
         double ingresosTotales = 0;
         for (int i = 0; i < vehiculosFinalizados.length; i++) {

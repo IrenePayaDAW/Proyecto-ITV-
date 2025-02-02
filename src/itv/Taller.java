@@ -6,12 +6,13 @@ import vehiculo.*;
 import java.util.regex.*;
 
 /**
- * Taller ITV - Gestión de vehículos y revisiones. Autor: Irene Payá, Álvaro
- * Carrión, Alejandro Soler
+ * Taller ITV - Gestión de vehículos y revisiones.
+ * 
+ * <p>Autor: Irene Payá, Álvaro Carrión, Alejandro Soler</p>
  */
 public class Taller {
 
-    GestorIO teclado = new GestorIO();
+    private GestorIO teclado = new GestorIO();
     private Box[] boxes;
     private Cola colaPrincipal;
     private Cola colaDePago;
@@ -19,6 +20,10 @@ public class Taller {
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
 
+    /**
+     * Constructor de la clase Taller.
+     * Inicializa los boxes, colas y variables necesarias.
+     */
     public Taller() {
         boxes = new Box[6];
         for (int i = 0; i < boxes.length; i++) {
@@ -30,101 +35,161 @@ public class Taller {
         ingresosTotales = 0;
     }
 
+    /**
+     * Registra un vehículo en el sistema.
+     * 
+     * @param vehiculo el vehículo a registrar.
+     */
     public void registrarVehiculo(Vehiculo vehiculo) {
-
-        int cc;
-        boolean estadoVehiculo = false;
         vehiculo.insertarCilindros();
         vehiculo.insertarCc();
         vehiculo.registrarVehiculo();
-
     }
 
+    /**
+     * Verifica si hay vehículos en la cola de pago.
+     * 
+     * @return true si hay vehículos para pagar, false en caso contrario.
+     */
     public boolean hayVehiculosParaPagar() {
-        if (this.colaDePago.estaVacia()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !this.colaDePago.estaVacia();
     }
 
+    /**
+     * Extrae un vehículo de la cola de pago.
+     * 
+     * @return el vehículo extraído.
+     */
     public Vehiculo extraerVehiculoPago() {
-
         return this.colaDePago.extraerVehiculo();
-
     }
 
+    /**
+     * Extrae un vehículo de la cola principal.
+     * 
+     * @return el vehículo extraído.
+     */
     public Vehiculo extraerVehiculoCola() {
         return this.colaPrincipal.extraerVehiculo();
     }
 
+    /**
+     * Valida si una matrícula está en el taller.
+     * 
+     * @param matricula la matrícula a validar.
+     * @return true si la matrícula es válida, false en caso contrario.
+     */
     public boolean validarMatricula(String matricula) {
         if (colaPrincipal.validarMatricula(matricula)) {
-            for (int i = 0; i < boxes.length; i++) {
-                if (!boxes[i].validarMatricula(matricula)) {
+            for (Box box : boxes) {
+                if (!box.validarMatricula(matricula)) {
                     return false;
-
                 }
             }
         } else {
             return false;
         }
         return true;
-
     }
 
+    /**
+     * Avanza los vehículos en un box específico.
+     * 
+     * @param numeroBox el número del box.
+     */
     public void avanzarVehiculos(int numeroBox) {
         boxes[numeroBox - 1].avanzarVehiculos();
     }
 
+    /**
+     * Verifica si la cola principal está vacía.
+     * 
+     * @return true si la cola está vacía, false en caso contrario.
+     */
     public boolean colaEstaVacia() {
         return this.colaPrincipal.estaVacia();
     }
 
+    /**
+     * Verifica si hay boxes vacíos.
+     * 
+     * @return true si hay algún box libre, false en caso contrario.
+     */
     public boolean boxesVacios() {
-        for (int i = 0; i < boxes.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (boxes[i].boxLibre()) {
-                    return true;
-                }
+        for (Box box : boxes) {
+            if (box.boxLibre()) {
+                return true;
             }
         }
         return false;
     }
 
+    /**
+     * Inserta un vehículo en la cola principal.
+     * 
+     * @param vehiculo el vehículo a insertar.
+     */
     public void insertarVehiculo(Vehiculo vehiculo) {
         this.colaPrincipal.insertarVehiculo(vehiculo);
     }
 
+    /**
+     * Asigna un vehículo a un box específico.
+     * 
+     * @param numeroBox el número del box.
+     * @param vehiculo el vehículo a asignar.
+     */
     public void asignarVehiculoBox(int numeroBox, Vehiculo vehiculo) {
         boxes[numeroBox - 1].asignarVehiculo(vehiculo);
     }
 
+    /**
+     * Muestra el estado de un box específico.
+     * 
+     * @param box el número del box.
+     */
     public void mostrarBox(int box) {
         this.boxes[box - 1].mostrarEstado();
     }
 
+    /**
+     * Muestra el estado de todos los boxes.
+     */
     public void mostrarBoxes() {
-
         int i = 1;
         for (Box box : boxes) {
             teclado.out("\nBOX " + i++ + "\n");
             box.mostrarEstado();
             teclado.out("\n");
         }
-
     }
     
-    public Vehiculo extraerVehiculoBox(int numeroBox){
-        return boxes[numeroBox-1].copiarUltimoVehiculo();
-        
+    /**
+     * Extrae el último vehículo que pasó por un box específico.
+     * 
+     * @param numeroBox el número del box.
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoBox(int numeroBox) {
+        return boxes[numeroBox - 1].copiarUltimoVehiculo();
     }
     
-    public boolean ultimaFaseOcupada(int numeroBox){
-        return boxes[numeroBox -1].ultimaFaseOcupada();
+    /**
+     * Verifica si la última fase de un box está ocupada.
+     * 
+     * @param numeroBox el número del box.
+     * @return true si la última fase está ocupada, false en caso contrario.
+     */
+    public boolean ultimaFaseOcupada(int numeroBox) {
+        return boxes[numeroBox - 1].ultimaFaseOcupada();
     }
     
-    public void meterColaPago(Vehiculo vehiculo){
+    /**
+     * Mueve un vehículo a la cola de pago.
+     * 
+     * @param vehiculo el vehículo a mover.
+     */
+    public void meterColaPago(Vehiculo vehiculo) {
         this.colaDePago.insertarVehiculo(vehiculo);
     }
 }

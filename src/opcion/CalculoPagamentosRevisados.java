@@ -25,6 +25,9 @@ public class CalculoPagamentosRevisados extends Opcion {
     
    
 
+    /**
+     * Calcula y cobra el precio totaln de un vehiculo
+     */
     @Override
     public void ejecutar() {
         if(!this.vehiculosCobrar.estaVacia()){

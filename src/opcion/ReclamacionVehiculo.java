@@ -29,7 +29,7 @@ public class ReclamacionVehiculo extends OpcionTaller {
         }else if(!taller.boxesVacios()){
            teclado.out("Los boxes están llenos\n");
         }else{
-            teclado.out("Indica el box donde quieres introducir el coche: ");
+            teclado.out("Indica el box donde quieres introducir el vehiculo: ");
             int opcion = teclado.inInt();            
            while(!taller.NUMERO_BOXES.inclou(opcion)){
                teclado.out("Este box no existe (1-6): ");

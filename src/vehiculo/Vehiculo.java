@@ -34,7 +34,7 @@ public abstract class Vehiculo {
     }
 
     public void vehiculoTerminado() {
-        teclado.out("El vehicle amb matrícula " + this.matricula + " ha completat la revisió.\n");
+        teclado.out("El vehiculo con la matrícula " + this.matricula + " ha completado la revisión.\n");
     }
 
     public String getMatricula() {
