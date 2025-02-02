@@ -30,7 +30,7 @@ public class MicroBus extends TransportePersonas {
             plazas = teclado.inInt();
             if(!limitesPlazas.inclou(plazas)){
                 error = true;
-                teclado.out("Solo puede tener entre 2 y 20 plazas.");
+                teclado.out("Solo puede tener entre 2 y 20 plazas.\n");
             }            
         }while(error);
         
