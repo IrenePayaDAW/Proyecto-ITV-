@@ -4,8 +4,8 @@ import util.GestorIO;
 import util.Interval;
 
 /**
- * Classe abstracta per a vehicles de transport de persones.
- * Defineix les característiques comunes com el nombre de places i costos addicionals.
+ * 
+ * @author irene, alvaro, alejandro
  */
 public abstract class TransportePersonas extends Vehiculo {
     private final int PLAZAS_GRATUITAS = 3;
@@ -24,7 +24,12 @@ public abstract class TransportePersonas extends Vehiculo {
         super(matricula, modeloVehiculo);
     }
     
-     public int validarCilindros() {
+    /**
+     * Valida la cantidad de cilindros asegurando que esté dentro del rango permitido.
+     * 
+     * @return Número de cilindros válido.
+     */
+    public int validarCilindros() {
         int cilindros;
         boolean error;
         Interval limite = new Interval(2,6);
@@ -37,14 +42,28 @@ public abstract class TransportePersonas extends Vehiculo {
                 teclado.out("Solo puede tener entre 2 y 6 cilindros.\n");
             }
         } while (error);
-
         return cilindros;
     }
+    
+    /**
+     * Registra el vehículo pidiendo al usuario que introduzca las plazas.
+     */
     public void registrarVehiculo(){
         this.plazas = this.validarPlazas();
     }
+    
+    /**
+     * Método abstracto para validar la cantidad de plazas del vehículo.
+     * 
+     * @return Número de plazas válido.
+     */
     public abstract int validarPlazas();
 
+    /**
+     * Calcula el costo adicional por plazas adicionales y potencia.
+     * 
+     * @return Costo adicional calculado.
+     */
     protected double calcularAdicional() {
         double extra = 0;
         if (this.plazas > PLAZAS_GRATUITAS) {
@@ -56,11 +75,21 @@ public abstract class TransportePersonas extends Vehiculo {
         return extra;
     }
 
+    /**
+     * Calcula el precio total de la revisión del vehículo.
+     * 
+     * @return Precio total de la revisión.
+     */
     @Override
     public double calcularPrecio() {
         return (this.getCilindros() * PRECIO_BASE) + this.calcularAdicional();
     }
 
+    /**
+     * Obtiene el número de plazas del vehículo.
+     * 
+     * @return Número de plazas.
+     */
     public int getPlazas() {
         return plazas;
     }

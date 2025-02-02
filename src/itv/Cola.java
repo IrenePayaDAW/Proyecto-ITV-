@@ -11,10 +11,7 @@ import java.util.Arrays;
 public class Cola {
     private Vehiculo[] vehiculos;
 
-    /**
-     * Constructor de la clase Cola.
-     * Inicializa un array vacío de vehículos.
-     */
+   
     public Cola() {
         this.vehiculos = new Vehiculo[0];
     }

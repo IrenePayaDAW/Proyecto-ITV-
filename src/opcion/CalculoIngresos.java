@@ -11,7 +11,7 @@ import vehiculo.Vehiculo;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 
 public class CalculoIngresos extends Opcion {

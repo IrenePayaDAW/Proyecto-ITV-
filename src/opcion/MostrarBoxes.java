@@ -8,14 +8,18 @@ import itv.Taller;
 
 /**
  *
- * @author irene
+ * @author irene, alvaro, alejandro
  */
 public class MostrarBoxes extends OpcionTaller {
 
+    
     public MostrarBoxes(Taller taller){
         super("Mostrar estado de todos los boxes", taller);
     }
 
+    /**
+     * muestra el estado de todos los boxes
+     */
     public void ejecutar(){
         taller.mostrarBoxes();
     }

@@ -14,10 +14,7 @@ public class Box {
     private static final int NUM_FASES = 4;
     private FaseRevision[] fases;
 
-    /**
-     * Constructor de la clase Box.
-     * Inicializa un array de fases de revisión.
-     */
+    
     public Box() {
         fases = new FaseRevision[NUM_FASES];
         for (int i = 0; i < NUM_FASES; i++) {

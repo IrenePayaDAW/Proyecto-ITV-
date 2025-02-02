@@ -6,9 +6,9 @@ import vehiculo.*;
 import java.util.regex.*;
 
 /**
- * Taller ITV - Gestión de vehículos y revisiones.
+ * @author irene, alvaro, alejandro
  * 
- * <p>Autor: Irene Payá, Álvaro Carrión, Alejandro Soler</p>
+ * 
  */
 public class Taller {
 
@@ -20,10 +20,7 @@ public class Taller {
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
 
-    /**
-     * Constructor de la clase Taller.
-     * Inicializa los boxes, colas y variables necesarias.
-     */
+   
     public Taller() {
         boxes = new Box[6];
         for (int i = 0; i < boxes.length; i++) {

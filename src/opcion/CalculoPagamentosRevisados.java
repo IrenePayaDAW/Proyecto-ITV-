@@ -8,7 +8,7 @@ import vehiculo.Vehiculo;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 public class CalculoPagamentosRevisados extends Opcion {
 

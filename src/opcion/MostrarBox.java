@@ -9,7 +9,7 @@ import util.Interval;
 
 /**
  *
- * @author irene
+ * @author irene, alvaro, alejandro
  */
 public class MostrarBox extends OpcionTaller {
 

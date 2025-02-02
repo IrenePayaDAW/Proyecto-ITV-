@@ -17,7 +17,7 @@ import opcion.OpcionTaller;
 
 /**
  *
- * @author irene
+ * @author irene, alvaro, alejandro
  */
 public class Main {
 
@@ -29,7 +29,10 @@ public class Main {
         this.menu = new OpcionTaller("Opciones", taller);
           
     }
-    
+    /**
+     * ejecuta el programa
+     * @param args 
+     */
     public static void main(String[] args) {
         Taller taller = new Taller();
         Opcion menu = new OpcionTaller("Opciones", taller);

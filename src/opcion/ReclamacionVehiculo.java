@@ -13,7 +13,7 @@ import util.GestorIO;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 public class ReclamacionVehiculo extends OpcionTaller {
    
@@ -21,7 +21,9 @@ public class ReclamacionVehiculo extends OpcionTaller {
         super("Reclamar vehículo", taller);
     }
     
-    
+    /**
+     * Reclama un vehiculo para introducirlo en un box.
+     */
     public void ejecutar(){
         if(this.taller.colaEstaVacia()){
            teclado.out("No hay vehiculos en la cola principal\n");
@@ -40,16 +42,5 @@ public class ReclamacionVehiculo extends OpcionTaller {
         }
     }
    
-    //(CORREGIDO)
-
-//    @Override
-//    public void ejecutar() {
-//        GestorIO teclado = new GestorIO();
-//        if (taller.hayVehiculosEnCola()) {
-//            Vehiculo vehiculo = taller.reclamarVehiculo();
-//            teclado.out("El vehículo con matrícula " + vehiculo.getMatricula() + " ha sido reclamado y está listo para entrar en el box.\n");
-//        } else {
-//            teclado.out("No hay vehículos en la cola para reclamar.\n");
-//        }
-//    }
+   
 }

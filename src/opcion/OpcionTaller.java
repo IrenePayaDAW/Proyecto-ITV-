@@ -11,7 +11,7 @@ import util.Interval;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 public class OpcionTaller extends Opcion {
 
@@ -25,6 +25,9 @@ public class OpcionTaller extends Opcion {
         this.calculoPagamentosRevisados = new CalculoPagamentosRevisados(taller, this.calculoIngresos);
     }
 
+    /**
+     * Ejecuta las opciones 
+     */
     public void ejecutar() {
         
         int opcion;
@@ -64,6 +67,11 @@ public class OpcionTaller extends Opcion {
 
     }
 
+    /**
+     * valida que el usuario introduzca una opción válida
+     * @param opcion
+     * @return opción válida
+     */
     public int validarOpcion(int opcion) {
         while (!OPCIONES.inclou(opcion)) {
             teclado.out("Introduce una opción válida: ");

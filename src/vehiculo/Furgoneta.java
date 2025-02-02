@@ -1,25 +1,31 @@
 package vehiculo;
 
 import util.Interval;
-
 /**
- * Classe Furgoneta que representa un vehicle de transport de càrrega.
- * Aplica les tarifes específiques per a furgonetes.
+ * 
+ * @author irene, alvaro, alejandro
  */
 public class Furgoneta extends TransporteCarga {
+
     public Furgoneta(double pma, int cilindros, double CC, String matricula, String modeloVehiculo) {
         super(cilindros, CC, matricula, modeloVehiculo, pma);
     }
 
-     public Furgoneta(String matricula, String modeloVehiculo) {
+    
+    public Furgoneta(String matricula, String modeloVehiculo) {
         super(matricula, modeloVehiculo);
     }
 
+    /**
+     * Valida la cantidad de cilindros asegurando que esté dentro del rango permitido.
+     * 
+     * @return Número de cilindros válido.
+     */
     @Override
     public int validarCilindros() {
-       int cilindros;
+        int cilindros;
         boolean error;
-        Interval limite = new Interval(4,10);
+        Interval limite = new Interval(4, 10);
         do {
             error = false;
             teclado.out("Introduce los cilindros: ");
@@ -33,14 +39,23 @@ public class Furgoneta extends TransporteCarga {
         return cilindros;
     }
     
+    /**
+     * Obtiene el tipo de vehículo.
+     * 
+     * @return "Furgoneta" como tipo de vehículo.
+     */
     @Override
     public String getTipo() {
         return "Furgoneta";
     }
 
+    /**
+     * Calcula el pago total de la revisión.
+     * 
+     * @return Pago total a realizar.
+     */
     @Override
     public double pagoTotal() {
         return this.calcularPrecio();
     }
 }
-

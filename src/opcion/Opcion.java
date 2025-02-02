@@ -6,7 +6,7 @@ import util.GestorIO;
 import util.Interval;
 
 /**
- * Classe abstracta Opcio que defineix l'estructura bàsica de les opcions del sistema ITV.
+ * @author irene, alvaro, alejandro
  */
 public abstract class Opcion {
     GestorIO teclado = new GestorIO();
@@ -20,6 +20,9 @@ public abstract class Opcion {
         
     }
 
+    /**
+     * muestra las opciones
+     */
     public void mostrar() {
         GestorIO teclado = new GestorIO();
         teclado.out("\nMenú del Taller:\n");

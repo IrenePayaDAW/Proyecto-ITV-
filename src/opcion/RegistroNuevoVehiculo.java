@@ -19,7 +19,7 @@ import vehiculo.Vehiculo;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 public class RegistroNuevoVehiculo extends OpcionTaller {
 
@@ -30,6 +30,9 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         super("Registrar nuevo vehículo", taller);
     }
 
+    /**
+     * Registra un nuevo vehiculo
+     */
     @Override
     public void ejecutar() {
         Vehiculo vehiculo = null;
@@ -63,7 +66,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         switch (opcion) {
             
             case 1:
-                vehiculo = new Coche(matricula, modelo);
+                vehiculo = new Coche(matricula, modelo); //He usado constructores con estos dos atributos porque son finales y necesito inicializar los tipos de vehiculo para usar el polimorfismo
                 break;
             case 2:
                 vehiculo = new MicroBus(matricula, modelo);
@@ -84,6 +87,11 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         
     }
 
+    /**
+     * valida que el usuario haya introducido una opción válida
+     * @param opcion
+     * @return opción valida
+     */
     @Override
     public int validarOpcion(int opcion) {
         while (!OPCIONES_COCHE.inclou(opcion)) {

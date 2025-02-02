@@ -19,11 +19,7 @@ public class FaseRevision {
     private String nombreFase;
     private Vehiculo vehiculo;
 
-    /**
-     * Constructor de la clase FaseRevision.
-     * 
-     * @param posicion la posición de la fase dentro del proceso de revisión.
-     */
+   
     public FaseRevision(int posicion) {
         this.nombreFase = NOMBRES_FASES[posicion];
         this.vehiculo = null;

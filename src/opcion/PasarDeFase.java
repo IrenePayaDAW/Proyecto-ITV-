@@ -10,7 +10,7 @@ import util.Interval;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 public class PasarDeFase extends OpcionTaller {
     
@@ -20,6 +20,9 @@ public class PasarDeFase extends OpcionTaller {
         super("Pasar vehículo de fase", taller);
     }
     
+    /**
+     * Pasa de fase los vehiculos que están en los boxes
+     */
     public void ejecutar() {
         
         teclado.out("Ingrese el número de box donde desea pasar los vehículos de fase: ");
