@@ -11,7 +11,7 @@ public abstract class TransporteCarga extends Vehiculo {
 
     public TransporteCarga(int cilindros, double CC, String matricula, String modeloVehiculo, double PMA) {
         super(cilindros, CC, matricula, modeloVehiculo);
-        this.pma = validarPMA(pma);
+        this.pma = PMA;
     }
 
      public TransporteCarga(String matricula, String modeloVehiculo) {
@@ -27,13 +27,6 @@ public abstract class TransporteCarga extends Vehiculo {
         this.pma = pma;
     }
     
-    private double validarPMA(double pma) {
-        if (pma <= 0) {
-            throw new IllegalArgumentException("El PMA ha de ser un valor positiu.");
-        }
-        return pma;
-    }
-
     protected double calcularCargoPma() {
         return (this.getCilindros() < 10) ? (3 * this.pma) : (4 * this.pma);
     }

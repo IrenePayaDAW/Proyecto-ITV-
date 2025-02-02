@@ -22,7 +22,7 @@ public abstract class Opcion {
 
     public void mostrar() {
         GestorIO teclado = new GestorIO();
-        teclado.out("Menú del Taller:\n");
+        teclado.out("\nMenú del Taller:\n");
         teclado.out("1. Registrar nuevo vehículo\n");
         teclado.out("2. Reclamar vehículo\n");
         teclado.out("3. Pasar vehículo de fase\n");

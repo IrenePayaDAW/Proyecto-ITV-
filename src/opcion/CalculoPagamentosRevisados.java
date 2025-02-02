@@ -23,18 +23,7 @@ public class CalculoPagamentosRevisados extends Opcion {
     }
 
     
-    
-
-//    @Override
-//    public void ejecutar() {
-//        if (taller.hayVehiculosParaPagar()) {
-//            Vehiculo vehiculo = taller.procesarPagoVehiculo();
-//            teclado.out("El vehículo con matrícula " + vehiculo.getMatricula()
-//                    + " ha abonado un total de " + vehiculo.pagoTotal() + "€ y ha salido del taller.\n");
-//        } else {
-//            teclado.out("No hay vehículos en la cola de pagos.\n");
-//        }
-//    }
+   
 
     @Override
     public void ejecutar() {
@@ -42,9 +31,9 @@ public class CalculoPagamentosRevisados extends Opcion {
             Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
             teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() +" tiene que pagar: "+ vehiculo.calcularPrecio()+ "\n");
             ingresos.insertarVehiculo(vehiculo);
-            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() + " se ha añadido al historial.");         
-        }else if(vehiculosCobrar.estaVacia() && !taller.hayVehiculosParaPagar()){
-            teclado.out("No hay vehículos para pagar.");
+            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() + " se ha añadido al historial.\n");         
+        }else if(!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()){
+            teclado.out("No hay vehículos para pagar.\n");
         }else if(taller.hayVehiculosParaPagar()){
             this.vehiculosCobrar.insertarVehiculo(this.taller.extraerVehiculoPago());
             this.ejecutar();

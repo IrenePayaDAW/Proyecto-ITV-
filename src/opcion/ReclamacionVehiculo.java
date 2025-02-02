@@ -24,10 +24,10 @@ public class ReclamacionVehiculo extends OpcionTaller {
     
     public void ejecutar(){
         if(this.taller.colaEstaVacia()){
-           teclado.out("No hay vehiculos en la cola principal");
+           teclado.out("No hay vehiculos en la cola principal\n");
            
         }else if(!taller.boxesVacios()){
-           teclado.out("Los boxes están llenos");
+           teclado.out("Los boxes están llenos\n");
         }else{
             teclado.out("Indica el box donde quieres introducir el coche: ");
             int opcion = teclado.inInt();            

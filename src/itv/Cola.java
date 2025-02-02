@@ -41,7 +41,7 @@ public class Cola {
     public boolean estaVacia() {
         return this.vehiculos.length == 0;
     }
-
+    
     public Vehiculo[] getVehiculos() {
         return this.vehiculos;
     }

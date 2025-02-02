@@ -46,7 +46,7 @@ public class Camion extends TransporteCarga {
             cilindros = teclado.inInt();
             if (!limite.inclou(cilindros)) {
                 error = true;
-                teclado.out("Solo puede tener entre 8 y 16 cilindros.");
+                teclado.out("Solo puede tener entre 8 y 16 cilindros.\n");
             }
         } while (error);
 

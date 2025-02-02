@@ -49,15 +49,17 @@ public class OpcionTaller extends Opcion {
                     new MostrarBoxes(taller).ejecutar();
                     break;
                 case 6:
-                    this.calculoIngresos.ejecutar();
-                    break;
-                case 7:
                     this.calculoPagamentosRevisados.ejecutar();
                     break;
+                case 7:
+                    this.calculoIngresos.ejecutar();
+                    break;
                 case 8:
-                    teclado.out("Fin del programa");
+                    teclado.out("Fin del programa\n");
                     break;
             }
+            
+            super.mostrar();
         } while (opcion != 8);
 
     }

@@ -33,6 +33,10 @@ public class Box {
             teclado.out("El box está ocupado.");
         }
     }
+    
+    public Vehiculo copiarUltimoVehiculo(){
+        return this.fases[3].getVehiculo();
+    }
 
     /**
      * Avanza los vehículos de las fases en un box que llama a este método
@@ -51,8 +55,9 @@ public class Box {
         }
         if (!fases[fases.length - 1].estaLibre()) {
             Vehiculo ultimoVehiculoFase = fases[fases.length - 1].getVehiculo();
-            teclado.out("El vehículo con matrícula " + ultimoVehiculoFase.getMatricula() + " ha superado las fases de revisión y ha abandonado el taller.\n");
+            teclado.out("El vehículo con matrícula " + ultimoVehiculoFase.getMatricula() + " ha superado las fases de revisión y ha abandonado el taller.\n");           
             fases[fases.length - 1].eliminarVehiculo();
+            
         }
         for (int i = fases.length - 1; i > 0; i--) {
             if (!fases[i - 1].estaLibre()) {
@@ -68,7 +73,7 @@ public class Box {
     public void mostrarEstado() {
         for (int i = 0; i < NUM_FASES; i++) {
             String estado = fases[i].estaLibre() ? "vacía" : "ocupada por " + fases[i].getVehiculo().getMatricula();
-            teclado.out("Fase " + i + " está " + estado + ".");
+            teclado.out("\nFase " + (i+1) + " está " + estado + ".");
         }
     }
 
@@ -84,6 +89,10 @@ public class Box {
 
     public boolean boxLibre() {
         return this.fases[0].estaLibre();
+    }
+    
+    public boolean ultimaFaseOcupada(){
+        return !this.fases[fases.length-1].estaLibre();
     }
 
 }

@@ -77,8 +77,11 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             
         }
         
-        Taller.registrarVehiculo(vehiculo);
-
+        
+        taller.registrarVehiculo(vehiculo);
+        taller.insertarVehiculo(vehiculo);
+        teclado.out("Vehiculo " + vehiculo.getMatricula() + " registrado\n");
+        
     }
 
     @Override

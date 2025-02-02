@@ -26,7 +26,7 @@ public class Furgoneta extends TransporteCarga {
             cilindros = teclado.inInt();
             if (!limite.inclou(cilindros)) {
                 error = true;
-                teclado.out("Solo puede tener entre 4 y 10 cilindros.");
+                teclado.out("Solo puede tener entre 4 y 10 cilindros.\n");
             }
         } while (error);
 

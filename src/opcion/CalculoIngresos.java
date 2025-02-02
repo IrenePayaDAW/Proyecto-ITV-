@@ -35,7 +35,7 @@ public class CalculoIngresos extends Opcion {
         for (int i = 0; i < vehiculosFinalizados.length; i++) {
             ingresosTotales += vehiculosFinalizados[i].calcularPrecio();
         }
-        teclado.out("Han sido cobrados: "+ vehiculosFinalizados.length +" vehiculos");
-        teclado.out("El total de ingresos es de: "+ ingresosTotales);
+        teclado.out("Han sido cobrados: "+ vehiculosFinalizados.length +" vehiculos\n");
+        teclado.out("El total de ingresos es de: "+ ingresosTotales + "\n");
     }
 }

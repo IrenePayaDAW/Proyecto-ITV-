@@ -16,6 +16,9 @@ public class MostrarBoxes extends OpcionTaller {
         super("Mostrar estado de todos los boxes", taller);
     }
 
+    public void ejecutar(){
+        taller.mostrarBoxes();
+    }
    
 
 }
