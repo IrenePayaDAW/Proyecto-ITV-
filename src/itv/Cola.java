@@ -46,13 +46,6 @@ public class Cola {
         return this.vehiculos;
     }
 
-    public Vehiculo getPrimerVehiculo() {
-        if (estaVacia()) {
-            return null;
-        }
-        return this.vehiculos[0];
-    }
-
     public void mostrarCola() {
         GestorIO teclado = new GestorIO();
         teclado.out("\n-- Cola de Vehicles --\n");

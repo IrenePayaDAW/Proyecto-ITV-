@@ -16,11 +16,6 @@ public class MostrarBoxes extends OpcionTaller {
         super("Mostrar estado de todos los boxes", taller);
     }
 
-    teclado.out("--Estado de todos los box--\n");
-    for(int i = 0;i< boxes.length ;i++){
-        teclado.out("Box " + (i + 1) + ":\n");
-        boxes[i].mostrarEstado();
-        teclado.out("\n");
-    }
+   
 
 }

@@ -34,13 +34,15 @@ public abstract class TransportePersonas extends Vehiculo {
             cilindros = teclado.inInt();
             if (!limite.inclou(cilindros)) {
                 error = true;
-                teclado.out("Solo puede tener entre 2 y 6 cilindros.");
+                teclado.out("Solo puede tener entre 2 y 6 cilindros.\n");
             }
         } while (error);
 
         return cilindros;
     }
-     
+    public void registrarVehiculo(){
+        this.plazas = this.validarPlazas();
+    }
     public abstract int validarPlazas();
 
     protected double calcularAdicional() {

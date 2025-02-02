@@ -53,7 +53,11 @@ public class FaseRevision {
     }
 
     public boolean validarMatricula(String matricula) {
-        return this.vehiculo != null && this.vehiculo.getMatricula().equalsIgnoreCase(matricula);
+        return this.vehiculo != null && !this.vehiculo.getMatricula().equalsIgnoreCase(matricula);
+    }
+    
+    public void setVehiculo(Vehiculo vehiculo){
+        this.vehiculo = vehiculo;
     }
     
     public int validarPosicion(int posicion){

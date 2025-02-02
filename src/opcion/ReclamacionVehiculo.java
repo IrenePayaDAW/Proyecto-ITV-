@@ -15,29 +15,32 @@ import util.GestorIO;
  *
  * @author acarr
  */
-class ReclamacionVehiculo extends OpcionTaller {
-
+public class ReclamacionVehiculo extends OpcionTaller {
+   
     public ReclamacionVehiculo(Taller taller) {
         super("Reclamar vehículo", taller);
     }
-    int eleccionBox;
-
-    if(this.colaPrincipal.estaVacia ()){
-       teclado.out("La cola está vacía.\n");
-    }else{ //TIENE QUE PEDIR EL BOX DONDE SE QUIERE ASIGNAR EL VEHÍCULO
-     teclado.out("Qué box quieres selecionar (1 - 6): ");
-     eleccionBox = teclado.inInt();
-     while(!numBoxes.inclou(eleccionBox)){
-        teclado.out("Error, los boxes están entre 1 y 6.");
-        eleccionBox = teclado.inInt();
-        }
-    if(boxes[eleccionBox - 1].boxLibre()){
-       teclado.out("Vehiculo introduccido en el box " + eleccionBox + "\n");
-       boxes[eleccionBox - 1].asignarVehiculo(colaPrincipal.extraerVehiculo());
+    
+    
+    public void ejecutar(){
+        if(this.taller.colaEstaVacia()){
+           teclado.out("No hay vehiculos en la cola principal");
+           
+        }else if(!taller.boxesVacios()){
+           teclado.out("Los boxes están llenos");
         }else{
-         teclado.out("El box está ocupado");
+            teclado.out("Indica el box donde quieres introducir el coche: ");
+            int opcion = teclado.inInt();            
+           while(!taller.NUMERO_BOXES.inclou(opcion)){
+               teclado.out("Este box no existe (1-6): ");
+               opcion = teclado.inInt();
+           }
+            taller.asignarVehiculoBox(opcion, taller.extraerVehiculoCola());
+            
         }
-    }//(CORREGIDO)
+    }
+   
+    //(CORREGIDO)
 
 //    @Override
 //    public void ejecutar() {

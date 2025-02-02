@@ -1,6 +1,8 @@
 package opcion;
 
+import itv.Cola;
 import itv.Taller;
+import java.util.Arrays;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
@@ -10,22 +12,18 @@ import vehiculo.Vehiculo;
  */
 public class CalculoPagamentosRevisados extends Opcion {
 
-    GestorIO teclado = new GestorIO();
-
-    public CalculoPagamentosRevisados(Taller taller) {
+   
+    
+    private Cola vehiculosCobrar;
+    private CalculoIngresos ingresos;
+    public CalculoPagamentosRevisados(Taller taller, CalculoIngresos ingresos) {
         super("Calcular y pagar vehículo revisado", taller);
-
+        this.ingresos = ingresos;
+        this.vehiculosCobrar = new Cola();
     }
 
-    if(colaDePago.estaVacia()){
-       teclado.out("Todavía no hay vehículos en la cola de pagos.\n");
-    }else{
-      System.out.printf("El primer vehículo de la cola de pagos ha abonado un total de %.2f€ y ha abandonado el taller.\n", colaDePago.getPrimerVehiculo().pagoTotal());
-      vehiculosFinalizados = Arrays.copyOf(vehiculosFinalizados, vehiculosFinalizados.length + 1);
-      vehiculosFinalizados[0] = colaDePago.getPrimerVehiculo();
-      ingresosTotales += colaDePago.getPrimerVehiculo().pagoTotal();
-      colaDePago.extraerVehiculo();
-    }
+    
+    
 
 //    @Override
 //    public void ejecutar() {
@@ -37,4 +35,21 @@ public class CalculoPagamentosRevisados extends Opcion {
 //            teclado.out("No hay vehículos en la cola de pagos.\n");
 //        }
 //    }
+
+    @Override
+    public void ejecutar() {
+        if(!this.vehiculosCobrar.estaVacia()){
+            Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
+            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() +" tiene que pagar: "+ vehiculo.calcularPrecio()+ "\n");
+            ingresos.insertarVehiculo(vehiculo);
+            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() + " se ha añadido al historial.");         
+        }else if(vehiculosCobrar.estaVacia() && !taller.hayVehiculosParaPagar()){
+            teclado.out("No hay vehículos para pagar.");
+        }else if(taller.hayVehiculosParaPagar()){
+            this.vehiculosCobrar.insertarVehiculo(this.taller.extraerVehiculoPago());
+            this.ejecutar();
+        }
+        
+        
+    }
 }

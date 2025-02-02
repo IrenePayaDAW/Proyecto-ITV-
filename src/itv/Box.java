@@ -1,12 +1,15 @@
 package itv;
 
+import itv.FaseRevision;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
 /**
- * Classe Box que representa un espai on es realitzen les fases de revisió d'un vehicle.
+ * Classe Box que representa un espai on es realitzen les fases de revisió d'un
+ * vehicle.
  */
 public class Box {
+
     GestorIO teclado = new GestorIO();
     private static final int NUM_FASES = 4;
     private FaseRevision[] fases;
@@ -31,17 +34,34 @@ public class Box {
         }
     }
 
+    /**
+     * Avanza los vehículos de las fases en un box que llama a este método
+     */
     public void avanzarVehiculos() {
-        if (fases[NUM_FASES - 1].tieneVehiculo()) {
-            Vehiculo vehiculo = fases[NUM_FASES - 1].getVehiculo();
-            fases[NUM_FASES - 1].eliminarVehiculo();
-            teclado.out("Vehículo con matrícula " + vehiculo.getMatricula() + " ha completado la revisión y ha salido del box.");
+        boolean hayVehiculos = false;
+        for (FaseRevision fase : fases) {
+            if (!fase.estaLibre()) {
+                hayVehiculos = true;
+                break;
+            }
         }
-        for (int i = NUM_FASES - 1; i > 0; i--) {
+        if (!hayVehiculos) {
+            teclado.out("No hay vehículos en este box para avanzar.\n");
+            return;
+        }
+        if (!fases[fases.length - 1].estaLibre()) {
+            Vehiculo ultimoVehiculoFase = fases[fases.length - 1].getVehiculo();
+            teclado.out("El vehículo con matrícula " + ultimoVehiculoFase.getMatricula() + " ha superado las fases de revisión y ha abandonado el taller.\n");
+            fases[fases.length - 1].eliminarVehiculo();
+        }
+        for (int i = fases.length - 1; i > 0; i--) {
             if (!fases[i - 1].estaLibre()) {
-                fases[i].asignarVehiculoFase(fases[i - 1].getVehiculo());
+                fases[i].setVehiculo(fases[i - 1].getVehiculo());
                 fases[i - 1].eliminarVehiculo();
             }
+        }
+        if (fases[0].estaLibre()) {
+            teclado.out("La primera fase ahora está libre para recibir nuevos vehículos.\n");
         }
     }
 
@@ -51,4 +71,19 @@ public class Box {
             teclado.out("Fase " + i + " está " + estado + ".");
         }
     }
+
+    public boolean validarMatricula(String matricula) {
+        for (int i = 0; i < fases.length; i++) {
+            if (!fases[i].validarMatricula(matricula)) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    public boolean boxLibre() {
+        return this.fases[0].estaLibre();
+    }
+
 }

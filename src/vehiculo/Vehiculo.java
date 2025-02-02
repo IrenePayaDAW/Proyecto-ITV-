@@ -57,6 +57,18 @@ public abstract class Vehiculo {
         return this.estadoVehiculo;
     }
     
+    public void insertarCc(){
+        int cc;
+        do {
+            teclado.out("Introduce la potencia que tiene el vehículo: ");
+            cc = teclado.inInt();
+        } while (cc < 0);
+        this.CC = cc;
+    }
+    
+    public void insertarCilindros(){
+        this.cilindros = this.validarCilindros();
+    }
     public void setEstado(boolean nuevoEstado) {
         this.estadoVehiculo = nuevoEstado;
     }
@@ -78,6 +90,8 @@ public abstract class Vehiculo {
     public abstract double pagoTotal();
     
     public abstract int validarCilindros();
+    
+    public abstract void registrarVehiculo();
 }
 
 

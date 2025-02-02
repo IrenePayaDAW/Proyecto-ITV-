@@ -23,8 +23,7 @@ import vehiculo.Vehiculo;
  */
 public class RegistroNuevoVehiculo extends OpcionTaller {
 
-    GestorIO teclado = new GestorIO();
-    Cola cola = taller.getColaPrincipal();
+    
     Interval OPCIONES_COCHE = new Interval(1, 4);
 
     public RegistroNuevoVehiculo(Taller taller) {
@@ -51,7 +50,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             matricula = teclado.inString().toUpperCase().trim();
 
             Matcher matcher = patron.matcher(matricula);
-            esValida = (matcher.matches() && !cola.validarMatricula(matricula));
+            esValida = (matcher.matches() && !taller.validarMatricula(matricula));
 
             if (!esValida) {
                 teclado.out("Matrícula inválida.");

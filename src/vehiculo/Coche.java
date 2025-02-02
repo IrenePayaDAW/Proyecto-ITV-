@@ -13,7 +13,7 @@ public class Coche extends TransportePersonas {
         super(cilindros, CC, matricula, modeloVehiculo, plazas, COSTE_PLAZA_ADICIONAL, new Interval(2, 7));
     }
 
-     public Coche(String matricula, String modeloVehiculo){
+    public Coche(String matricula, String modeloVehiculo){
         super(matricula, modeloVehiculo);
     }
     
@@ -26,9 +26,9 @@ public class Coche extends TransportePersonas {
             error = false;
             teclado.out("Introduce las plazas del coche: ");
             plazas = teclado.inInt();
-            if(limitesPlazas.inclou(plazas)){
+            if(!limitesPlazas.inclou(plazas)){
                 error = true;
-                teclado.out("Solo puede tener entre 2 y 7 plazas.");
+                teclado.out("Solo puede tener entre 2 y 7 plazas.\n");
             }            
         }while(error);
         
@@ -44,4 +44,5 @@ public class Coche extends TransportePersonas {
     public double pagoTotal() {
         return this.calcularPrecio();
     }
+   
 }
