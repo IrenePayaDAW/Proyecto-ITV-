@@ -1,24 +1,39 @@
 package itv;
 
+<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+=======
+>>>>>>> 8fe4088faea94df1fa54001507d046e3989ce49b
 import util.GestorIO;
 import util.Interval;
+import vehiculo.*;
+import java.util.regex.*;
 
 /**
- * @author Irene Payá, Álvaro Carrión, Alejando Soler
+ * @author irene, alvaro, alejandro
+ * 
+ * 
  */
 public class Taller {
 
+    private GestorIO teclado = new GestorIO();
     private Box[] boxes;
     private Cola colaPrincipal;
     private Cola colaDePago;
+<<<<<<< HEAD
     private String[] matriculasCochesEnTaller;
     private Vehiculo[] vehiculosFinalizados;
     private Interval numBoxes = new Interval(1, 6);
     private double ingresosTotales = 0;
+=======
+    private String[] matriculasEnTaller;
+    private double ingresosTotales;
+    public final Interval NUMERO_BOXES = new Interval(1, 6);
+>>>>>>> 8fe4088faea94df1fa54001507d046e3989ce49b
 
+   
     public Taller() {
         boxes = new Box[6];
         for (int i = 0; i < boxes.length; i++) {
@@ -26,6 +41,7 @@ public class Taller {
         }
         colaPrincipal = new Cola();
         colaDePago = new Cola();
+<<<<<<< HEAD
         matriculasCochesEnTaller = new String[1];
         vehiculosFinalizados = new Vehiculo[0];
     }
@@ -107,34 +123,95 @@ public class Taller {
                 return new Camion(PMA, cilindros, CC, matricula, modeloVehiculo, tipo, estadoVehiculo);
         }
 
+=======
+        matriculasEnTaller = new String[0];
+        ingresosTotales = 0;
+>>>>>>> 8fe4088faea94df1fa54001507d046e3989ce49b
     }
 
     /**
-     * Método para comprobar que los boxes están vacios
-     *
-     * @return
+     * Registra un vehículo en el sistema.
+     * 
+     * @param vehiculo el vehículo a registrar.
      */
-    public boolean boxesVacios() {
-        for (int i = 0; i < boxes.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (boxes[i].boxLibre()) {
-                    return true;
+    public void registrarVehiculo(Vehiculo vehiculo) {
+        vehiculo.insertarCilindros();
+        vehiculo.insertarCc();
+        vehiculo.registrarVehiculo();
+    }
+
+    /**
+     * Verifica si hay vehículos en la cola de pago.
+     * 
+     * @return true si hay vehículos para pagar, false en caso contrario.
+     */
+    public boolean hayVehiculosParaPagar() {
+        return !this.colaDePago.estaVacia();
+    }
+
+    /**
+     * Extrae un vehículo de la cola de pago.
+     * 
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoPago() {
+        return this.colaDePago.extraerVehiculo();
+    }
+
+    /**
+     * Extrae un vehículo de la cola principal.
+     * 
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoCola() {
+        return this.colaPrincipal.extraerVehiculo();
+    }
+
+    /**
+     * Valida si una matrícula está en el taller.
+     * 
+     * @param matricula la matrícula a validar.
+     * @return true si la matrícula es válida, false en caso contrario.
+     */
+    public boolean validarMatricula(String matricula) {
+        if (colaPrincipal.validarMatricula(matricula)) {
+            for (Box box : boxes) {
+                if (!box.validarMatricula(matricula)) {
+                    return false;
                 }
             }
+        } else {
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
-     * Método para comprobar que la matrícula no se encuentra en ninguno de los
-     * boxes.
-     *
-     * @param matricula
-     * @return (boolean)
+     * Avanza los vehículos en un box específico.
+     * 
+     * @param numeroBox el número del box.
      */
-    public boolean comprobarMatriculaBoxes(String matricula) {
-        for (int i = 0; i < boxes.length; i++) {
-            if (boxes[i].comprobarMatriculaFases(matricula)) {
+    public void avanzarVehiculos(int numeroBox) {
+        boxes[numeroBox - 1].avanzarVehiculos();
+    }
+
+    /**
+     * Verifica si la cola principal está vacía.
+     * 
+     * @return true si la cola está vacía, false en caso contrario.
+     */
+    public boolean colaEstaVacia() {
+        return this.colaPrincipal.estaVacia();
+    }
+
+    /**
+     * Verifica si hay boxes vacíos.
+     * 
+     * @return true si hay algún box libre, false en caso contrario.
+     */
+    public boolean boxesVacios() {
+        for (Box box : boxes) {
+            if (box.boxLibre()) {
                 return true;
             }
         }
@@ -142,8 +219,11 @@ public class Taller {
     }
 
     /**
-     * Método para mostrar el menu.
+     * Inserta un vehículo en la cola principal.
+     * 
+     * @param vehiculo el vehículo a insertar.
      */
+<<<<<<< HEAD
     public void mostrarMenu() {
         GestorIO teclado = new GestorIO();
 
@@ -156,15 +236,19 @@ public class Taller {
         teclado.out("6. Calcular y pagar vehículo revisado\n");
         teclado.out("7. Calculo de ingresos\n");
         teclado.out("8. Salir del programa\n\n");
+=======
+    public void insertarVehiculo(Vehiculo vehiculo) {
+        this.colaPrincipal.insertarVehiculo(vehiculo);
+>>>>>>> 8fe4088faea94df1fa54001507d046e3989ce49b
     }
 
     /**
-     * Método para comprobar que el valor int introducido por el usuario está
-     * entre 1 y 6 (ambos números incluidos).
-     *
-     * @param opcion
-     * @return (boolean)
+     * Asigna un vehículo a un box específico.
+     * 
+     * @param numeroBox el número del box.
+     * @param vehiculo el vehículo a asignar.
      */
+<<<<<<< HEAD
     public boolean opcion1A8(int opcion) {
         Interval opcionesMenu = new Interval(1, 8);
         return opcionesMenu.inclou(opcion);
@@ -178,11 +262,18 @@ public class Taller {
     public static void main(String[] args) {
         Taller programa = new Taller();
         programa.inicio();
+=======
+    public void asignarVehiculoBox(int numeroBox, Vehiculo vehiculo) {
+        boxes[numeroBox - 1].asignarVehiculo(vehiculo);
+>>>>>>> 8fe4088faea94df1fa54001507d046e3989ce49b
     }
 
     /**
-     * Método para inicializar el programa.
+     * Muestra el estado de un box específico.
+     * 
+     * @param box el número del box.
      */
+<<<<<<< HEAD
     public void inicio() {
         int opcion = 0;
         Interval opcionesMenu = new Interval(1, 8);
@@ -310,9 +401,50 @@ public class Taller {
                         break;
                 }
             }
-
-        }
-
+=======
+    public void mostrarBox(int box) {
+        this.boxes[box - 1].mostrarEstado();
     }
+>>>>>>> 8fe4088faea94df1fa54001507d046e3989ce49b
 
+    /**
+     * Muestra el estado de todos los boxes.
+     */
+    public void mostrarBoxes() {
+        int i = 1;
+        for (Box box : boxes) {
+            teclado.out("\nBOX " + i++ + "\n");
+            box.mostrarEstado();
+            teclado.out("\n");
+        }
+    }
+    
+    /**
+     * Extrae el último vehículo que pasó por un box específico.
+     * 
+     * @param numeroBox el número del box.
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoBox(int numeroBox) {
+        return boxes[numeroBox - 1].copiarUltimoVehiculo();
+    }
+    
+    /**
+     * Verifica si la última fase de un box está ocupada.
+     * 
+     * @param numeroBox el número del box.
+     * @return true si la última fase está ocupada, false en caso contrario.
+     */
+    public boolean ultimaFaseOcupada(int numeroBox) {
+        return boxes[numeroBox - 1].ultimaFaseOcupada();
+    }
+    
+    /**
+     * Mueve un vehículo a la cola de pago.
+     * 
+     * @param vehiculo el vehículo a mover.
+     */
+    public void meterColaPago(Vehiculo vehiculo) {
+        this.colaDePago.insertarVehiculo(vehiculo);
+    }
 }
