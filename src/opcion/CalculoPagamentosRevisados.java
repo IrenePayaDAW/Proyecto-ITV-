@@ -11,20 +11,13 @@ import vehiculo.Vehiculo;
  * @author irene, alvaro, alejandro
  */
 public class CalculoPagamentosRevisados extends Opcion {
-
-   
-    
     private Cola vehiculosCobrar;
-    private CalculoIngresos ingresos;
-    public CalculoPagamentosRevisados(Taller taller, CalculoIngresos ingresos) {
-        super("Calcular y pagar vehículo revisado", taller);
-        this.ingresos = ingresos;
+    
+    public CalculoPagamentosRevisados() {
+        super("Calcular y pagar vehículo revisado");
         this.vehiculosCobrar = new Cola();
     }
-
     
-   
-
     /**
      * Calcula y cobra el precio totaln de un vehiculo
      */
@@ -38,7 +31,7 @@ public class CalculoPagamentosRevisados extends Opcion {
         }else if(!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()){
             teclado.out("No hay vehículos para pagar.\n");
         }else if(taller.hayVehiculosParaPagar()){
-            this.vehiculosCobrar.insertarVehiculo(this.taller.extraerVehiculoPago());
+            this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
             this.ejecutar();
         }
         

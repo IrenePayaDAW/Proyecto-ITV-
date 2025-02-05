@@ -13,58 +13,14 @@ import util.Interval;
  *
  * @author irene, alvaro, alejandro
  */
-public class OpcionTaller extends Opcion {
+public abstract class OpcionTaller extends Opcion {
 
-    
+    protected Taller taller ;
     private Interval OPCIONES = new Interval(1, 8);
-    private CalculoIngresos calculoIngresos; 
-    private CalculoPagamentosRevisados calculoPagamentosRevisados; 
+    
     public OpcionTaller(String titulo, Taller taller) {
-        super(titulo, taller);
-        this.calculoIngresos = new CalculoIngresos(taller);
-        this.calculoPagamentosRevisados = new CalculoPagamentosRevisados(taller, this.calculoIngresos);
-    }
-
-    /**
-     * Ejecuta las opciones 
-     */
-    public void ejecutar() {
-        
-        int opcion;
-        do {
-            teclado.out("Seleccione una opción: ");
-            opcion = validarOpcion(teclado.inInt());
-
-            switch (opcion) {
-                case 1:
-                    new RegistroNuevoVehiculo(taller).ejecutar();
-                    break;
-                case 2:
-                    new ReclamacionVehiculo(taller).ejecutar();
-                    break;
-                case 3:
-                    new PasarDeFase(taller).ejecutar();
-                    break;
-                case 4:
-                    new MostrarBox(taller).ejecutar();
-                    break;
-                case 5:
-                    new MostrarBoxes(taller).ejecutar();
-                    break;
-                case 6:
-                    this.calculoPagamentosRevisados.ejecutar();
-                    break;
-                case 7:
-                    this.calculoIngresos.ejecutar();
-                    break;
-                case 8:
-                    teclado.out("Fin del programa\n");
-                    break;
-            }
-            
-            super.mostrar();
-        } while (opcion != 8);
-
+        super(titulo);
+        this.taller = taller;
     }
 
     /**

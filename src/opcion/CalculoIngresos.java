@@ -18,8 +18,8 @@ public class CalculoIngresos extends Opcion {
     
     private Vehiculo[] vehiculosFinalizados;
     
-    public CalculoIngresos(Taller taller) {
-        super("Calculo ingresos totales",taller);
+    public CalculoIngresos() {
+        super("Calculo ingresos totales");
         vehiculosFinalizados = new Vehiculo[0];     
     }
     

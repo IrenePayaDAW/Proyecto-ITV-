@@ -1,5 +1,6 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.GestorIO;
 import util.Interval;
 
@@ -14,20 +15,23 @@ public abstract class Vehiculo {
     private final String modeloVehiculo;
     private boolean estadoVehiculo;
     public static final int PRECIO_BASE = 15;
+    private final Cliente cliente;
 
     
-    public Vehiculo(int cilindros, double CC, String matricula, String modeloVehiculo) {
+    public Vehiculo(Cliente cliente, int cilindros, double CC, String matricula, String modeloVehiculo) {
         this.cilindros = cilindros;
         this.CC = CC;
         this.matricula = matricula;
         this.modeloVehiculo = modeloVehiculo;
         this.estadoVehiculo = false;
+        this.cliente = cliente;
     }
     
     
-     public Vehiculo(String matricula, String modeloVehiculo){
+     public Vehiculo(Cliente cliente, String matricula, String modeloVehiculo){
         this.matricula = matricula;
         this.modeloVehiculo = modeloVehiculo;
+        this.cliente = cliente;
     }
 
     /**
