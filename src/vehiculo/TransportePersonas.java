@@ -1,5 +1,6 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.GestorIO;
 import util.Interval;
 
@@ -13,15 +14,8 @@ public abstract class TransportePersonas extends Vehiculo {
     private double costePlazasAdicionales;
     protected Interval limitesPlazas;
 
-    public TransportePersonas(int cilindros, double CC, String matricula, String modeloVehiculo, int plazas, double costePlazasAdicionales, Interval limitesPlazas) {
-        super(cilindros, CC, matricula, modeloVehiculo);
-        this.plazas = plazas;
-        this.costePlazasAdicionales = costePlazasAdicionales;
-        this.limitesPlazas = limitesPlazas;
-    }
-
-    public TransportePersonas(String matricula, String modeloVehiculo) {
-        super(matricula, modeloVehiculo);
+    public TransportePersonas(Cliente cliente,String matricula, String modeloVehiculo) {
+        super(cliente,matricula, modeloVehiculo);
     }
     
     /**

@@ -10,7 +10,7 @@ import vehiculo.Vehiculo;
  * @author Irene, Álvaro, Alejandro
  */
 public class Cliente {
-    private  String ID;
+    private  final String DNI;
     private String nombre;
     private  String telefono;
     private  boolean vip;
@@ -18,15 +18,19 @@ public class Cliente {
     private int contVecesAqui;
     private int cochesTiene;
     
-    public Cliente(String nombre,String telefono, boolean VIP) {
-        this.ID = UUID.randomUUID().toString();
+    public Cliente(String dni,String nombre,String telefono, boolean VIP) {
+        this.DNI = dni;
         this.nombre = nombre;
         this.telefono = telefono;
         this.vip = VIP;
+        this.contVecesAqui = 0;
     }
     
     public double descuentoPrimeraVez(){
-        return 0.7; //Es un 30% de descuento
+        if(contVecesAqui == 0){
+            return 0.7; //Es un 30% de descuento
+        }
+        return 0;
     }
     
     public double descuentoSocio(){
@@ -37,8 +41,8 @@ public class Cliente {
         return 0;
     }
     
-    public String getID() {
-        return ID;
+    public String getDni() {
+        return DNI;
     }
 
     public String getTelefono() {
@@ -57,6 +61,8 @@ public class Cliente {
         return contVecesAqui;
     }
     
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -69,12 +75,12 @@ public class Cliente {
             return false;
         }
         final Cliente other = (Cliente) obj;
-        return Objects.equals(this.ID, other.ID);
+        return Objects.equals(this.DNI, other.DNI);
     }
     
     @Override
     public String toString() {
-        return "Cliente{" + "ID=" + ID + ", telefono=" + telefono + ", VIP=" + vip + ", SOCIO=" + socio + ", contVecesAqui=" + contVecesAqui + '}';
+        return "Cliente{" + "DNI=" + DNI + ", telefono=" + telefono + ", VIP=" + vip + ", SOCIO=" + socio + ", contVecesAqui=" + contVecesAqui + '}';
     }
     
 }

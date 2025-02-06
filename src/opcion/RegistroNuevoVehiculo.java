@@ -2,6 +2,7 @@
 package opcion;
 
 
+import cliente.Cliente;
 import itv.Cola;
 import itv.Taller;
 import java.util.regex.Matcher;
@@ -33,10 +34,18 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
     @Override
     public void ejecutar() {
         Vehiculo vehiculo = null;
+        String dniCliente;
         String matricula;
         boolean esValida;
         Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
-
+        
+        teclado.out("Introduce el DNI del cliente:");
+        dniCliente = teclado.inString();
+        while(verificarConPatrones()){
+            
+        }
+        
+        
         teclado.out("Selecciona el tipo de vehículo: \n");
         teclado.out("1. Coche\n");
         teclado.out("2. Microbús\n");
@@ -63,16 +72,16 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         switch (opcion) {
             
             case 1:
-                vehiculo = new Coche(matricula, modelo); //He usado constructores con estos dos atributos porque son finales y necesito inicializar los tipos de vehiculo para usar el polimorfismo
+                vehiculo = new Coche(cliente,matricula, modelo); //He usado constructores con estos dos atributos porque son finales y necesito inicializar los tipos de vehiculo para usar el polimorfismo
                 break;
             case 2:
-                vehiculo = new MicroBus(matricula, modelo);
+                vehiculo = new MicroBus(cliente, matricula, modelo);
                 break;
             case 3:
-                vehiculo = new Furgoneta(matricula, modelo);
+                vehiculo = new Furgoneta(cliente, matricula, modelo);
                 break;
             case 4:
-                vehiculo = new Camion(matricula, modelo);
+                vehiculo = new Camion(cliente,matricula, modelo);
                 break;
             
         }
@@ -83,7 +92,11 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         teclado.out("Vehiculo " + vehiculo.getMatricula() + " registrado\n");
         
     }
-
+    
+    private boolean verificarConPatrones(Pattern patron, String telefono){
+        Matcher matcher = patron.matcher(telefono);
+        return matcher.matches();
+    }
     /**
      * valida que el usuario haya introducido una opción válida
      * @param opcion

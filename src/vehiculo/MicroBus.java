@@ -1,6 +1,7 @@
 
 package vehiculo;
 
+import cliente.Cliente;
 import util.Interval;
 
 /**
@@ -9,14 +10,8 @@ import util.Interval;
 public class MicroBus extends TransportePersonas {
     private static final double COSTE_PLAZA_ADICIONAL = 2.0;
 
-    
-    public MicroBus(int cilindros, int plazas, double CC, String matricula, String modeloVehiculo) {
-        super(cilindros, CC, matricula, modeloVehiculo, plazas, COSTE_PLAZA_ADICIONAL, new Interval(2, 20));
-    }
-
-   
-    public MicroBus(String matricula, String modeloVehiculo) {
-        super(matricula, modeloVehiculo);
+    public MicroBus(Cliente cliente, String matricula, String modeloVehiculo) {
+        super(cliente, matricula, modeloVehiculo);
     }
      
     /**

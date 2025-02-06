@@ -1,9 +1,12 @@
 package itv;
 
+import cliente.Cliente;
+import java.util.Arrays;
 import util.GestorIO;
 import util.Interval;
 import vehiculo.*;
 import java.util.regex.*;
+import opcion.CalculoIngresos;
 
 /**
  * @author irene, alvaro, alejandro
@@ -19,6 +22,8 @@ public class Taller {
     private String[] matriculasEnTaller;
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
+    private  Cliente[] clientes;
+    
 
    
     public Taller() {
@@ -30,8 +35,26 @@ public class Taller {
         colaDePago = new Cola();
         matriculasEnTaller = new String[0];
         ingresosTotales = 0;
+        clientes = new Cliente[0];
     }
-
+    /**
+     * Añade un Cliente al array de los clientes
+     * 
+     * @param cliente 
+     */
+    public void añadirCliente(Cliente cliente){
+        Cliente[] clientesNew = Arrays.copyOf(clientes, clientes.length + 1);
+        clientesNew[clientesNew.length - 1] = cliente;
+        clientes = clientesNew;
+    }
+    
+    
+    public boolean estaElDni(String dni){
+        for (int i = 0; i < clientes.length; i++) {
+            if(clientes[i].getDni().equals(dni))return true;
+        }
+        return false;
+    }
     /**
      * Registra un vehículo en el sistema.
      * 

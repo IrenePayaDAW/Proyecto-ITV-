@@ -34,7 +34,8 @@ public class ITV {
         menu.añadirOpcion(new MostrarBox(taller));
         menu.añadirOpcion(new MostrarBoxes(taller));
         menu.añadirOpcion(new CalculoPagamentosRevisados());
-        menu.añadirOpcion(new CalculoIngresos());
+        menu.añadirOpcion(new CalculoIngresos(taller));
+       
     }
     /**
      * ejecuta el programa
@@ -46,6 +47,7 @@ public class ITV {
     }
     public void inicio(){
         menu.mostrar();
+        menu.getOpcion().ejecutar();
     }
 }
 

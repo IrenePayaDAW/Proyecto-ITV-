@@ -1,5 +1,6 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.GestorIO;
 
 /**
@@ -9,18 +10,14 @@ import util.GestorIO;
 public abstract class TransporteCarga extends Vehiculo {
     private double pma;
 
-    public TransporteCarga(int cilindros, double CC, String matricula, String modeloVehiculo, double PMA) {
-        super(cilindros, CC, matricula, modeloVehiculo);
-        this.pma = PMA;
-    }
-
-    public TransporteCarga(String matricula, String modeloVehiculo) {
-        super(matricula, modeloVehiculo);
+    public TransporteCarga(Cliente cliente, String matricula, String modeloVehiculo) {
+        super( cliente, matricula, modeloVehiculo);
     }
 
     /**
      * Registra el vehículo pidiendo al usuario que introduzca el PMA.
      */
+    @Override
     public void registrarVehiculo() {
         double pma;
         do {

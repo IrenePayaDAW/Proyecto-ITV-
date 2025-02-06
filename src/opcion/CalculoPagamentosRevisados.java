@@ -11,30 +11,30 @@ import vehiculo.Vehiculo;
  * @author irene, alvaro, alejandro
  */
 public class CalculoPagamentosRevisados extends Opcion {
+
     private Cola vehiculosCobrar;
-    
+
     public CalculoPagamentosRevisados() {
         super("Calcular y pagar vehículo revisado");
         this.vehiculosCobrar = new Cola();
     }
-    
+
     /**
      * Calcula y cobra el precio totaln de un vehiculo
      */
     @Override
     public void ejecutar() {
-        if(!this.vehiculosCobrar.estaVacia()){
-            Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
-            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() +" tiene que pagar: "+ vehiculo.calcularPrecio()+ "\n");
-            ingresos.insertarVehiculo(vehiculo);
-            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() + " se ha añadido al historial.\n");         
-        }else if(!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()){
-            teclado.out("No hay vehículos para pagar.\n");
-        }else if(taller.hayVehiculosParaPagar()){
-            this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
-            this.ejecutar();
-        }
-        
-        
+//        if(!this.vehiculosCobrar.estaVacia()){
+//            Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
+//            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() +" tiene que pagar: "+ vehiculo.calcularPrecio()+ "\n");
+//            ingresos.insertarVehiculo(vehiculo);
+//            teclado.out("Vehiculo con matrícula: "+ vehiculo.getMatricula() + " se ha añadido al historial.\n");         
+//        }else if(!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()){
+//            teclado.out("No hay vehículos para pagar.\n");
+//        }else if(taller.hayVehiculosParaPagar()){
+//            this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
+//            this.ejecutar();
+//        }
+
     }
 }

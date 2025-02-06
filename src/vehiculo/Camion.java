@@ -1,5 +1,6 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.Interval;
 
 /**
@@ -9,14 +10,10 @@ import util.Interval;
 public class Camion extends TransporteCarga {
     private static final int FIJO_ADICIONAL = 40;
 
-    
-    public Camion(double PMA, int cilindros, double CC, String matricula, String modeloVehiculo) {
-        super(cilindros, CC, matricula, modeloVehiculo, PMA);
-    }
 
     
-    public Camion(String matricula, String modeloVehiculo) {
-        super(matricula, modeloVehiculo);
+    public Camion(Cliente cliente, String matricula, String modeloVehiculo) {
+        super(cliente, matricula, modeloVehiculo);
     }
     
     /**

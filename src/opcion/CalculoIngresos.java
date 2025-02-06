@@ -14,12 +14,12 @@ import vehiculo.Vehiculo;
  * @author irene, alvaro, alejandro
  */
 
-public class CalculoIngresos extends Opcion {
-    
+public class CalculoIngresos extends OpcionTaller{
+    //Facturas[] facturas; AQUI SI, PORQUE ES UNA OPCION DEL TALLER ENTONCES EL TALLER TIENE CALCULOINGRESOS Y LA FACTURA DENTRO DE ESTA OPCION:)
     private Vehiculo[] vehiculosFinalizados;
     
-    public CalculoIngresos() {
-        super("Calculo ingresos totales");
+    public CalculoIngresos(Taller taller) {
+        super("Calculo ingresos totales",taller);
         vehiculosFinalizados = new Vehiculo[0];     
     }
     

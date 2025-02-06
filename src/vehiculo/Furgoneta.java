@@ -1,5 +1,6 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.Interval;
 /**
  * 
@@ -7,13 +8,8 @@ import util.Interval;
  */
 public class Furgoneta extends TransporteCarga {
 
-    public Furgoneta(double pma, int cilindros, double CC, String matricula, String modeloVehiculo) {
-        super(cilindros, CC, matricula, modeloVehiculo, pma);
-    }
-
-    
-    public Furgoneta(String matricula, String modeloVehiculo) {
-        super(matricula, modeloVehiculo);
+    public Furgoneta(Cliente cliente, String matricula, String modeloVehiculo) {
+        super(cliente, matricula, modeloVehiculo);
     }
 
     /**
