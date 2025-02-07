@@ -15,6 +15,7 @@ public class Cliente {
     private  String telefono;
     private  boolean vip;
     private  boolean socio; 
+    private int contSiendoSocio;
     private int contVecesAqui;
     private int cochesTiene;
     
@@ -24,20 +25,28 @@ public class Cliente {
         this.telefono = telefono;
         this.vip = VIP;
         this.contVecesAqui = 0;
+        this.contSiendoSocio = 0;
     }
     
     public double descuentoPrimeraVez(){
-        if(contVecesAqui == 0){
+        if(this.getContVecesAqui() == 0){
             return 0.7; //Es un 30% de descuento
         }
         return 0;
     }
     
     public double descuentoSocio(){
+        if(this.contSiendoSocio() == 0){
+            contSiendoSocio++;
+            return 0.97;
+        } //ARREGLAR ESTA PTA MRDA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return 0;
     }
     
     public double descuentoVip(){
+        if(isVIP()){
+            return 0;
+        }
         return 0;
     }
     
@@ -60,7 +69,9 @@ public class Cliente {
     public int getContVecesAqui() {
         return contVecesAqui;
     }
-    
+    public int contSiendoSocio(){
+        return contSiendoSocio;
+    }
     
     
     @Override

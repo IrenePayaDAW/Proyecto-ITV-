@@ -40,12 +40,12 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
         
         teclado.out("Introduce el DNI del cliente:");
-        dniCliente = teclado.inString();
-        while(verificarConPatrones()){
-            
+        dniCliente = validarDNI(teclado.inString().toUpperCase().trim());
+        Cliente cliente = taller.getClientePorDNI(dniCliente);
+        if(cliente == null){
+            teclado.out("\nEl cliente de este coche no está aun registrado.");
+            return;
         }
-        
-        
         teclado.out("Selecciona el tipo de vehículo: \n");
         teclado.out("1. Coche\n");
         teclado.out("2. Microbús\n");
@@ -92,8 +92,14 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         teclado.out("Vehiculo " + vehiculo.getMatricula() + " registrado\n");
         
     }
-    
-    private boolean verificarConPatrones(Pattern patron, String telefono){
+    private String validarDNI(String dni){
+        while(!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"),dni)){
+                teclado.out("Error, el DNI debe ser 8 números y una letra.\n");
+                dni = teclado.inString().toUpperCase().trim();
+            }
+        return dni;
+    }
+    private boolean validarConPatrones(Pattern patron, String telefono){
         Matcher matcher = patron.matcher(telefono);
         return matcher.matches();
     }

@@ -37,6 +37,33 @@ public class Taller {
         ingresosTotales = 0;
         clientes = new Cliente[0];
     }
+    
+    /**
+     * Busca a un cliente dentro del array de clientes
+     * @param dni
+     * @return cliente (NULL SI NO ESTÁ)
+     */
+    public Cliente getClientePorDNI(String dni){
+        if(estaEsteDNI(dni)){
+            for(Cliente c: clientes){
+                if(c.getDni().equals(dni))return c;
+            }
+        }
+        return null;
+    }
+    /**
+     * Verifica si está el dni
+     * @param DNI
+     * @return boolean
+     */
+    public boolean estaEsteDNI(String dni){
+        for (int i = 0; i < clientes.length; i++) {
+            if(clientes[i].getDni().equalsIgnoreCase(dni)){
+                return true;
+            }
+        }
+        return false;
+    } 
     /**
      * Añade un Cliente al array de los clientes
      * 

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class RegistrarCliente extends OpcionTaller{
 
     public RegistrarCliente(Taller taller) {
-        super("Resgistrar taller", taller);
+        super("Resgistrar cliente", taller);
     }
 
     @Override
@@ -26,15 +26,10 @@ public class RegistrarCliente extends OpcionTaller{
         Matcher matcher;
         
         teclado.out("\n---REGISTRA CLIENTE---");
-        do{ 
             error = false;
             teclado.out("\nIntroduce el DNI: ");
-            dni = teclado.inString().toUpperCase().trim();
-            while(!verificarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"),dni)){
-                teclado.out("Error, el DNI debe ser 8 números y una letra.\n");
-                dni = teclado.inString().toUpperCase().trim();
-            }
-        }while(error);
+            dni = validarDNI(teclado.inString().toUpperCase().trim());
+        
         if(taller.estaElDni(dni)){
             teclado.out("\n Error, el DNI ya está registrado.");
             return;
@@ -44,8 +39,8 @@ public class RegistrarCliente extends OpcionTaller{
         nombre = teclado.inString().toUpperCase().trim();
         
         telefono = teclado.inString();
-        while(!verificarConPatrones(Pattern.compile("^[0-9]{9}$"), telefono)){
-            teclado.out("Error, introduce un teléfono solo con 8 números: ");
+        while(!validarConPatrones(Pattern.compile("^[0-9]{9}$"), telefono)){
+            teclado.out("Error, introduce un teléfono solo con 9 números: ");
             telefono = teclado.inString().toUpperCase().trim();
         }
         
@@ -61,7 +56,16 @@ public class RegistrarCliente extends OpcionTaller{
         
         taller.añadirCliente(new Cliente(dni, nombre, telefono, vip));
     }
-    private boolean verificarConPatrones(Pattern patron, String telefono){
+    
+    private String validarDNI(String dni){
+        while(!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"),dni)){
+                teclado.out("Error, el DNI debe ser 8 números y una letra.\n");
+                dni = teclado.inString().toUpperCase().trim();
+            }
+        return dni;
+    }
+    
+    private boolean validarConPatrones(Pattern patron, String telefono){
         Matcher matcher = patron.matcher(telefono);
         return matcher.matches();
     }
