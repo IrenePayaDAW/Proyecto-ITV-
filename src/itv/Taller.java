@@ -1,54 +1,168 @@
 package itv;
 
+import cliente.Cliente;
 import java.util.Arrays;
 import util.GestorIO;
 import util.Interval;
+import vehiculo.*;
+import java.util.regex.*;
+import opcion.CalculoIngresos;
 
 /**
- * @author Irene Payá, Álvaro Carrión, Alejando Soler
+ * @author irene, alvaro, alejandro
+ * 
+ * 
  */
 public class Taller {
 
+    private GestorIO teclado = new GestorIO();
     private Box[] boxes;
     private Cola colaPrincipal;
-    private String[] matriculasCochesEnTaller;//incluido ahora por mi
-    private Interval numBoxes = new Interval(1,6);
+    private Cola colaDePago;
+    private String[] matriculasEnTaller;
+    private double ingresosTotales;
+    public final Interval NUMERO_BOXES = new Interval(1, 6);
+    private  Cliente[] clientes;
+    
 
+   
     public Taller() {
         boxes = new Box[6];
         for (int i = 0; i < boxes.length; i++) {
             boxes[i] = new Box();
         }
         colaPrincipal = new Cola();
-        matriculasCochesEnTaller = new String[1];//incluido ahora por mi
+        colaDePago = new Cola();
+        matriculasEnTaller = new String[0];
+        ingresosTotales = 0;
+        clientes = new Cliente[0];
     }
-
+    
     /**
-     * Método para comprobar que los boxes están vacios
-     *
-     * @return
+     * Busca a un cliente dentro del array de clientes
+     * @param dni
+     * @return cliente (NULL SI NO ESTÁ)
      */
-    public boolean boxesVacios() {
-        for (int i = 0; i < boxes.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (boxes[i].boxLibre()) {
-                    return true;
-                }
+    public Cliente getClientePorDNI(String dni){
+        if(estaEsteDNI(dni)){
+            for(Cliente c: clientes){
+                if(c.getDni().equals(dni))return c;
+            }
+        }
+        return null;
+    }
+    /**
+     * Verifica si está el dni
+     * @param DNI
+     * @return boolean
+     */
+    public boolean estaEsteDNI(String dni){
+        for (int i = 0; i < clientes.length; i++) {
+            if(clientes[i].getDni().equalsIgnoreCase(dni)){
+                return true;
             }
         }
         return false;
+    } 
+    /**
+     * Añade un Cliente al array de los clientes
+     * 
+     * @param cliente 
+     */
+    public void añadirCliente(Cliente cliente){
+        Cliente[] clientesNew = Arrays.copyOf(clientes, clientes.length + 1);
+        clientesNew[clientesNew.length - 1] = cliente;
+        clientes = clientesNew;
+    }
+    
+    
+    public boolean estaElDni(String dni){
+        for (int i = 0; i < clientes.length; i++) {
+            if(clientes[i].getDni().equals(dni))return true;
+        }
+        return false;
+    }
+    /**
+     * Registra un vehículo en el sistema.
+     * 
+     * @param vehiculo el vehículo a registrar.
+     */
+    public void registrarVehiculo(Vehiculo vehiculo) {
+        vehiculo.insertarCilindros();
+        vehiculo.insertarCc();
+        vehiculo.registrarVehiculo();
     }
 
     /**
-     * Método para comprobar que la matrícula no se encuentra en ninguno de los
-     * boxes.
-     *
-     * @param matricula
-     * @return (boolean)
+     * Verifica si hay vehículos en la cola de pago.
+     * 
+     * @return true si hay vehículos para pagar, false en caso contrario.
      */
-    public boolean comprobarMatriculaBoxes(String matricula) {
-        for (int i = 0; i < boxes.length; i++) {
-            if (boxes[i].comprobarMatriculaFases(matricula)) {
+    public boolean hayVehiculosParaPagar() {
+        return !this.colaDePago.estaVacia();
+    }
+
+    /**
+     * Extrae un vehículo de la cola de pago.
+     * 
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoPago() {
+        return this.colaDePago.extraerVehiculo();
+    }
+
+    /**
+     * Extrae un vehículo de la cola principal.
+     * 
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoCola() {
+        return this.colaPrincipal.extraerVehiculo();
+    }
+
+    /**
+     * Si la matrícula ya está registrada en el taller NO será válida.
+     * 
+     * @param matricula la matrícula a validar.
+     * @return true si la matrícula es válida.
+     */
+    public boolean matriculaValida(String matricula) {
+        if (colaPrincipal.matriculaValida(matricula)) {
+            for (Box box : boxes) {
+                if (!box.matriculaValida(matricula)) {
+                    return false;
+                }
+            }
+        } 
+        return true;
+    }
+
+    /**
+     * Avanza los vehículos en un box específico.
+     * 
+     * @param numeroBox el número del box.
+     */
+    public void avanzarVehiculos(int numeroBox) {
+        boxes[numeroBox - 1].avanzarVehiculos();
+    }
+
+    /**
+     * Verifica si la cola principal está vacía.
+     * 
+     * @return true si la cola está vacía, false en caso contrario.
+     */
+    public boolean colaEstaVacia() {
+        return this.colaPrincipal.estaVacia();
+    }
+
+    /**
+     * Verifica si hay boxes vacíos.
+     * 
+     * @return true si hay algún box libre, false en caso contrario.
+     */
+    public boolean boxesVacios() {
+        for (Box box : boxes) {
+            if (box.boxLibre()) {
                 return true;
             }
         }
@@ -56,144 +170,71 @@ public class Taller {
     }
 
     /**
-     * Método para mostrar el menu.
+     * Inserta un vehículo en la cola principal.
+     * 
+     * @param vehiculo el vehículo a insertar.
      */
-    public void mostrarMenu() {
-        GestorIO teclado = new GestorIO();
-
-        teclado.out("\n--- TALLER ITV ---\n");
-        teclado.out("1. Alta y recepción de vehículos\n");
-        teclado.out("2. Reclamar vehículo para entrar en el box\n");
-        teclado.out("3. Mover todos los vehículos de fase dentro de un box\n");
-        teclado.out("4. Información del estado de un box concreto\n");
-        teclado.out("5. Información general de todos los boxes\n");
-        teclado.out("6. Salir del programa\n\n");
+    public void insertarVehiculo(Vehiculo vehiculo) {
+        this.colaPrincipal.insertarVehiculo(vehiculo);
     }
 
     /**
-     * Método para comprobar que el valor int introducido por el usuario está
-     * entre 1 y 6 (ambos números incluidos).
-     *
-     * @param opcion
-     * @return (boolean)
+     * Asigna un vehículo a un box específico.
+     * 
+     * @param numeroBox el número del box.
+     * @param vehiculo el vehículo a asignar.
      */
-    public boolean opcion1A6(int opcion) {
-        Interval opcionesMenu = new Interval(1, 6);
-        return opcionesMenu.inclou(opcion);
-    }
-
-    public static void main(String[] args) {
-        Taller programa = new Taller();
-        programa.inicio();
+    public void asignarVehiculoBox(int numeroBox, Vehiculo vehiculo) {
+        boxes[numeroBox - 1].asignarVehiculo(vehiculo);
     }
 
     /**
-     * Método para inicializar el programa.
+     * Muestra el estado de un box específico.
+     * 
+     * @param box el número del box.
      */
-    public void inicio() {
-        int opcion = 0;
-        Interval opcionesMenu = new Interval(1, 6);
-        GestorIO teclado = new GestorIO();
+    public void mostrarBox(int box) {
+        this.boxes[box - 1].mostrarEstado();
+    }
 
-        this.mostrarMenu();
-
-        while (!this.opcion1A6(opcion)) {
-
-            while (!opcionesMenu.inclou(opcion)) {
-                teclado.out("Selecciona una opción: ");
-                opcion = teclado.inInt();
-                if (!this.opcion1A6(opcion)) {
-                    teclado.out("Error: Debes introducir un valor entre 1 y 6\n");
-                }
-
-                switch (opcion) {
-                    case 1:
-                        boolean matriculaRepetida = true;
-                        Vehiculo vehiculo1 = null;
-
-                        while (matriculaRepetida) {
-                            vehiculo1 = Vehiculo.registrarVehiculo();
-                            matriculaRepetida = false;
-
-                            for (String matricula : matriculasCochesEnTaller) {
-                                if (vehiculo1.getMatricula().equals(matricula)) {
-                                    teclado.out("Error: Esta matrícula ya pertenece a un vehículo dentro del taller.\n");
-                                    matriculaRepetida = true;
-                                    break;
-                                }
-                            }
-                        }
-                        colaPrincipal.insertarVehiculo(vehiculo1);
-
-                        matriculasCochesEnTaller = Arrays.copyOf(matriculasCochesEnTaller, matriculasCochesEnTaller.length + 1);
-                        matriculasCochesEnTaller[matriculasCochesEnTaller.length - 1] = vehiculo1.getMatricula();
-                        inicio();
-                        break;
-                    case 2:
-                        int eleccionBox;
-                        if (this.colaPrincipal.estaVacia()) {
-                            teclado.out("La cola está vacía.\n");
-
-                        } else { //TIENE QUE PEDIR EL BOX DONDE SE QUIERE ASIGNAR EL VEHÍCULO
-                            teclado.out("Cual box quieres selecionar (1 - 6)");
-                            eleccionBox = teclado.inInt();
-                            while(!numBoxes.inclou(eleccionBox)){
-                                teclado.out("Error, los boxes están entre 1 y 6.");
-                                eleccionBox = teclado.inInt();
-                            };
-                            if(boxes[eleccionBox - 1].boxLibre()){
-                                teclado.out("Vehiculo introduccido en el box "+eleccionBox);
-                                boxes[eleccionBox - 1].asignarVehiculo(colaPrincipal.extraerVehiculo());
-                            } else {
-                                teclado.out("El box está ocupado");
-                            }
-                        }//(CORREGIDO)
-
-                        inicio();
-                        break;
-                    case 3:
-                        int boxSeleccionado = 0;
-                        teclado.out("Introduce el box en el que quieras mover de fase a todos sus vehículos: ");
-                        boxSeleccionado = teclado.inInt();
-                        boxes[boxSeleccionado - 1].avanzarVehiculos();
-                        teclado.out("Los vehículos del box " + (boxSeleccionado) + " Han avanzado a la siguiente fase.\n");
-
-                        inicio();
-                        break;
-                    case 4:
-                        int numeroBox = 0;
-                        teclado.out("Dime un número de box para consultar su estado (1 - 6): ");
-                        numeroBox = teclado.inInt();
-                        while (!this.opcion1A6(numeroBox)) {
-                            teclado.out("Número de box inválido. Debe estar entre 1 y 6.\n");
-                            teclado.out("Volver a insertar: ");
-                            numeroBox = teclado.inInt();
-                            teclado.out("\n");
-                        }
-                        if (this.boxes[numeroBox - 1] == null) {
-                            teclado.out("El box se encuentra vacío.\n");
-                        } else {
-                            teclado.out("Estado del box " + numeroBox + ":\n");
-                            this.boxes[numeroBox - 1].mostrarEstado();
-                        }
-                        inicio();
-                        break;
-                    case 5:
-                        teclado.out("--Estado de todos los box--\n");
-                        for (int i = 0; i < boxes.length; i++) {
-                            teclado.out("Box " + (i + 1) + ":\n");
-                            boxes[i].mostrarEstado();
-                            teclado.out("\n");
-                        }
-                        inicio();
-                        break;
-                    case 6:
-                        teclado.out("Fin del programa.\n");
-                }
-            }
-
+    /**
+     * Muestra el estado de todos los boxes.
+     */
+    public void mostrarBoxes() {
+        int i = 1;
+        for (Box box : boxes) {
+            teclado.out("\nBOX " + i++ + "\n");
+            box.mostrarEstado();
+            teclado.out("\n");
         }
-
     }
-
+    
+    /**
+     * Extrae el último vehículo que pasó por un box específico.
+     * 
+     * @param numeroBox el número del box.
+     * @return el vehículo extraído.
+     */
+    public Vehiculo extraerVehiculoBox(int numeroBox) {
+        return boxes[numeroBox - 1].copiarUltimoVehiculo();
+    }
+    
+    /**
+     * Verifica si la última fase de un box está ocupada.
+     * 
+     * @param numeroBox el número del box.
+     * @return true si la última fase está ocupada, false en caso contrario.
+     */
+    public boolean ultimaFaseOcupada(int numeroBox) {
+        return boxes[numeroBox - 1].ultimaFaseOcupada();
+    }
+    
+    /**
+     * Mueve un vehículo a la cola de pago.
+     * 
+     * @param vehiculo el vehículo a mover.
+     */
+    public void meterColaPago(Vehiculo vehiculo) {
+        this.colaDePago.insertarVehiculo(vehiculo);
+    }
 }
