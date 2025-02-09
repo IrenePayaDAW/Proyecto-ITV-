@@ -5,21 +5,33 @@ import util.GestorIO;
 import java.util.Arrays;
 
 /**
- * Classe que representa una cua de vehicles en el taller.
+ * 
+ * @author irene, alvaro, alejandro
  */
 public class Cola {
     private Vehiculo[] vehiculos;
 
+   
     public Cola() {
         this.vehiculos = new Vehiculo[0];
     }
 
+    /**
+     * Inserta un vehículo al final de la cola.
+     * 
+     * @param vehiculo el vehículo a insertar.
+     */
     public void insertarVehiculo(Vehiculo vehiculo) {
         Vehiculo[] nuevaCola = Arrays.copyOf(this.vehiculos, this.vehiculos.length + 1);
         nuevaCola[nuevaCola.length - 1] = vehiculo;
         this.vehiculos = nuevaCola;
     }
 
+    /**
+     * Extrae y devuelve el primer vehículo de la cola.
+     * 
+     * @return el vehículo extraído o null si la cola está vacía.
+     */
     public Vehiculo extraerVehiculo() {
         if (estaVacia()) {
             return null;
@@ -29,41 +41,50 @@ public class Cola {
         return vehiculo;
     }
 
-    public boolean validarMatricula(String matricula) {
+    /**
+     * Si la matrícula ya está registrada en la cola de vehiculos devolvera false porque no es válida
+     * 
+     * @param matricula la matrícula a validar.
+     * @return true si la matrícula es valida.
+     */
+    public boolean matriculaValida(String matricula) {
         for (int i = 0; i < this.vehiculos.length; i++) {
             if (this.vehiculos[i].tieneEstaMatricula(matricula)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
+    /**
+     * Verifica si la cola está vacía.
+     * 
+     * @return true si no hay vehículos en la cola, false en caso contrario.
+     */
     public boolean estaVacia() {
         return this.vehiculos.length == 0;
     }
-
+    
+    /**
+     * Obtiene el array de vehículos en la cola.
+     * 
+     * @return un array de vehículos.
+     */
     public Vehiculo[] getVehiculos() {
         return this.vehiculos;
     }
 
-    public Vehiculo getPrimerVehiculo() {
-        if (estaVacia()) {
-            return null;
-        }
-        return this.vehiculos[0];
-    }
-
+    /**
+     * Muestra el estado de la cola de vehículos en el taller.
+     */
     public void mostrarCola() {
         GestorIO teclado = new GestorIO();
-        teclado.out("\n-- Cola de Vehicles --\n");
+        teclado.out("\n-- Cola de Vehículos --\n");
         for (int i = 0; i < this.vehiculos.length; i++) {
-            teclado.out("\nPosició " + (i + 1) + ":\n");
+            teclado.out("\nPosición " + (i + 1) + ":\n");
             this.vehiculos[i].mostrarTodo();
             teclado.out("\n");
         }
         teclado.out("\n");
-    }
-    public Vehiculo getPrimerVehiculo(){
-        return this.vehiculos[0];
     }
 }

@@ -1,32 +1,46 @@
-
 package opcion;
 
+import itv.Cola;
 import itv.Taller;
+import java.util.Arrays;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
 public class CalculoPagamentosRevisados extends Opcion {
-    GestorIO teclado = new GestorIO();
-    Taller taller;
+
+    private Cola vehiculosCobrar;
+
     public CalculoPagamentosRevisados() {
         super("Calcular y pagar vehículo revisado");
-        taller = new Taller();
+        this.vehiculosCobrar = new Cola();
     }
 
-
+    /**
+     * Calcula y cobra el precio totaln de un vehiculo
+     */
     @Override
     public void ejecutar() {
-        if (taller.hayVehiculosParaPagar()) {
-            Vehiculo vehiculo = taller.procesarPagoVehiculo();
-            teclado.out("El vehículo con matrícula " + vehiculo.getMatricula() + 
-                        " ha abonado un total de " + vehiculo.pagoTotal() + "€ y ha salido del taller.\n");
-        } else {
-            teclado.out("No hay vehículos en la cola de pagos.\n");
+        /*
+        if (!this.vehiculosCobrar.estaVacia()) {
+            Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
+            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio() + "\n");
+            ingresos.insertarVehiculo(vehiculo);
+            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " se ha añadido al historial.\n");
+        } else if (!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()) {
+            teclado.out("No hay vehículos para pagar.\n");
+        } else if (taller.hayVehiculosParaPagar()) {
+            this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
+            this.ejecutar();
         }
+         */
     }
 }
-}
+//en ejecutar() Factura facturaVehiculo = new Factura(vehiculo);
+// el array de facturas debe volcarse sobre uno nuev con mayor longitud y 
+// facturaVehiculo debe guardarse en el array de facturas incrementandose la longitud del mismo
+// taller.agregarFactura(facturaVehiculo);
+

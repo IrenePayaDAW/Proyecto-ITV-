@@ -4,6 +4,10 @@
  */
 package opcion;
 
+import excepciones.NotExistsException;
+import itv.Taller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vehiculo.Furgoneta;
 import vehiculo.Vehiculo;
 import java.util.regex.Matcher;
@@ -12,22 +16,38 @@ import util.GestorIO;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
-class ReclamacionVehiculo extends OpcionTaller {
-    public ReclamacionVehiculo() {
-        super(null);
+public class ReclamacionVehiculo extends OpcionTaller {
+   
+    public ReclamacionVehiculo(Taller taller) {
+        super("Reclamar vehículo", taller);
     }
-
-    @Override
-    public void ejecutar() {
-        GestorIO teclado = new GestorIO();
-        if (taller.hayVehiculosEnCola()) {
-            Vehiculo vehiculo = taller.reclamarVehiculo();
-            teclado.out("El vehículo con matrícula " + vehiculo.getMatricula() + " ha sido reclamado y está listo para entrar en el box.\n");
-        } else {
-            teclado.out("No hay vehículos en la cola para reclamar.\n");
+    
+    /**
+     * Reclama un vehiculo para introducirlo en un box.
+     */
+    public void ejecutar(){
+        if(this.taller.colaEstaVacia()){
+           teclado.out("No hay vehiculos en la cola principal\n");
+           
+        }else if(!taller.boxesVacios()){
+           teclado.out("Los boxes están llenos\n");
+        }else{
+            teclado.out("Indica el box donde quieres introducir el vehiculo: ");
+            int opcion = teclado.inInt();            
+           while(!taller.NUMERO_BOXES.inclou(opcion)){
+               teclado.out("Este box no existe (1-6): ");
+               opcion = teclado.inInt();
+           }
+            try {
+                taller.asignarVehiculoBox(opcion, taller.extraerVehiculoCola());
+            } catch (NotExistsException ex) {
+                teclado.out("No ha sido posible realizar la operación ya que todavía no hay vehículos existentes.");
+            }
+            
         }
     }
+   
+   
 }
-

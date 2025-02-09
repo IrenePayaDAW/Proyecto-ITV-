@@ -1,36 +1,57 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.GestorIO;
 
 /**
- * Classe abstracta per a vehicles de transport de càrrega.
- * Defineix les característiques comunes com el PMA i costos addicionals.
+ * 
+ * @author irene, alvaro, alejandro
  */
 public abstract class TransporteCarga extends Vehiculo {
-    private double PMA;
+    private double pma;
 
-    public TransporteCarga(int cilindros, double CC, String matricula, String modeloVehiculo, double PMA) {
-        super(cilindros, CC, matricula, modeloVehiculo);
-        this.PMA = validarPMA(PMA);
+    public TransporteCarga(Cliente cliente, String matricula, String modeloVehiculo) {
+        super( cliente, matricula, modeloVehiculo);
     }
 
-    private double validarPMA(double PMA) {
-        if (PMA <= 0) {
-            throw new IllegalArgumentException("El PMA ha de ser un valor positiu.");
-        }
-        return PMA;
+    /**
+     * Registra el vehículo pidiendo al usuario que introduzca el PMA.
+     */
+    @Override
+    public void registrarVehiculo() {
+        double pma;
+        do {
+            teclado.out("Introduce el PMA del vehículo: ");
+            pma = teclado.inDouble();
+        } while (pma < 0);
+        this.pma = pma;
     }
-
+    
+    /**
+     * Calcula el cargo adicional basado en el PMA del vehículo.
+     * 
+     * @return Cargo adicional calculado.
+     */
     protected double calcularCargoPma() {
-        return (this.getCilindros() < 10) ? (3 * this.PMA) : (4 * this.PMA);
+        return (this.getCilindros() < 10) ? (3 * this.pma) : (4 * this.pma);
     }
 
+    /**
+     * Calcula el precio total de la revisión del vehículo.
+     * 
+     * @return Precio total de la revisión.
+     */
     @Override
     public double calcularPrecio() {
         return (this.getCilindros() * PRECIO_BASE) + this.calcularCargoPma();
     }
 
+    /**
+     * Obtiene el PMA del vehículo.
+     * 
+     * @return El PMA del vehículo.
+     */
     public double getPMA() {
-        return PMA;
+        return pma;
     }
 }

@@ -1,23 +1,56 @@
 package vehiculo;
 
+import cliente.Cliente;
 import util.Interval;
 
 /**
- * Classe Coche que representa un vehicle de transport de persones.
- * Aplica les tarifes específiques per a cotxes.
+ * @author irene, alvaro, alejandro
  */
 public class Coche extends TransportePersonas {
     private static final double COSTE_PLAZA_ADICIONAL = 1.5;
-
-    public Coche(int cilindros, int plazas, double CC, String matricula, String modeloVehiculo) {
-        super(cilindros, CC, matricula, modeloVehiculo, plazas, COSTE_PLAZA_ADICIONAL, new Interval(2, 7));
+ 
+    public Coche(Cliente cliente,String matricula, String modeloVehiculo) {
+        super(cliente, matricula, modeloVehiculo);
     }
+    
+    /**
+     * Valida la cantidad de plazas asegurando que esté dentro del rango permitido.
+     * 
+     * @return Número de plazas válido.
+     */
+    public int validarPlazas() {
+        int plazas;
+        boolean error;
+        Interval limitesPlazas = new Interval(2, 7);
 
+        do {
+            error = false;
+            teclado.out("Introduce las plazas del coche: ");
+            plazas = teclado.inInt();
+            if (!limitesPlazas.inclou(plazas)) {
+                error = true;
+                teclado.out("Solo puede tener entre 2 y 7 plazas.\n");
+            }            
+        } while (error);
+        
+        return plazas;
+    }
+    
+    /**
+     * Obtiene el tipo de vehículo.
+     * 
+     * @return "Coche" como tipo de vehículo.
+     */
     @Override
     public String getTipo() {
         return "Coche";
     }
 
+    /**
+     * Calcula el pago total de la revisión.
+     * 
+     * @return Pago total a realizar.
+     */
     @Override
     public double pagoTotal() {
         return this.calcularPrecio();

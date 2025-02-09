@@ -1,29 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package opcion;
+
+import itv.Taller;
+import util.GestorIO;
+import util.Interval;
 
 /**
  *
- * @author acarr
+ * @author irene, alvaro, alejandro
  */
-class PasarDeFase extends OpcionTaller {
-    public PasarDeFase() {
-        super(null);
-    }
+public class PasarDeFase extends OpcionTaller {
+    
+    private Interval limiteBoxes = new Interval(1, 6);
 
-    @Override
-    public void ejecutar(Taller taller) {
-        GestorIO teclado = new GestorIO();
+    public PasarDeFase(Taller taller) {
+        super("Pasar vehículo de fase", taller);
+    }
+    
+    /**
+     * Pasa de fase los vehiculos que están en los boxes
+     */
+    public void ejecutar() {
+        
         teclado.out("Ingrese el número de box donde desea pasar los vehículos de fase: ");
         int numeroBox = teclado.inInt();
-
-        if (taller.existeBox(numeroBox)) {
-            taller.pasarVehiculosDeFase(numeroBox);
-            teclado.out("Los vehículos del box " + numeroBox + " han avanzado a la siguiente fase.\n");
-        } else {
-            teclado.out("El box ingresado no existe.\n");
+        while (!limiteBoxes.inclou(numeroBox)) {
+            teclado.out("Introduce un número de box válido (1-6): ");
+            numeroBox = teclado.inInt();
         }
+        if (taller.ultimaFaseOcupada(numeroBox)) {
+            taller.meterColaPago(taller.extraerVehiculoBox(numeroBox)); 
+        }
+        taller.avanzarVehiculos(numeroBox);
+        teclado.out("\nHan pasado de fase\n");
     }
 }

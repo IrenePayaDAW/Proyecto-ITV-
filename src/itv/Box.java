@@ -1,16 +1,21 @@
 package itv;
 
+import excepciones.NotExistsException;
+import itv.FaseRevision;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
 /**
- * Classe Box que representa un espai on es realitzen les fases de revisió d'un vehicle.
+ * 
+ * @author irene, alvaro, alejandro
  */
 public class Box {
-    GestorIO teclado = new GestorIO();
+
+    private GestorIO teclado = new GestorIO();
     private static final int NUM_FASES = 4;
     private FaseRevision[] fases;
 
+    
     public Box() {
         fases = new FaseRevision[NUM_FASES];
         for (int i = 0; i < NUM_FASES; i++) {
@@ -18,54 +23,110 @@ public class Box {
         }
     }
 
+    /**
+     * Verifica si la primera fase del box está libre.
+     * 
+     * @return true si el box está libre, false en caso contrario.
+     */
     public boolean estaLibre() {
         return fases[0].estaLibre();
     }
 
-    public void avanzarVehiculos() {
-        if (fases[NUM_FASES - 1].tieneVehiculo()) {
-            Vehiculo vehiculo = fases[NUM_FASES - 1].getVehiculo();
-            fases[NUM_FASES - 1].eliminarVehiculo();
-            teclado.out("Vehículo con matrícula " + vehiculo.getMatricula() + " ha completado la revisión y ha salido del box.");
+    /**
+     * Asigna un vehículo a la primera fase de revisión si el box está libre.
+     * 
+     * @param vehiculo el vehículo a asignar.
+     */
+    public void asignarVehiculo(Vehiculo vehiculo){
+        if (estaLibre()) {
+            fases[0].asignarVehiculoFase(vehiculo);
+            teclado.out("Vehículo con matrícula " + vehiculo.getMatricula() + " asignado al box.");
+        } else {
+            teclado.out("El box está ocupado.");
         }
-        for (int i = NUM_FASES - 1; i > 0; i--) {
+    }
+    
+    /**
+     * Copia el último vehículo que pasó por la última fase de revisión.
+     * 
+     * @return el vehículo en la última fase del box.
+     */
+    public Vehiculo copiarUltimoVehiculo(){
+        return this.fases[3].getVehiculo();
+    }
+
+    /**
+     * Avanza los vehículos de las fases en un box.
+     * Si la última fase está ocupada, se elimina el vehículo antes de mover los demás.
+     */
+    public void avanzarVehiculos() {
+        boolean hayVehiculos = false;
+        for (FaseRevision fase : fases) {
+            if (!fase.estaLibre()) {
+                hayVehiculos = true;
+                break;
+            }
+        }
+        if (!hayVehiculos) {
+            teclado.out("No hay vehículos en este box para avanzar.\n");
+            return;
+        }
+        if (!fases[fases.length - 1].estaLibre()) {
+            Vehiculo ultimoVehiculoFase = fases[fases.length - 1].getVehiculo();
+            teclado.out("El vehículo con matrícula " + ultimoVehiculoFase.getMatricula() + " ha superado las fases de revisión y ha abandonado el taller.\n");           
+            fases[fases.length - 1].eliminarVehiculo();
+        }
+        for (int i = fases.length - 1; i > 0; i--) {
             if (!fases[i - 1].estaLibre()) {
-                fases[i].asignarVehiculoFase(fases[i - 1].getVehiculo());
+                fases[i].setVehiculo(fases[i - 1].getVehiculo());
                 fases[i - 1].eliminarVehiculo();
             }
         }
+        if (fases[0].estaLibre()) {
+            teclado.out("La primera fase ahora está libre para recibir nuevos vehículos.\n");
+        }
     }
 
+    /**
+     * Muestra el estado actual de cada fase en el box.
+     */
     public void mostrarEstado() {
         for (int i = 0; i < NUM_FASES; i++) {
             String estado = fases[i].estaLibre() ? "vacía" : "ocupada por " + fases[i].getVehiculo().getMatricula();
-            teclado.out("Fase " + i + " está " + estado + ".");
+            teclado.out("\nFase " + (i+1) + " está " + estado + ".");
         }
-        teclado.out("\n");
     }
- 
-     /** COMPRUEBA SI LA FASE 0 DEL BOX ESTÁ LIBRE
-     * @return boolean (Está o no la fase libre)
+
+    /**
+     * Valida si la matrícula de un vehículo está presente en alguna fase del box.
+     * 
+     * @param matricula la matrícula a validar.
+     * @return true si la matrícula es válida.
+     */
+    public boolean matriculaValida(String matricula) {
+        for (int i = 0; i < fases.length; i++) {
+            if (!fases[i].matriculaValida(matricula)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Verifica si el box está libre en la primera fase.
+     * 
+     * @return true si la primera fase está libre, false en caso contrario.
      */
     public boolean boxLibre() {
         return this.fases[0].estaLibre();
     }
     
-    public boolean boxLleno(){
-        return !this.fases[fases.length-1].estaLibre();
-    }
-    
-    public Vehiculo getUltimoVehiculo(){
-        return this.fases[fases.length-1].getVehiculo();
-    }
-    
     /**
-     * ASIGNA UN VEHICULO AL BOX (LA PRIMERA FASE DE UN BOX)
-     * @param vehiculo (DE LA COLA)
+     * Verifica si la última fase del box está ocupada.
+     * 
+     * @return true si la última fase está ocupada, false en caso contrario.
      */
-    public void asignarVehiculo(Vehiculo vehiculo){
-        this.fases[0].asignarVehiculoFase(vehiculo);
-
-
+    public boolean ultimaFaseOcupada(){
+        return !this.fases[fases.length-1].estaLibre();
     }
 }
