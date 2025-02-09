@@ -1,64 +1,66 @@
 package itv;
 
+import util.GestorIO;
+import util.Interval;
+import vehiculo.Vehiculo;
+
 /**
- * @author Irene Payá, Álvaro Carrión, Alejando Soler
+ * Classe FaseRevision que representa una fase específica del procés de revisió d'un vehicle.
  */
 public class FaseRevision {
-
-    private final static String[] fases = {"Revisión inicial de elementos de seguridad", "Revisión del sistema eléctrico", "Revisión de emisión de humos", "Revisión de frenos y dirección"};
+    GestorIO teclado = new GestorIO();
+    Interval LIMITE_POSICION = new Interval(1,4);
+    private static final String[] NOMBRES_FASES = {
+        "Revisión inicial de elementos de seguridad",
+        "Revisión del sistema eléctrico",
+        "Revisión de emisión de humos",
+        "Revisión de frenos y dirección"
+    }; 
     private String nombreFase;
     private Vehiculo vehiculo;
 
     public FaseRevision(int posicion) {
-        this.nombreFase = fases[posicion];
+        this.nombreFase = NOMBRES_FASES[posicion];
         this.vehiculo = null;
     }
-    /**
-     * Incluye un vehículo a la fase que usa este método.
-     * @param vehiculo 
-     */
+
     public void asignarVehiculoFase(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-    /**
-     * Muestra el nombre correspondiente de esta fase que usa el método.
-     * @return String (nombre de la fase)
-     */
-    public String mostrarNombreFase() {
+
+    public String getNombreFase() {
         return this.nombreFase;
     }
-    /**
-     * Elimina el vehículo de la fase que llama al método
-     */
+
     public void eliminarVehiculo() {
         this.vehiculo = null;
     }
-    /**
-     * Comprueba si la fase está libre de vehículos
-     * @return boolean
-     */
+
     public boolean estaLibre() {
         return this.vehiculo == null;
     }
-    /**
-     * Recoge la matrícula que tiene el vehículo que está en la fase que llama al método
-     * @return String (Matricula del coche)
-     */
-    public String getMatricula() {
-        return this.vehiculo.getMatricula();
+
+    public boolean tieneVehiculo() {
+        return this.vehiculo != null;
     }
-    /**
-     * Recoge le vehículo que está en la fase que llama al método
-     * @return Vehículo (De la fase)
-     */
+
+    public String getMatriculaVehiculo() {
+        return (vehiculo != null) ? vehiculo.getMatricula() : "Sin vehículo";
+    }
+
     public Vehiculo getVehiculo() {
         return this.vehiculo;
     }
-    /**
-     * Inserta un vehículo en la fase que llama al método
-     * @param vehiculo 
-     */
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+
+    public boolean validarMatricula(String matricula) {
+        return this.vehiculo != null && this.vehiculo.getMatricula().equalsIgnoreCase(matricula);
     }
+    
+    public int validarPosicion(int posicion){
+        while(!LIMITE_POSICION.inclou(posicion)){
+            teclado.out("Introduce una posición correcta");
+            posicion = teclado.inInt();
+        }
+        return posicion;
+    }//(Posiblemente hay que quitar esta mierda)
 }
