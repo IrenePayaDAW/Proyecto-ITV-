@@ -27,7 +27,7 @@ public class CalculoPagamentosRevisados extends Opcion {
         /*
         if (!this.vehiculosCobrar.estaVacia()) {
             Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
-            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio() + "\n");
+            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio()((!!!!*vehiculo.getDescuento()!!!!!(NUEVO A AÑADIR))) + "\n");
             ingresos.insertarVehiculo(vehiculo);
             teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " se ha añadido al historial.\n");
         } else if (!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()) {

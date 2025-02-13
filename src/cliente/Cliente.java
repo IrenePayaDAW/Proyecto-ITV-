@@ -18,6 +18,7 @@ public class Cliente {
     private int contSiendoSocio;
     private int contVecesAqui;
     private int cochesTiene;
+    private double descuentoSocio = 0.97;
     
     public Cliente(String dni,String nombre,String telefono, boolean VIP) {
         this.DNI = dni;
@@ -30,18 +31,25 @@ public class Cliente {
     
     public double descuentoPrimeraVez(){
         if(this.getContVecesAqui() == 0){
+            contVecesAqui++;
             return 0.7; //Es un 30% de descuento
         }
         return 0;
     }
     
     public double descuentoSocio(){
-        if(this.contSiendoSocio() == 0){
-            contSiendoSocio++;
-            return 0.97;
-        } //ARREGLAR ESTA PTA MRDA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return 0;
+        if(this.getContVecesAqui() == 0){
+           return this.descuentoPrimeraVez();
+        }else if(this.contSiendoSocio() == 0){
+            return descuentoSocio;
+        }
+        contSiendoSocio++;
+        if(this.contSiendoSocio()%2 == 0 && descuentoSocio != 0.90){
+            descuentoSocio -= (contSiendoSocio/2);
+        } 
+        return descuentoSocio;
     }
+   
     
     public double descuentoVip(){
         if(isVIP()){

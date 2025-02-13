@@ -16,6 +16,7 @@ public abstract class Vehiculo {
     private boolean estadoVehiculo;
     public static final int PRECIO_BASE = 15;
     private final Cliente cliente;
+    private boolean opcDescuentoVIP;
  
      public Vehiculo(Cliente cliente, String matricula, String modeloVehiculo){
         this.matricula = matricula;
@@ -166,4 +167,13 @@ public abstract class Vehiculo {
      * Registra el vehículo en el sistema.
      */
     public abstract void registrarVehiculo();
+    
+    public abstract boolean tieneDescuentoVIP();
+    public abstract double getDescuento();
+//    if es el cliente vip??
+//        dame el descuento que tiene asignado el coche
+//    no??
+//    else if dame el descuento que le corresponde a este cliente
+//        descuento que tiene como socio por las veces que ha asistido a la itv
+//            (cliente.descuentoSocio())
 }
