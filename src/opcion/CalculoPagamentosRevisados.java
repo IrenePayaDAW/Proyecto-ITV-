@@ -1,5 +1,6 @@
 package opcion;
 
+import excepciones.FullQueueException;
 import excepciones.NotExistsException;
 import factura.Factura;
 import itv.Cola;
@@ -16,11 +17,11 @@ import vehiculo.Vehiculo;
  */
 public class CalculoPagamentosRevisados extends OpcionTaller {
 
-    private Cola vehiculosCobrar;
+    
 
     public CalculoPagamentosRevisados(Taller taller) {
         super("Calcular y pagar vehículo revisado",taller);
-        this.vehiculosCobrar = new Cola();
+        
     }
 
     /**
@@ -29,21 +30,15 @@ public class CalculoPagamentosRevisados extends OpcionTaller {
     @Override
     public void ejecutar() {
        
-        if (!this.vehiculosCobrar.estaVacia()) {
-            Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
+        try{
+            Vehiculo vehiculo = taller.extraerVehiculoPago();
             teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio() + "\n");
             taller.agregarFactura(new Factura(vehiculo));
             teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " se ha añadido al historial.\n");
-        } else if (!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()) {
-            teclado.out("No hay vehículos para pagar.\n");
-        } else if (taller.hayVehiculosParaPagar()) {
-            try {
-                this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
-            } catch (NotExistsException ex) {
-                System.out.println(ex.getMessage());
-            }
-            this.ejecutar();
+        }catch(NotExistsException ex){
+            System.out.println(ex.getMessage());
         }
+              
 
     }
 }

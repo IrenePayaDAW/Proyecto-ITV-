@@ -3,8 +3,11 @@ package opcion;
 
 
 import cliente.Cliente;
+import excepciones.FullQueueException;
 import excepciones.NotExistsException;
 import itv.Taller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import util.Interval;
@@ -33,7 +36,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
     @Override
     public void ejecutar() {
         Vehiculo vehiculo = null;
-        String dniCliente;
+        String dniCliente = null;
         String matricula;
         boolean esValida;
         Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
@@ -93,9 +96,12 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         
         
         taller.registrarVehiculo(vehiculo);
-        taller.insertarVehiculo(vehiculo);
-        teclado.out("\n----Vehiculo " + vehiculo.getMatricula() + " registrado----\n");
-        
+        try{
+            taller.insertarVehiculo(vehiculo);
+            teclado.out("\n----Vehiculo " + vehiculo.getMatricula() + " registrado----\n");
+        }catch(FullQueueException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     private String validarDNI(String dni){
         while(!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"),dni)){
