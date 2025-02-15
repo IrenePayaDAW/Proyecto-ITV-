@@ -13,8 +13,8 @@ public class Cliente {
     private final String DNI;
     private String nombre;
     private String telefono;
-    private boolean vip;
-    private boolean socio;
+    private boolean vip = false;
+    private boolean socio = false;
     private int contSiendoSocio;
     private int contVecesAqui;
     private int vehiculosTiene = 0;
@@ -52,6 +52,10 @@ public class Cliente {
 
     public String getDni() {
         return DNI;
+    }
+    
+    public String getNombre(){
+        return nombre;
     }
 
     public String getTelefono() {

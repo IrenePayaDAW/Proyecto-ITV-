@@ -1,6 +1,7 @@
 package itv;
 
 import cliente.Cliente;
+import excepciones.AlreadyExistsException;
 import excepciones.NotExistsException;
 import factura.Factura;
 import java.util.Arrays;
@@ -81,18 +82,20 @@ public class Taller {
      *
      * @param dni
      * @return cliente (NULL SI NO ESTÁ)
-     * @throws excepciones.NotExistsException
+     * @throws NotExistsException
+     * @throws NullPointerException
      */
-    public Cliente getClientePorDNI(String dni) throws NotExistsException {
-        if (estaEsteDNI(dni)) {
+    public Cliente getClientePorDNI(String dni) throws NotExistsException, NullPointerException{
+        try{
+            estaEsteDNI(dni);//ESTE MÉTODO LLAMA AL DE ABAJO Y SI SALTA LA EXCEPTION HACE EL FOR
+            throw new NotExistsException("ERROR: El cliente con el DNI: " + dni + " no existe.");//SI NO ESTÁ LANZA ESTA EXCEPTION
+        }catch(AlreadyExistsException ex){
             for (Cliente c : clientes) {
                 if (c.getDni().equals(dni)) {
                     return c;
                 }
             }
-        } else {
-            throw new NotExistsException("ERROR: El cliente con el DNI " + dni + " no existe.");
-        }
+        }    
         return null;
     }
 
@@ -100,16 +103,16 @@ public class Taller {
      * Verifica si está el dni
      *
      * @param dni
-     * @return boolean
+     * @return dni
+     * @throws excepciones.AlreadyExistsException
      */
-    public boolean estaEsteDNI(String dni) {
+    public String estaEsteDNI(String dni)throws AlreadyExistsException {
         for (int i = 0; i < clientes.length; i++) {
             if (clientes[i].getDni().equalsIgnoreCase(dni)) {
-                return true;
+                throw new AlreadyExistsException(dni,"ERROR. El DNI que quiere insertar está registrado.");
             }
         }
-        return false;
-
+        return dni;
     }
 
     /**
@@ -289,5 +292,29 @@ public class Taller {
      */
     public void meterColaPago(Vehiculo vehiculo) {
         this.colaDePago.insertarVehiculo(vehiculo);
+    }
+    /**
+     * COMPRUEBA SI EXISTE EL NOMBRE, SI NO EXISTE LO RETORNA SI EXISTE LANZA UNA EXCEPCION
+     * @param nombre
+     * @return EL NOMBRE
+     * @throws AlreadyExistsException 
+     */
+    public String esteNombreExiste(String nombre) throws AlreadyExistsException{
+        for(Cliente c: clientes){
+            if(c.getNombre().equalsIgnoreCase(nombre))throw new AlreadyExistsException(nombre, "QUE CASUALIDAD!! Ya existe este nombre!");
+        }
+        return nombre;
+    }
+    /**
+     * COMPRUEBA SI EXISTE EL TELEFONO, SI NO EXISTE LO RETORNA Y SI EXISTE LANZA UNA EXCEPCION
+     * @param telefono
+     * @return EL TELEFONO
+     * @throws AlreadyExistsException 
+     */
+    public String esteTelefonoExiste(String telefono) throws AlreadyExistsException{
+        for(Cliente c: clientes){
+            if(c.getTelefono().equals(telefono))throw new AlreadyExistsException(telefono,"Este teléfono ya existe."+telefono);
+        }
+        return telefono;
     }
 }

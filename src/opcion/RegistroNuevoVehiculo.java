@@ -4,13 +4,9 @@ package opcion;
 
 import cliente.Cliente;
 import excepciones.NotExistsException;
-import itv.Cola;
 import itv.Taller;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import util.GestorIO;
 import util.Interval;
 import vehiculo.Camion;
 import vehiculo.Coche;
@@ -42,7 +38,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         boolean esValida;
         Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
         
-        teclado.out("Introduce el DNI del cliente:");
+        teclado.out("\nIntroduce el DNI del cliente:");
         dniCliente = validarDNI(teclado.inString().toUpperCase().trim());
         
         //meter excepción notexists
@@ -51,7 +47,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             cliente = taller.getClientePorDNI(dniCliente);
             cliente.unVehiculoMas();
         } catch (NotExistsException ex) {
-            teclado.out("El cliente con el DNI " + dniCliente +" no ha sido dado de alta");
+            teclado.out("\nEl cliente con el DNI " + dniCliente +" no ha sido dado de alta\n");
             return;
         }
         
@@ -98,7 +94,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         
         taller.registrarVehiculo(vehiculo);
         taller.insertarVehiculo(vehiculo);
-        teclado.out("Vehiculo " + vehiculo.getMatricula() + " registrado\n");
+        teclado.out("\n----Vehiculo " + vehiculo.getMatricula() + " registrado----\n");
         
     }
     private String validarDNI(String dni){

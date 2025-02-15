@@ -33,6 +33,7 @@ public class Menu {
     }
     
     public void mostrar(){
+        teclado.out("\n----MENÚ OPCIONES----\n");
         for (int i = 0; i < opciones.length; i++) {
             opciones[i].mostrar(i+1);
         }
