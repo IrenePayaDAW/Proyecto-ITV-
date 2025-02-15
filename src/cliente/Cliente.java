@@ -19,7 +19,7 @@ public class Cliente {
     private int contVecesAqui;
     private int cochesTiene;
     private double descuentoSocio = 0.97;
-    
+
     public Cliente(String dni,String nombre,String telefono, boolean VIP) {
         this.DNI = dni;
         this.nombre = nombre;
@@ -49,7 +49,6 @@ public class Cliente {
         } 
         return descuentoSocio;
     }
-   
     
     public double descuentoVip(){
         if(isVIP()){

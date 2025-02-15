@@ -26,5 +26,6 @@ public abstract class Opcion {
 
     
     public abstract void ejecutar();
-    
+
 }
+

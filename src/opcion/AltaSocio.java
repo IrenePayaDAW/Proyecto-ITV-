@@ -1,5 +1,6 @@
 package opcion;
 
+
 import excepciones.NotExistsException;
 import itv.Taller;
 import java.util.logging.Level;
@@ -26,7 +27,7 @@ public class AltaSocio extends OpcionTaller {
             teclado.out("\nEl DNI no está registrado, registra al cliente primero.");
             return;
         }
-        
+
         try {
             if(taller.getClientePorDNI(dni).isSOCIO()){
                 teclado.out("\nEl cliente ya es socio");

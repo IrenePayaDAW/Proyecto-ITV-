@@ -96,6 +96,7 @@ public class Taller {
             }
         }
         return false;
+
     }
 
     /**
@@ -109,6 +110,7 @@ public class Taller {
         clientes = clientesNew;
     }
 
+
     public boolean estaElDni(String dni) {
         for (int i = 0; i < clientes.length; i++) {
             if (clientes[i].getDni().equals(dni)) {
@@ -117,7 +119,6 @@ public class Taller {
         }
         return false;
     }
-
     /**
      * Registra un vehículo en el sistema.
      *
@@ -162,7 +163,6 @@ public class Taller {
 
     /**
      * Si la matrícula ya está registrada en el taller NO será válida.
-     *
      * @param matricula la matrícula a validar.
      * @return true si la matrícula es válida.
      */
@@ -173,7 +173,7 @@ public class Taller {
                     return false;
                 }
             }
-        }
+        }    
         return true;
     }
 

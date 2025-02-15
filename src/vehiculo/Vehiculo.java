@@ -17,6 +17,7 @@ public abstract class Vehiculo {
     public static final int PRECIO_BASE = 15;
     private final Cliente cliente;
     private boolean opcDescuentoVIP;
+
  
      public Vehiculo(Cliente cliente, String matricula, String modeloVehiculo){
         this.matricula = matricula;

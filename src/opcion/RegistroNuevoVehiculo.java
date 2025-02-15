@@ -1,3 +1,4 @@
+
 package opcion;
 
 
@@ -52,8 +53,6 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             teclado.out("El cliente con el DNI " + dniCliente +" no ha sido dado de alta");
             return;
         }
-        
-        
         
         teclado.out("Selecciona el tipo de vehículo: \n");
         teclado.out("1. Coche\n");

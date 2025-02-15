@@ -3,6 +3,11 @@ package opcion;
 
 import menu.Menu;
 
+/**
+ *
+ * @author irene
+ */
+
 public class Salir extends Opcion{
 
     Menu menu;
