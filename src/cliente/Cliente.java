@@ -41,6 +41,7 @@ public class Cliente {
 
     public double descuentoSocio() {
         if (this.contSiendoSocio() == 0) {
+            contSiendoSocio++;
             return descuentoSocio;
         }
         contSiendoSocio++;
