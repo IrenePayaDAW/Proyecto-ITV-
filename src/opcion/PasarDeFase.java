@@ -1,6 +1,10 @@
 package opcion;
 
+import excepciones.FullQueueException;
+import excepciones.NotExistsException;
 import itv.Taller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.GestorIO;
 import util.Interval;
 
@@ -28,9 +32,16 @@ public class PasarDeFase extends OpcionTaller {
             numeroBox = teclado.inInt();
         }
         if (taller.ultimaFaseOcupada(numeroBox)) {
-            taller.meterColaPago(taller.extraerVehiculoBox(numeroBox)); 
+            try { 
+                taller.meterColaPago(taller.extraerVehiculoBox(numeroBox));
+                taller.avanzarVehiculos(numeroBox);
+                teclado.out("\nHan pasado de fase\n");
+            } catch (NotExistsException | FullQueueException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }else{
+            taller.avanzarVehiculos(numeroBox);
         }
-        taller.avanzarVehiculos(numeroBox);
-        teclado.out("\nHan pasado de fase\n");
+        
     }
 }

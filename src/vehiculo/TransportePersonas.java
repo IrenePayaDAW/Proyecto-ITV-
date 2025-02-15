@@ -77,7 +77,7 @@ public abstract class TransportePersonas extends Vehiculo {
      */
     @Override
     public double calcularPrecio() {
-        return (this.getCilindros() * PRECIO_BASE) + this.calcularAdicional()- this.getDescuento();
+        return ((this.getCilindros() * PRECIO_BASE) + this.calcularAdicional())* this.getDescuento();
     }
 
     /**
@@ -94,7 +94,7 @@ public abstract class TransportePersonas extends Vehiculo {
         if(cliente.esSuPrimeraVez())return cliente.descuentoPrimeraVez();
         if(cliente.isVIP())return this.DESCUENTO_VIP;
         if(cliente.isSOCIO())return cliente.descuentoSocio();
-        return 0.;
+        return 1.;
     }
     
 }

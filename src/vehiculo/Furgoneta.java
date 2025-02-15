@@ -62,6 +62,6 @@ public class Furgoneta extends TransporteCarga {
         if(cliente.esSuPrimeraVez())return cliente.descuentoPrimeraVez();
         if(cliente.isVIP())return DESCUENTO_VIP;
         if(cliente.isSOCIO())return cliente.descuentoSocio();
-        return 0.;
+        return 1.;
     }
 }

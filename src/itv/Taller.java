@@ -1,6 +1,7 @@
 package itv;
 
 import cliente.Cliente;
+import excepciones.FullQueueException;
 import excepciones.NotExistsException;
 import factura.Factura;
 import java.util.Arrays;
@@ -33,13 +34,16 @@ public class Taller {
         for (int i = 0; i < boxes.length; i++) {
             boxes[i] = new Box();
         }
-        colaPrincipal = new Cola();
-        colaDePago = new Cola();
+        colaPrincipal = new Cola(20);
+        colaDePago = new Cola(4);
         matriculasEnTaller = new String[0];
         ingresosTotales = 0;
         clientes = new Cliente[0];
         facturas = new Factura[0];
     }
+    
+    
+    
     /**
      * HACE EL CÁLCULO DE LAS FACTURAS ACUMULADAS 
      * @return RESULTADO
@@ -186,8 +190,9 @@ public class Taller {
                     return false;
                 }
             }
+            return true;
         }    
-        return true;
+        return false;
     }
 
     /**
@@ -227,7 +232,7 @@ public class Taller {
      *
      * @param vehiculo el vehículo a insertar.
      */
-    public void insertarVehiculo(Vehiculo vehiculo) {
+    public void insertarVehiculo(Vehiculo vehiculo) throws FullQueueException {
         this.colaPrincipal.insertarVehiculo(vehiculo);
     }
 
@@ -268,7 +273,7 @@ public class Taller {
      * @param numeroBox el número del box.
      * @return el vehículo extraído.
      */
-    public Vehiculo extraerVehiculoBox(int numeroBox) {
+    public Vehiculo extraerVehiculoBox(int numeroBox) throws NotExistsException {
         return boxes[numeroBox - 1].copiarUltimoVehiculo();
     }
 
@@ -287,7 +292,7 @@ public class Taller {
      *
      * @param vehiculo el vehículo a mover.
      */
-    public void meterColaPago(Vehiculo vehiculo) {
+    public void meterColaPago(Vehiculo vehiculo)throws FullQueueException {
         this.colaDePago.insertarVehiculo(vehiculo);
     }
 }

@@ -51,7 +51,8 @@ public class Box {
      * 
      * @return el vehículo en la última fase del box.
      */
-    public Vehiculo copiarUltimoVehiculo(){
+    public Vehiculo copiarUltimoVehiculo()throws NotExistsException{
+        if(this.fases[3].estaLibre())throw new NotExistsException("No hay vehículos en la última fase");
         return this.fases[3].getVehiculo();
     }
 

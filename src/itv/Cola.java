@@ -1,5 +1,6 @@
 package itv;
 
+import excepciones.FullQueueException;
 import vehiculo.Vehiculo;
 import util.GestorIO;
 import java.util.Arrays;
@@ -10,10 +11,11 @@ import java.util.Arrays;
  */
 public class Cola {
     private Vehiculo[] vehiculos;
-
+    private int limiteCola;
    
-    public Cola() {
+    public Cola(int limiteCola) {
         this.vehiculos = new Vehiculo[0];
+        this.limiteCola = limiteCola;
     }
 
     /**
@@ -21,12 +23,17 @@ public class Cola {
      * 
      * @param vehiculo el vehículo a insertar.
      */
-    public void insertarVehiculo(Vehiculo vehiculo) {
+    public void insertarVehiculo(Vehiculo vehiculo)throws FullQueueException {
+        if(vehiculos.length == limiteCola)throw new FullQueueException(vehiculo, getPrimerVehiculo());
         Vehiculo[] nuevaCola = Arrays.copyOf(this.vehiculos, this.vehiculos.length + 1);
         nuevaCola[nuevaCola.length - 1] = vehiculo;
         this.vehiculos = nuevaCola;
     }
 
+    public Vehiculo getPrimerVehiculo(){
+        return vehiculos[0];
+    }
+    
     /**
      * Extrae y devuelve el primer vehículo de la cola.
      * 
