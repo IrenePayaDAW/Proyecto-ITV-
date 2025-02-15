@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package opcion;
 
+import excepciones.NotExistsException;
 import itv.Taller;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
@@ -15,22 +14,9 @@ import vehiculo.Vehiculo;
  */
 
 public class CalculoIngresos extends OpcionTaller{
-    //Facturas[] facturas; AQUI SI, PORQUE ES UNA OPCION DEL TALLER ENTONCES EL TALLER TIENE CALCULOINGRESOS Y LA FACTURA DENTRO DE ESTA OPCION:)
-    private Vehiculo[] vehiculosFinalizados;
     
     public CalculoIngresos(Taller taller) {
-        super("Calculo ingresos totales",taller);
-        vehiculosFinalizados = new Vehiculo[0];     
-    }
-    
-    /**
-     * Inserta un vehiculo a la cola
-     * @param vehiculo 
-     */
-    public void insertarVehiculo(Vehiculo vehiculo) {
-        Vehiculo[] nuevaCola = Arrays.copyOf(this.vehiculosFinalizados, this.vehiculosFinalizados.length + 1);
-        nuevaCola[nuevaCola.length - 1] = vehiculo;
-        this.vehiculosFinalizados = nuevaCola;
+        super("Calculo ingresos totales",taller);    
     }
 
     @Override
@@ -38,11 +24,11 @@ public class CalculoIngresos extends OpcionTaller{
      * calcula los ingresos totales
      */
     public void ejecutar() {
-        double ingresosTotales = 0;
-        for (int i = 0; i < vehiculosFinalizados.length; i++) {
-            ingresosTotales += vehiculosFinalizados[i].calcularPrecio();
+        System.out.println("\n---"+super.titulo+"---\n");
+        try {
+            System.out.println("Los ingresos totales han sido un total de: "+taller.calculoFacturas());
+        } catch (NotExistsException ex) {
+            System.out.println(ex.getMessage());
         }
-        teclado.out("Han sido cobrados: "+ vehiculosFinalizados.length +" vehiculos\n");
-        teclado.out("El total de ingresos es de: "+ ingresosTotales + "\n");
     }
 }

@@ -56,4 +56,9 @@ public class MicroBus extends TransportePersonas {
     public double pagoTotal() {
         return this.calcularPrecio();
     }
+
+    @Override
+    public double getDescuento() {
+        return super.getDescuento();
+    }
 }

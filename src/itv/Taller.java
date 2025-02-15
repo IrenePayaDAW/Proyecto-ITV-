@@ -25,7 +25,7 @@ public class Taller {
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
     private Cliente[] clientes;
-    private Factura[] facturasVehiculosFinalizados;
+    private Factura[] facturas;
     private static int contadorID = 0;
 
     public Taller() {
@@ -38,27 +38,40 @@ public class Taller {
         matriculasEnTaller = new String[0];
         ingresosTotales = 0;
         clientes = new Cliente[0];
-        facturasVehiculosFinalizados = new Factura[0];
+        facturas = new Factura[0];
     }
-
+    /**
+     * HACE EL CÁLCULO DE LAS FACTURAS ACUMULADAS 
+     * @return RESULTADO
+     * @throws NotExistsException 
+     */
+    public double calculoFacturas() throws NotExistsException{
+        if(facturas.length == 0)throw new NotExistsException("ERROR: Aun no hay facturas");
+        double resultado= 0.;
+        for(Factura f: facturas){
+            resultado += f.getPrecioPagado();
+        }
+        return resultado;
+    }
+    
     public void agregarFactura(Factura factura) {
         factura.setID(contadorID);
         contadorID++;
-        Factura[] arrayFacturas = new Factura[facturasVehiculosFinalizados.length + 1];
+        Factura[] arrayFacturas = new Factura[facturas.length + 1];
 
-        for (int i = 0; i < facturasVehiculosFinalizados.length; i++) {
-            arrayFacturas[i] = facturasVehiculosFinalizados[i];
+        for (int i = 0; i < facturas.length; i++) {
+            arrayFacturas[i] = facturas[i];
         }
 
-        arrayFacturas[facturasVehiculosFinalizados.length] = factura;
-        facturasVehiculosFinalizados = arrayFacturas;
+        arrayFacturas[facturas.length] = factura;
+        facturas = arrayFacturas;
     }
 
     public void mostrarFacturas() throws NotExistsException {
-        if(facturasVehiculosFinalizados.length == 0)
+        if(facturas.length == 0)
             throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
         
-        for (Factura factura : facturasVehiculosFinalizados) {
+        for (Factura factura : facturas) {
             System.out.println(factura);
         }
     }

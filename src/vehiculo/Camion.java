@@ -71,4 +71,11 @@ public class Camion extends TransporteCarga {
 
         return cilindros;
     }
+
+    @Override
+    public double getDescuento() {
+        if(cliente.esSuPrimeraVez())return cliente.descuentoPrimeraVez();
+        if(cliente.isSOCIO())return cliente.descuentoSocio();
+        return 0.;
+    }
 }

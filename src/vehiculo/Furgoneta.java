@@ -7,7 +7,7 @@ import util.Interval;
  * @author irene, alvaro, alejandro
  */
 public class Furgoneta extends TransporteCarga {
-
+    private final double DESCUENTO_VIP = 0.75;
     public Furgoneta(Cliente cliente, String matricula, String modeloVehiculo) {
         super(cliente, matricula, modeloVehiculo);
     }
@@ -53,5 +53,15 @@ public class Furgoneta extends TransporteCarga {
     @Override
     public double pagoTotal() {
         return this.calcularPrecio();
+    }
+    
+    
+
+    @Override
+    public double getDescuento() {
+        if(cliente.esSuPrimeraVez())return cliente.descuentoPrimeraVez();
+        if(cliente.isVIP())return DESCUENTO_VIP;
+        if(cliente.isSOCIO())return cliente.descuentoSocio();
+        return 0.;
     }
 }

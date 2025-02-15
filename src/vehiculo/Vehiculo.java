@@ -15,7 +15,7 @@ public abstract class Vehiculo {
     private final String modeloVehiculo;
     private boolean estadoVehiculo;
     public static final int PRECIO_BASE = 15;
-    private final Cliente cliente;
+    protected final Cliente cliente;
     private boolean opcDescuentoVIP;
 
  
@@ -24,15 +24,12 @@ public abstract class Vehiculo {
         this.modeloVehiculo = modeloVehiculo;
         this.cliente = cliente;
     }
-     
-     public boolean clienteVip(){
-         return this.cliente.isVIP();
-     }
-     
-     public boolean clienteSocio(){
-         return this.cliente.isSOCIO();
-     }
-
+    public boolean clienteIsVIP(){
+       return cliente.isVIP();
+    }
+    public boolean clienteIsSOCIO(){
+        return cliente.isSOCIO();
+    }
     /**
      * Verifica si el vehículo tiene una matrícula específica.
      * 
@@ -169,12 +166,7 @@ public abstract class Vehiculo {
      */
     public abstract void registrarVehiculo();
     
-    public abstract boolean tieneDescuentoVIP();
+    
     public abstract double getDescuento();
-//    if es el cliente vip??
-//        dame el descuento que tiene asignado el coche
-//    no??
-//    else if dame el descuento que le corresponde a este cliente
-//        descuento que tiene como socio por las veces que ha asistido a la itv
-//            (cliente.descuentoSocio())
+
 }

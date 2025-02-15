@@ -43,7 +43,7 @@ public abstract class TransporteCarga extends Vehiculo {
      */
     @Override
     public double calcularPrecio() {
-        return (this.getCilindros() * PRECIO_BASE) + this.calcularCargoPma();
+        return (this.getCilindros() * PRECIO_BASE) + this.calcularCargoPma()- this.getDescuento();
     }
 
     /**

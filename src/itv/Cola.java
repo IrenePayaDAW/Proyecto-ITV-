@@ -32,7 +32,7 @@ public class Cola {
      * 
      * @return el vehículo extraído o null si la cola está vacía.
      */
-    public Vehiculo extraerVehiculo() {
+    public Vehiculo extraerVehiculo()throws NullPointerException {
         if (estaVacia()) {
             return null;
         }

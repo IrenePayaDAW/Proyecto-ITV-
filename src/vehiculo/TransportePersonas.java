@@ -13,6 +13,7 @@ public abstract class TransportePersonas extends Vehiculo {
     private int plazas;
     private double costePlazasAdicionales;
     protected Interval limitesPlazas;
+    private final double DESCUENTO_VIP = 0.8;
 
     public TransportePersonas(Cliente cliente,String matricula, String modeloVehiculo) {
         super(cliente,matricula, modeloVehiculo);
@@ -76,7 +77,7 @@ public abstract class TransportePersonas extends Vehiculo {
      */
     @Override
     public double calcularPrecio() {
-        return (this.getCilindros() * PRECIO_BASE) + this.calcularAdicional();
+        return (this.getCilindros() * PRECIO_BASE) + this.calcularAdicional()- this.getDescuento();
     }
 
     /**
@@ -87,4 +88,13 @@ public abstract class TransportePersonas extends Vehiculo {
     public int getPlazas() {
         return plazas;
     }
+    
+    @Override
+    public double getDescuento(){
+        if(cliente.esSuPrimeraVez())return cliente.descuentoPrimeraVez();
+        if(cliente.isVIP())return this.DESCUENTO_VIP;
+        if(cliente.isSOCIO())return cliente.descuentoSocio();
+        return 0.;
+    }
+    
 }

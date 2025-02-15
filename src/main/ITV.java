@@ -36,7 +36,7 @@ public class ITV {
         menu.añadirOpcion(new PasarDeFase(taller));
         menu.añadirOpcion(new MostrarBox(taller));
         menu.añadirOpcion(new MostrarBoxes(taller));
-        menu.añadirOpcion(new CalculoPagamentosRevisados());
+        menu.añadirOpcion(new CalculoPagamentosRevisados(taller));
         menu.añadirOpcion(new CalculoIngresos(taller));
         menu.añadirOpcion(new Salir(menu));
 

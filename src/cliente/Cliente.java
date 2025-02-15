@@ -1,4 +1,3 @@
-
 package cliente;
 
 import java.util.Objects;
@@ -10,17 +9,18 @@ import vehiculo.Vehiculo;
  * @author Irene, Álvaro, Alejandro
  */
 public class Cliente {
-    private  final String DNI;
+
+    private final String DNI;
     private String nombre;
-    private  String telefono;
-    private  boolean vip;
-    private  boolean socio; 
+    private String telefono;
+    private boolean vip;
+    private boolean socio;
     private int contSiendoSocio;
     private int contVecesAqui;
-    private int cochesTiene;
+    private int vehiculosTiene = 0;
     private double descuentoSocio = 0.97;
 
-    public Cliente(String dni,String nombre,String telefono, boolean VIP) {
+    public Cliente(String dni, String nombre, String telefono, boolean VIP) {
         this.DNI = dni;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -28,35 +28,28 @@ public class Cliente {
         this.contVecesAqui = 0;
         this.contSiendoSocio = 0;
     }
-    
-    public double descuentoPrimeraVez(){
-        if(this.getContVecesAqui() == 0){
-            contVecesAqui++;
-            return 0.7; //Es un 30% de descuento
-        }
-        return 0;
+
+    public boolean esSuPrimeraVez() {
+        return contVecesAqui == 0;
     }
-    
-    public double descuentoSocio(){
-        if(this.getContVecesAqui() == 0){
-           return this.descuentoPrimeraVez();
-        }else if(this.contSiendoSocio() == 0){
+
+    public double descuentoPrimeraVez() {
+        contVecesAqui++;
+        return 0.7; //Es un 30% de descuento
+
+    }
+
+    public double descuentoSocio() {
+        if (this.contSiendoSocio() == 0) {
             return descuentoSocio;
         }
         contSiendoSocio++;
-        if(this.contSiendoSocio()%2 == 0 && descuentoSocio != 0.90){
-            descuentoSocio -= (contSiendoSocio/2);
-        } 
+        if (this.contSiendoSocio() % 2 == 0 && descuentoSocio != 0.90) {
+            descuentoSocio -= (contSiendoSocio / 2);
+        }
         return descuentoSocio;
     }
-    
-    public double descuentoVip(){
-        if(isVIP()){
-            return 0;
-        }
-        return 0;
-    }
-    
+
     public String getDni() {
         return DNI;
     }
@@ -72,19 +65,19 @@ public class Cliente {
     public boolean isSOCIO() {
         return socio;
     }
-    
-    public void hacerSocio(){
+
+    public void hacerSocio() {
         socio = true;
     }
 
-    public int getContVecesAqui() {
-        return contVecesAqui;
-    }
-    public int contSiendoSocio(){
+    public int contSiendoSocio() {
         return contSiendoSocio;
     }
     
-    
+    public void unVehiculoMas(){
+        vehiculosTiene++;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -99,10 +92,10 @@ public class Cliente {
         final Cliente other = (Cliente) obj;
         return Objects.equals(this.DNI, other.DNI);
     }
-    
+
     @Override
     public String toString() {
         return "Cliente{" + "DNI=" + DNI + ", telefono=" + telefono + ", VIP=" + vip + ", SOCIO=" + socio + ", contVecesAqui=" + contVecesAqui + '}';
     }
-    
+
 }

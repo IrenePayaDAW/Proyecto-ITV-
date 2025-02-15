@@ -1,7 +1,12 @@
 package opcion;
 
+import excepciones.NotExistsException;
+import factura.Factura;
 import itv.Cola;
+import itv.Taller;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
@@ -9,12 +14,12 @@ import vehiculo.Vehiculo;
  *
  * @author irene, alvaro, alejandro
  */
-public class CalculoPagamentosRevisados extends Opcion {
+public class CalculoPagamentosRevisados extends OpcionTaller {
 
     private Cola vehiculosCobrar;
 
-    public CalculoPagamentosRevisados() {
-        super("Calcular y pagar vehículo revisado");
+    public CalculoPagamentosRevisados(Taller taller) {
+        super("Calcular y pagar vehículo revisado",taller);
         this.vehiculosCobrar = new Cola();
     }
 
@@ -23,24 +28,24 @@ public class CalculoPagamentosRevisados extends Opcion {
      */
     @Override
     public void ejecutar() {
-        /*
+       
         if (!this.vehiculosCobrar.estaVacia()) {
             Vehiculo vehiculo = this.vehiculosCobrar.extraerVehiculo();
-            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio()((!!!!*vehiculo.getDescuento()!!!!!(NUEVO A AÑADIR))) + "\n");
-            ingresos.insertarVehiculo(vehiculo);
+            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio() + "\n");
+            taller.agregarFactura(new Factura(vehiculo));
             teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " se ha añadido al historial.\n");
         } else if (!vehiculosCobrar.estaVacia() && taller.hayVehiculosParaPagar()) {
             teclado.out("No hay vehículos para pagar.\n");
         } else if (taller.hayVehiculosParaPagar()) {
-            this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
+            try {
+                this.vehiculosCobrar.insertarVehiculo(super.taller.extraerVehiculoPago());
+            } catch (NotExistsException ex) {
+                System.out.println(ex.getMessage());
+            }
             this.ejecutar();
         }
-         */
 
     }
 }
-//en ejecutar() Factura facturaVehiculo = new Factura(vehiculo);
-// el array de facturas debe volcarse sobre uno nuev con mayor longitud y 
-// facturaVehiculo debe guardarse en el array de facturas incrementandose la longitud del mismo
-// taller.agregarFactura(facturaVehiculo);
+
 

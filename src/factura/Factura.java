@@ -20,8 +20,8 @@ public class Factura {
         this.vehiculo = vehiculo;
         this.precioPagado = vehiculo.calcularPrecio();
         this.fecha = LocalDateTime.now();
-        this.VIP = vehiculo.clienteVip();
-        this.socio = vehiculo.clienteSocio();
+        this.VIP = vehiculo.clienteIsVIP();
+        this.socio = vehiculo.clienteIsSOCIO();
         this.ID = 0;
     }
 
@@ -37,7 +37,7 @@ public class Factura {
         return precioPagado;
     }
     
-    /*
+    
     @Override
     public String toString() {
         String clienteVip;
@@ -65,32 +65,10 @@ public class Factura {
                 + "Tarjeta de socio = " + clienteSocio
                 + "Coste de revisión = " + precioPagado + "€\n";
     }
-*/
+
 
     public void mostrar() {
-        String clienteVip;
-        if (this.VIP){
-            clienteVip = "Si";
-        }
-        else {
-            clienteVip = "No";
-        }
-        
-        String clienteSocio;
-        if (this.socio){
-            clienteSocio = "Si";
-        }
-        else {
-            clienteSocio = "No";
-        }
-        
-        System.out.println("-- Factura de vehículo--");
-        System.out.println("ID Factura = " + ID);
-        System.out.println("Matrícula de vehiculo = " + vehiculo.getMatricula());
-        System.out.println("Fecha de pago = " + fecha);
-        System.out.println("Cliente VIP = " + clienteVip);
-        System.out.println("Tarjeta de socio = " + clienteSocio);
-        System.out.printf("Coste de revisión = %.2f€\n", precioPagado);
+        System.out.println(this.toString());
     }
     
     @Override
