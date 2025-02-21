@@ -8,7 +8,7 @@ import vehiculo.Vehiculo;
  *
  * @author Irene, Álvaro, Alejandro
  */
-public class Cliente {
+public class Cliente implements Comparable<Cliente> {
 
     private final String DNI;
     private String nombre;
@@ -102,4 +102,12 @@ public class Cliente {
         return "Cliente{" + "DNI=" + DNI + ", telefono=" + telefono + ", VIP=" + vip + ", SOCIO=" + socio + ", Veces Aquí=" + (contVecesAqui==0?" Nunca":contVecesAqui) + '}';
     }
 
+    @Override
+    public int compareTo(Cliente t) {
+        return this.DNI.compareTo(t.getDni());
+    }
+
+    
+
+   
 }

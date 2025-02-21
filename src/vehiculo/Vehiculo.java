@@ -7,7 +7,7 @@ import util.Interval;
 /**
  * @author irene, alvaro, alejandro
  */
-public abstract class Vehiculo {
+public abstract class Vehiculo implements Comparable<Vehiculo>{
     GestorIO teclado = new GestorIO();
     protected int cilindros;
     protected double CC;
