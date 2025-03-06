@@ -45,8 +45,9 @@ public class RegistrarCliente extends OpcionTaller {
             }
             return;
         }
-
+        //INTRODUCCIÓN DEL NOMBRE
         do {
+            error = false;
             teclado.out("\nIntroduce el nombre: ");
             try {
                 nombre = esteNombreExiste(teclado.inString().toUpperCase().trim());//ESTO ES ALGO LIOSO PERO LE PREGUNTO A TALLER SI YA EXISTE EL NOMBRE CON UN MÉTODO QUE ME HE CREADO AQUÍ
@@ -63,9 +64,9 @@ public class RegistrarCliente extends OpcionTaller {
                 teclado.out("Ok. Sigamos.");
             }
         } while (error);
-        error = false;
-        
+        //INTRODUCCIÓN DEL NÚMERO DEL TELÉFONO
         do {
+            error = false;
             teclado.out("\nIntroduce el número de teléfono: ");
             telefono = teclado.inString();
             while (!validarConPatrones(Pattern.compile("^[0-9]{9}$"), telefono)) {
@@ -92,7 +93,7 @@ public class RegistrarCliente extends OpcionTaller {
         if (respuesta.equals("SI")) {
             vip = true;
         }
-        teclado.out("\n---EL CLIENTE HA SIDO REGISTRADO--\n");
+        teclado.out("\n---EL CLIENTE "+nombre+" HA SIDO REGISTRADO--\n");
         taller.añadirCliente(new Cliente(dni, nombre, telefono, vip));//INSERTAMOS EL CLIENTE
     }
 

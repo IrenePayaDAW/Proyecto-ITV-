@@ -101,6 +101,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             teclado.out("\n----Vehiculo " + vehiculo.getMatricula() + " registrado----\n");
         }catch(FullQueueException ex){
             System.out.println(ex.getMessage());
+            System.out.println(ex);
         }
     }
     private String validarDNI(String dni){

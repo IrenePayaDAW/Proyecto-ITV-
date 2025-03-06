@@ -2,6 +2,7 @@ package cliente;
 
 import java.util.Objects;
 import java.util.UUID;
+import vehiculo.Coche;
 import vehiculo.Vehiculo;
 
 /**
@@ -19,6 +20,7 @@ public class Cliente {
     private int contVecesAqui;
     private int vehiculosTiene = 0;
     private double descuentoSocio = 0.97;
+    private final double INCREMENTO_SOCIO_DESCUENTO = 0.01;
 
     public Cliente(String dni, String nombre, String telefono, boolean VIP) {
         this.DNI = dni;
@@ -29,6 +31,26 @@ public class Cliente {
         this.contSiendoSocio = 0;
     }
 
+     public static void main(String[] args) {
+        Cliente cli = new Cliente("12345678a", "paco", "123456789", false);
+        cli.hacerSocio();
+        
+        Vehiculo vehiculo = new Coche(cli,"1111aaa","a");
+        vehiculo.insertarCc();
+        vehiculo.insertarCilindros();
+        vehiculo.registrarVehiculo();
+        Vehiculo vehiculo1 = new Coche(cli,"1112aaa","a");
+        vehiculo1.registrarVehiculo();
+        vehiculo1.insertarCc();
+        vehiculo1.insertarCilindros();
+         for (int i = 0; i < 20; i++) {
+             System.out.println(vehiculo.calcularPrecio());
+         
+         }
+         
+        
+        
+    }
     public boolean esSuPrimeraVez() {
         return contVecesAqui == 0;
     }
@@ -46,7 +68,7 @@ public class Cliente {
         }
         contSiendoSocio++;
         if (this.contSiendoSocio() % 2 == 0 && descuentoSocio != 0.90) {
-            descuentoSocio -= (contSiendoSocio / 2);
+            descuentoSocio -= INCREMENTO_SOCIO_DESCUENTO;
         }
         return descuentoSocio;
     }
@@ -100,7 +122,9 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "DNI=" + DNI + ", telefono=" + telefono + ", VIP=" + vip + ", SOCIO=" + socio + ", contVecesAqui=" + contVecesAqui + '}';
+        return "Cliente{" + "DNI=" + DNI + ", telefono=" + telefono + ", VIP=" + vip + ", SOCIO=" + socio + ", Veces Aquí=" + (contVecesAqui==0?" Nunca":contVecesAqui) + '}';
     }
+    
+   
 
 }

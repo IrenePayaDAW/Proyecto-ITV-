@@ -38,6 +38,7 @@ public class PasarDeFase extends OpcionTaller {
                 teclado.out("\nHan pasado de fase\n");
             } catch (NotExistsException | FullQueueException ex) {
                 System.out.println(ex.getMessage());
+                System.out.println(ex);
             }
         }else{
             taller.avanzarVehiculos(numeroBox);

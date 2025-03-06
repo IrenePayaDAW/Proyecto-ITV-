@@ -24,6 +24,7 @@ public abstract class TransportePersonas extends Vehiculo {
      * 
      * @return Número de cilindros válido.
      */
+    @Override
     public int validarCilindros() {
         int cilindros;
         boolean error;
@@ -89,6 +90,10 @@ public abstract class TransportePersonas extends Vehiculo {
         return plazas;
     }
     
+    /**
+     * APLICA EL DESCUENTO
+     * @return el descuento
+     */
     @Override
     public double getDescuento(){
         if(cliente.esSuPrimeraVez())return cliente.descuentoPrimeraVez();

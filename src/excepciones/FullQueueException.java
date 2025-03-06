@@ -44,7 +44,7 @@ public class FullQueueException extends Exception{
     
     @Override
     public String toString() {
-        return "FullQueueException{ El vehiculo con matrícula "+ getMatriculaError() + ", no puede ser añadido a la cola.\nDebe salir el vehículo con la matrícula "+getMatriculaCola()+  '}';
+        return "FullQueueException{ \nEl vehiculo con matrícula "+ getMatriculaError() + ", no puede ser añadido a la cola.\nDebe salir el vehículo con la matrícula "+getMatriculaCola()+  '}';
     }
 
     
