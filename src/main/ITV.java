@@ -1,8 +1,10 @@
 package main;
 
+import cliente.ClienteSet;
 import itv.Taller;
 import menu.Menu;
 import opcion.AltaSocio;
+import opcion.BuscarClientesPorDni;
 import opcion.CalculoPagamentosRevisados;
 import opcion.MostrarBox;
 import opcion.MostrarBoxes;
@@ -23,6 +25,7 @@ public class ITV {
 
     private final Taller taller;
     private final Menu menu;
+    private ClienteSet clientes;
 
     public ITV() {
         this.taller = new Taller();
@@ -31,6 +34,7 @@ public class ITV {
         //2.-Tarjeta de socio al cliente
         menu.añadirOpcion(new RegistrarCliente(taller));
         menu.añadirOpcion(new RegistroNuevoVehiculo(taller));
+        menu.añadirOpcion(new BuscarClientesPorDni(clientes));
         menu.añadirOpcion(new AltaSocio(taller));
         menu.añadirOpcion(new ReclamacionVehiculo(taller));
         menu.añadirOpcion(new PasarDeFase(taller));

@@ -1,20 +1,23 @@
 package itv;
 
 import excepciones.FullQueueException;
+import java.util.ArrayList;
 import vehiculo.Vehiculo;
 import util.GestorIO;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 
  * @author irene, alvaro, alejandro
  */
-public class Cola {
-    private Vehiculo[] vehiculos;
+public class Cola<T> {
+    private Queue<T> vehiculos;
     private int limiteCola;
    
     public Cola(int limiteCola) {
-        this.vehiculos = new Vehiculo[0];
+        this.vehiculos = new LinkedList<T>();
         this.limiteCola = limiteCola;
     }
 
@@ -23,15 +26,13 @@ public class Cola {
      * 
      * @param vehiculo el vehículo a insertar.
      */
-    public void insertarVehiculo(Vehiculo vehiculo)throws FullQueueException {
-        if(vehiculos.length == limiteCola)throw new FullQueueException(vehiculo, getPrimerVehiculo());
-        Vehiculo[] nuevaCola = Arrays.copyOf(this.vehiculos, this.vehiculos.length + 1);
-        nuevaCola[nuevaCola.length - 1] = vehiculo;
-        this.vehiculos = nuevaCola;
+    public void insertarVehiculo(T vehiculo)throws FullQueueException {
+        if(vehiculos.size() == limiteCola)throw new FullQueueException(vehiculo, getPrimerVehiculo());
+        this.vehiculos.add(vehiculo);
     }
 
-    public Vehiculo getPrimerVehiculo(){
-        return vehiculos[0];
+    public T getPrimerVehiculo(){
+        return this.vehiculos.peek();
     }
     
     /**
@@ -39,13 +40,8 @@ public class Cola {
      * 
      * @return el vehículo extraído o null si la cola está vacía.
      */
-    public Vehiculo extraerVehiculo()throws NullPointerException {
-        if (estaVacia()) {
-            return null;
-        }
-        Vehiculo vehiculo = this.vehiculos[0];
-        this.vehiculos = Arrays.copyOfRange(this.vehiculos, 1, this.vehiculos.length);
-        return vehiculo;
+    public T extraerVehiculo()throws NullPointerException {
+        return this.vehiculos.poll();
     }
 
     /**
@@ -55,10 +51,9 @@ public class Cola {
      * @return true si la matrícula es valida.
      */
     public boolean matriculaValida(String matricula) {
-        for (int i = 0; i < this.vehiculos.length; i++) {
-            if (this.vehiculos[i].tieneEstaMatricula(matricula)) {
-                return false;
-            }
+        
+        for (T vehiculo : vehiculos) {
+            if(vehiculo.tieneEstaMatricula(matricula)) return false;
         }
         return true;
     }
@@ -69,7 +64,7 @@ public class Cola {
      * @return true si no hay vehículos en la cola, false en caso contrario.
      */
     public boolean estaVacia() {
-        return this.vehiculos.length == 0;
+        return this.vehiculos.size() == 0;
     }
     
     /**
@@ -77,7 +72,7 @@ public class Cola {
      * 
      * @return un array de vehículos.
      */
-    public Vehiculo[] getVehiculos() {
+    public Queue<T> getVehiculos() {
         return this.vehiculos;
     }
 
@@ -87,11 +82,11 @@ public class Cola {
     public void mostrarCola() {
         GestorIO teclado = new GestorIO();
         teclado.out("\n-- Cola de Vehículos --\n");
-        for (int i = 0; i < this.vehiculos.length; i++) {
+        int i=0;
+        for (T vehiculo : vehiculos) {
             teclado.out("\nPosición " + (i + 1) + ":\n");
-            this.vehiculos[i].mostrarTodo();
+            vehiculo.toString();
             teclado.out("\n");
-        }
-        teclado.out("\n");
+        }       
     }
 }
