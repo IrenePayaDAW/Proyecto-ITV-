@@ -1,4 +1,5 @@
 package cliente;
+import excepciones.NotExistsException;
 import java.util.*;
 /**
  *
@@ -25,15 +26,27 @@ public class ClienteSet {
     
     public Cliente getCliente(String dni) {
         for (Cliente cliente : clientes) {
-            if(cliente.getDni().equals(dni))return cliente;
+            if(cliente.getDni().equalsIgnoreCase(dni))return cliente;
         }
         return null;
+    }
+    
+    public TreeSet<Cliente> getClientesVip() throws NotExistsException{
+        TreeSet<Cliente> vips = new TreeSet<>();
+        for (Cliente cliente : clientes) {
+            if(cliente.isVIP())vips.add(cliente);
+        }
+        if(vips.isEmpty())throw new NotExistsException("ERROR, no hay clientes vip");
+        return vips;
+    }
+    
+    public void remove(Cliente cliente){
+        clientes.remove(cliente);
     }
     
     public void cleanClientes(){
         clientes.clear();
     }
-    
     
     @Override
     public String toString() {
