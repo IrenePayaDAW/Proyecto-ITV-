@@ -8,7 +8,7 @@ import util.Interval;
  * @author irene, alvaro, alejandro
  */
 public abstract class Opcion {
-    GestorIO teclado = new GestorIO();
+    private GestorIO teclado = new GestorIO();
     protected String titulo;
     
     

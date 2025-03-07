@@ -34,7 +34,7 @@ public class ITV {
         //2.-Tarjeta de socio al cliente
         menu.añadirOpcion(new RegistrarCliente(taller));
         menu.añadirOpcion(new RegistroNuevoVehiculo(taller));
-        menu.añadirOpcion(new BuscarClientesPorDni(clientes));
+        menu.añadirOpcion(new BuscarClientesPorDni(taller));
         menu.añadirOpcion(new AltaSocio(taller));
         menu.añadirOpcion(new ReclamacionVehiculo(taller));
         menu.añadirOpcion(new PasarDeFase(taller));

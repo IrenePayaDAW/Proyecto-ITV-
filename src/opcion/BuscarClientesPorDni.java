@@ -1,8 +1,11 @@
 
 package opcion;
 
-import cliente.ClienteSet;
-import java.util.Collection;
+import excepciones.NotExistsException;
+import interfaces.Validable;
+import itv.Taller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,31 +13,22 @@ import java.util.regex.Pattern;
  *
  * @author ciclost
  */
-public class BuscarClientesPorDni extends Opcion{
-    private ClienteSet clientes;
-    public BuscarClientesPorDni(ClienteSet clientes) {
-        super("Buscar cliente por dni");
-        this.clientes = clientes;
+public class BuscarClientesPorDni extends OpcionTaller{
+
+    public BuscarClientesPorDni(Taller taller) {
+        super("Buscar cliente por dni", taller);
     }
     
     @Override
     public void ejecutar() {
-        mostrarCliente();
-    }
-    
-    public void mostrarCliente(){
-        System.out.println(clientes.getCliente(validarDNI(teclado.inString())));
-    }
-    private String validarDNI(String dni) {
-        while (!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"), dni)) {
-            teclado.out("\nError, el DNI debe ser 8 números y una letra: ");
-            dni = teclado.inString().toUpperCase().trim();
+        try {
+            teclado.out("\nInserte el DNI del Cliente: ");
+            System.out.println(taller.getClientePorDNI(Validable.withPattern(teclado.inString(), "DNI")));
+        } catch (NotExistsException ex) {
+            System.out.println(ex);
+        } catch (NullPointerException ex) {
+            System.out.println(ex);
         }
-        return dni;
     }
 
-    private boolean validarConPatrones(Pattern patron, String telefono) {
-        Matcher matcher = patron.matcher(telefono);
-        return matcher.matches();
-    }
 }

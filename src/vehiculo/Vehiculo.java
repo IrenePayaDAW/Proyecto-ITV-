@@ -169,4 +169,11 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
     
     public abstract double getDescuento();
 
+    @Override
+    public int compareTo(Vehiculo o) {
+        return this.matricula.compareTo(o.matricula);
+    }
+
+    
+    
 }

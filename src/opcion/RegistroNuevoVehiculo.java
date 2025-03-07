@@ -5,6 +5,7 @@ package opcion;
 import cliente.Cliente;
 import excepciones.FullQueueException;
 import excepciones.NotExistsException;
+import interfaces.Validable;
 import itv.Taller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
         
         teclado.out("\nIntroduce el DNI del cliente:");
-        dniCliente = validarDNI(teclado.inString().toUpperCase().trim());
+        dniCliente = Validable.withPattern(teclado.inString().toUpperCase().trim(), "dni");
         
         //meter excepción notexists
         Cliente cliente;
@@ -103,17 +104,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             System.out.println(ex.getMessage());
         }
     }
-    private String validarDNI(String dni){
-        while(!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"),dni)){
-                teclado.out("Error, el DNI debe ser 8 números y una letra.\n");
-                dni = teclado.inString().toUpperCase().trim();
-            }
-        return dni;
-    }
-    private boolean validarConPatrones(Pattern patron, String telefono){
-        Matcher matcher = patron.matcher(telefono);
-        return matcher.matches();
-    }
+
     /**
      * valida que el usuario haya introducido una opción válida
      * @param opcion
