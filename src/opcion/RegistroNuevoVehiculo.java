@@ -3,8 +3,10 @@ package opcion;
 
 
 import cliente.Cliente;
+import excepciones.AlreadyExistsException;
 import excepciones.FullQueueException;
 import excepciones.NotExistsException;
+import interfaces.Validable;
 import itv.Taller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +23,7 @@ import vehiculo.Vehiculo;
  *
  * @author irene, alvaro, alejandro
  */
-public class RegistroNuevoVehiculo extends OpcionTaller {
+public class RegistroNuevoVehiculo extends OpcionTaller implements Validable{
 
     
     Interval OPCIONES_COCHE = new Interval(1, 4);
@@ -38,11 +40,11 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         Vehiculo vehiculo = null;
         String dniCliente = null;
         String matricula;
-        boolean esValida;
+        boolean error;
         Pattern patron = Pattern.compile("^[0-9]{4}[A-Z]{3}$");
         
         teclado.out("\nIntroduce el DNI del cliente:");
-        dniCliente = validarDNI(teclado.inString().toUpperCase().trim());
+        dniCliente = Validable.withPattern(teclado.inString().toUpperCase().trim(), "dni");
         
         //meter excepción notexists
         Cliente cliente;
@@ -50,7 +52,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             cliente = taller.getClientePorDNI(dniCliente);
             cliente.unVehiculoMas();
         } catch (NotExistsException ex) {
-            teclado.out("\nEl cliente con el DNI " + dniCliente +" no ha sido dado de alta\n");
+            teclado.out(ex.getMessage());
             return;
         }
         
@@ -60,23 +62,26 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
         teclado.out("3. Furgoneta\n");
         teclado.out("4. Camión\n");
         teclado.out("Selecciona una opción: ");
-        int opcion = validarOpcion(teclado.inInt());
-
-        do {
+        int opcion = Validable.opcion(teclado.inInt(), OPCIONES_COCHE);
+        
+        do{
+            error = false;
             teclado.out("Introduce la matrícula del coche (formato 1234ABC): ");
-            matricula = teclado.inString().toUpperCase().trim();
-
-            Matcher matcher = patron.matcher(matricula);
-            esValida = (matcher.matches() && taller.matriculaValida(matricula));
-
-            if (!esValida) {
-                teclado.out("Matrícula inválida.");
+            matricula = Validable.withPattern(teclado.inString(),"MATRICULA");
+            
+            try {
+                taller.validarMatricula(matricula);
+            } catch (AlreadyExistsException ex) {
+                System.out.println(ex.getMessage());
+                error = true;
             }
-        } while (!esValida);
+            
+        }while(error);
         
         teclado.out("Introduce el modelo del vehículo: ");
         String modelo = teclado.inString();
-
+        
+       
         switch (opcion) {
             
             case 1:
@@ -104,29 +109,7 @@ public class RegistroNuevoVehiculo extends OpcionTaller {
             System.out.println(ex);
         }
     }
-    private String validarDNI(String dni){
-        while(!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"),dni)){
-                teclado.out("Error, el DNI debe ser 8 números y una letra.\n");
-                dni = teclado.inString().toUpperCase().trim();
-            }
-        return dni;
-    }
-    private boolean validarConPatrones(Pattern patron, String telefono){
-        Matcher matcher = patron.matcher(telefono);
-        return matcher.matches();
-    }
-    /**
-     * valida que el usuario haya introducido una opción válida
-     * @param opcion
-     * @return opción valida
-     */
-    @Override
-    public int validarOpcion(int opcion) {
-        while (!OPCIONES_COCHE.inclou(opcion)) {
-            teclado.out("Introduce una opción válida: ");
-            opcion = teclado.inInt();
-        }
-        return opcion;
-    }
+
+    
 
 }

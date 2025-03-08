@@ -61,4 +61,5 @@ public class MicroBus extends TransportePersonas {
     public double getDescuento() {
         return super.getDescuento();
     }
+
 }

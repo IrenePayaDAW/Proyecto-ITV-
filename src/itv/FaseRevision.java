@@ -47,8 +47,10 @@ public class FaseRevision {
     /**
      * Elimina el vehículo asignado a la fase.
      */
-    public void eliminarVehiculo() {
+    public Vehiculo eliminarVehiculo() {
+        Vehiculo vehiculo = this.vehiculo;
         this.vehiculo = null;
+        return vehiculo;
     }
 
     /**

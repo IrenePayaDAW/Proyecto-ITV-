@@ -8,7 +8,7 @@ import util.Interval;
  * @author irene, alvaro, alejandro
  */
 public abstract class Opcion {
-    GestorIO teclado = new GestorIO();
+    private GestorIO teclado = new GestorIO();
     protected String titulo;
     
     
@@ -19,6 +19,7 @@ public abstract class Opcion {
 
     /**
      * muestra las opciones
+     * @param numeroOpcion
      */
     public void mostrar(int numeroOpcion){
         teclado.out(numeroOpcion + ". "+ this.titulo +"\n");

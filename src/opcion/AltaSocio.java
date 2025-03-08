@@ -3,6 +3,7 @@ package opcion;
 
 import excepciones.AlreadyExistsException;
 import excepciones.NotExistsException;
+import interfaces.Validable;
 import itv.Taller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,7 @@ public class AltaSocio extends OpcionTaller {
     @Override
     public void ejecutar() {
         teclado.out("Introduce el DNI del cliente al que vas a dar de alta: ");
-        String dni = validarDNI(teclado.inString().toUpperCase().trim());
+        String dni = Validable.withPattern(teclado.inString().trim(),"DNI");
 
         if (!taller.estaElDni(dni)) {
             teclado.out("\nEl DNI no está registrado, registra al cliente primero.");
@@ -46,19 +47,6 @@ public class AltaSocio extends OpcionTaller {
         }
         teclado.out("\n----NUEVO SOCIO DNI: "+ dni+"----");
 
-    }
-
-    private String validarDNI(String dni) {
-        while (!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"), dni)) {
-            teclado.out("Error, el DNI debe ser 8 números y una letra.\n");
-            dni = teclado.inString().toUpperCase().trim();
-        }
-        return dni;
-    }
-
-    private boolean validarConPatrones(Pattern patron, String telefono) {
-        Matcher matcher = patron.matcher(telefono);
-        return matcher.matches();
     }
 
 }

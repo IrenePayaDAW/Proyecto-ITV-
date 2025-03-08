@@ -1,7 +1,10 @@
 package itv;
 
+import excepciones.FullQueueException;
 import excepciones.NotExistsException;
 import itv.FaseRevision;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.GestorIO;
 import vehiculo.Vehiculo;
 
@@ -13,13 +16,17 @@ public class Box {
 
     private GestorIO teclado = new GestorIO();
     private static final int NUM_FASES = 4;
-    private FaseRevision[] fases;
+    private GenericQueue<FaseRevision> fases;
 
     
     public Box() {
-        fases = new FaseRevision[NUM_FASES];
+        fases = new GenericQueue<>(NUM_FASES);
         for (int i = 0; i < NUM_FASES; i++) {
-            fases[i] = new FaseRevision(i);
+            try {
+                fases.insertarElemento(new FaseRevision(i));
+            } catch (FullQueueException ex) {
+                teclado.out("No se han podido añadir todos los elementos a la cola");
+            }
         }
     }
 
@@ -29,7 +36,7 @@ public class Box {
      * @return true si el box está libre, false en caso contrario.
      */
     public boolean estaLibre() {
-        return fases[0].estaLibre();
+        return !fases.getPrimero().tieneVehiculo();
     }
 
     /**
@@ -39,7 +46,7 @@ public class Box {
      */
     public void asignarVehiculo(Vehiculo vehiculo){
         if (estaLibre()) {
-            fases[0].asignarVehiculoFase(vehiculo);
+            fases.getPrimero().asignarVehiculoFase(vehiculo);
             teclado.out("Vehículo con matrícula " + vehiculo.getMatricula() + " asignado al box.");
         } else {
             teclado.out("El box está ocupado.");
@@ -52,8 +59,8 @@ public class Box {
      * @return el vehículo en la última fase del box.
      */
     public Vehiculo copiarUltimoVehiculo()throws NotExistsException{
-        if(this.fases[3].estaLibre())throw new NotExistsException("No hay vehículos en la última fase");
-        return this.fases[3].getVehiculo();
+        if(!fases.getUltimo().tieneVehiculo())throw new NotExistsException("No hay vehículos en la última fase");
+        return fases.getUltimo().getVehiculo();
     }
 
     /**
@@ -62,30 +69,49 @@ public class Box {
      */
     public void avanzarVehiculos() {
         boolean hayVehiculos = false;
-        for (FaseRevision fase : fases) {
-            if (!fase.estaLibre()) {
+        for (int i = 0; i < NUM_FASES; i++) {
+            if(fases.getCola().get(i).tieneVehiculo()){
                 hayVehiculos = true;
                 break;
             }
         }
-        if (!hayVehiculos) {
-            teclado.out("No hay vehículos en este box para avanzar.\n");
-            return;
-        }
-        if (!fases[fases.length - 1].estaLibre()) {
-            Vehiculo ultimoVehiculoFase = fases[fases.length - 1].getVehiculo();
-            teclado.out("El vehículo con matrícula " + ultimoVehiculoFase.getMatricula() + " ha superado las fases de revisión y ha abandonado el taller.\n");           
-            fases[fases.length - 1].eliminarVehiculo();
-        }
-        for (int i = fases.length - 1; i > 0; i--) {
-            if (!fases[i - 1].estaLibre()) {
-                fases[i].setVehiculo(fases[i - 1].getVehiculo());
-                fases[i - 1].eliminarVehiculo();
+        if(!hayVehiculos){
+            System.out.println("NO HAY VEHÍCULOS EN ESTE BOX PARA AVANZAR");
+        }else{
+            if(fases.getUltimo().tieneVehiculo()){
+                Vehiculo ultimo = fases.getUltimo().eliminarVehiculo();                
+                System.out.println("EL VEHíCULO CON LA MATRÍCULA "+ultimo.getMatricula()+" HA SUPERADO LAS FASES DE REVISIÓN Y HA ABANDONADO EL TALLER.\n");                
             }
+            for (int i = NUM_FASES-1; i > 0; i--) {
+                fases.getCola().get(i).asignarVehiculoFase(fases.getCola().get(i-1).getVehiculo());
+                fases.getCola().get(i-1).eliminarVehiculo();                
+            }
+            teclado.out("LA PRIMERA FASE AHORA ESTÁ LIBRE PARA RECIBIR NUEVOS VEHÍCULOS");
         }
-        if (fases[0].estaLibre()) {
-            teclado.out("La primera fase ahora está libre para recibir nuevos vehículos.\n");
-        }
+//        for (FaseRevision fase : fases) {
+//            if (!fase.estaLibre()) {
+//                hayVehiculos = true;
+//                break;
+//            }
+//        }
+//        if (fases.estaVacia()) {
+//            teclado.out("No hay vehículos en este box para avanzar.\n");
+//            return;
+//        }
+//        if (!fases[fases.length - 1].estaLibre()) {
+//            Vehiculo ultimoVehiculoFase = fases[fases.length - 1].getVehiculo();
+//            teclado.out("El vehículo con matrícula " + ultimoVehiculoFase.getMatricula() + " ha superado las fases de revisión y ha abandonado el taller.\n");           
+//            fases[fases.length - 1].eliminarVehiculo();
+//        }
+//        for (int i = fases.length - 1; i > 0; i--) {
+//            if (!fases[i - 1].estaLibre()) {
+//                fases[i].setVehiculo(fases[i - 1].getVehiculo());
+//                fases[i - 1].eliminarVehiculo();
+//            }
+//        }
+//        if (fases[0].estaLibre()) {
+//            teclado.out("La primera fase ahora está libre para recibir nuevos vehículos.\n");
+//        }
     }
 
     /**
@@ -93,7 +119,7 @@ public class Box {
      */
     public void mostrarEstado() {
         for (int i = 0; i < NUM_FASES; i++) {
-            String estado = fases[i].estaLibre() ? "vacía" : "ocupada por " + fases[i].getVehiculo().getMatricula();
+            String estado = fases.getCola().get(i).estaLibre() ? "vacía" : "ocupada por " + fases.getCola().get(i).getMatriculaVehiculo();
             teclado.out("\nFase " + (i+1) + " está " + estado + ".");
         }
     }
@@ -105,8 +131,8 @@ public class Box {
      * @return true si la matrícula es válida.
      */
     public boolean matriculaValida(String matricula) {
-        for (int i = 0; i < fases.length; i++) {
-            if (!fases[i].matriculaValida(matricula)) {
+        for (int i = 0; i < NUM_FASES; i++) {
+            if (!fases.getCola().get(i).matriculaValida(matricula)) {
                 return false;
             }
         }
@@ -119,7 +145,7 @@ public class Box {
      * @return true si la primera fase está libre, false en caso contrario.
      */
     public boolean boxLibre() {
-        return this.fases[0].estaLibre();
+        return this.estaLibre();
     }
     
     /**
@@ -128,6 +154,6 @@ public class Box {
      * @return true si la última fase está ocupada, false en caso contrario.
      */
     public boolean ultimaFaseOcupada(){
-        return !this.fases[fases.length-1].estaLibre();
+        return !fases.getUltimo().estaLibre();
     }
 }

@@ -1,13 +1,21 @@
 package itv;
 
 import cliente.Cliente;
+import cliente.ClienteSet;
 import excepciones.AlreadyExistsException;
 import excepciones.NotExistsException;
 import vehiculo.Vehiculo;
 import excepciones.AlreadyExistsException;
 import excepciones.FullQueueException;
 import factura.Factura;
+import interfaces.ComparatorMatricula;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeSet;
 import util.GestorIO;
 import util.Interval;
 
@@ -21,25 +29,25 @@ public class Taller {
 
     private GestorIO teclado = new GestorIO();
     private Box[] boxes;
-    private Cola colaPrincipal;
-    private Cola colaDePago;
+    private GenericQueue<Vehiculo> colaPrincipal;
+    private GenericQueue<Vehiculo> colaDePago;
     private String[] matriculasEnTaller;
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
-    private Cliente[] clientes;
+    private ClienteSet clientes;
     private Factura[] facturas;
     private static int contadorID = 0;
 
-    public Taller() {
+    public Taller()  {
         boxes = new Box[6];
         for (int i = 0; i < boxes.length; i++) {
             boxes[i] = new Box();
         }
-        colaPrincipal = new Cola(20);
-        colaDePago = new Cola(4);
+        colaPrincipal = new GenericQueue<>(20);
+        colaDePago = new GenericQueue<>(4);
         matriculasEnTaller = new String[0];
         ingresosTotales = 0;
-        clientes = new Cliente[0];
+        clientes = new ClienteSet();
         facturas = new Factura[0];
     }
     
@@ -94,13 +102,8 @@ public class Taller {
             estaEsteDNI(dni);//ESTE MÉTODO LLAMA AL DE ABAJO Y SI SALTA LA EXCEPTION HACE EL FOR
             throw new NotExistsException("ERROR: El cliente con el DNI: " + dni + " no existe.");//SI NO ESTÁ LANZA ESTA EXCEPTION
         }catch(AlreadyExistsException ex){
-            for (Cliente c : clientes) {
-                if (c.getDni().equals(dni)) {
-                    return c;
-                }
-            }
-        }    
-        return null;
+            return clientes.getCliente(dni);
+        }
     }
 
     /**
@@ -111,11 +114,7 @@ public class Taller {
      * @throws excepciones.AlreadyExistsException
      */
     public String estaEsteDNI(String dni)throws AlreadyExistsException {
-        for (int i = 0; i < clientes.length; i++) {
-            if (clientes[i].getDni().equalsIgnoreCase(dni)) {
-                throw new AlreadyExistsException(dni,"ERROR. El DNI que quiere insertar está registrado.");
-            }
-        }
+        if(clientes.getCliente(dni)!=null)throw new AlreadyExistsException(dni,"ERROR. El DNI que quiere insertar está registrado.");
         return dni;
     }
 
@@ -125,18 +124,12 @@ public class Taller {
      * @param cliente
      */
     public void añadirCliente(Cliente cliente){
-        Cliente[] clientesNew = Arrays.copyOf(clientes, clientes.length + 1);
-        clientesNew[clientesNew.length - 1] = cliente;
-        clientes = clientesNew;
+        clientes.addCliente(cliente);
     }
 
 
     public boolean estaElDni(String dni) {
-        for (int i = 0; i < clientes.length; i++) {
-            if (clientes[i].getDni().equals(dni)) {
-                return true;
-            }
-        }
+        if(clientes.getCliente(dni)!=null)return true;
         return false;
     }
     /**
@@ -167,7 +160,7 @@ public class Taller {
     public Vehiculo extraerVehiculoPago() throws NotExistsException {
         if(this.colaDePago.estaVacia())
             throw new NotExistsException("ERROR: No hay vehículos en la cola de pagos.");
-        return this.colaDePago.extraerVehiculo();
+        return this.colaDePago.extraer();
     }
 
     /**
@@ -178,7 +171,7 @@ public class Taller {
     public Vehiculo extraerVehiculoCola() throws NotExistsException {
         if(this.colaPrincipal.estaVacia())
             throw new NotExistsException("ERROR: No hay vehículos en la cola principal.");
-        return this.colaPrincipal.extraerVehiculo();
+        return this.colaPrincipal.extraer();
     }
 
     /**
@@ -186,16 +179,16 @@ public class Taller {
      * @param matricula la matrícula a validar.
      * @return true si la matrícula es válida.
      */
-    public boolean matriculaValida(String matricula) {
-        if (colaPrincipal.matriculaValida(matricula)) {
+    public void validarMatricula(String matricula) throws AlreadyExistsException {
+        if (GenericQueue.matriculaValida(matricula,colaPrincipal)) {
             for (Box box : boxes) {
                 if (!box.matriculaValida(matricula)) {
-                    return false;
+                    throw new AlreadyExistsException("ERROR: La matricula ya está registrada");
                 }
-            }
-            return true;
-        }    
-        return false;
+            }  
+            return;
+        }
+        throw new AlreadyExistsException("ERROR: La matricula ya está registrada"); 
     }
 
     /**
@@ -236,7 +229,7 @@ public class Taller {
      * @param vehiculo el vehículo a insertar.
      */
     public void insertarVehiculo(Vehiculo vehiculo) throws FullQueueException {
-        this.colaPrincipal.insertarVehiculo(vehiculo);
+        this.colaPrincipal.insertarElemento(vehiculo);
     }
 
     /**
@@ -296,7 +289,7 @@ public class Taller {
      * @param vehiculo el vehículo a mover.
      */
     public void meterColaPago(Vehiculo vehiculo)throws FullQueueException {
-        this.colaDePago.insertarVehiculo(vehiculo);
+        this.colaDePago.insertarElemento(vehiculo);
     }
     /**
      * COMPRUEBA SI EXISTE EL NOMBRE, SI NO EXISTE LO RETORNA SI EXISTE LANZA UNA EXCEPCION
@@ -305,7 +298,7 @@ public class Taller {
      * @throws AlreadyExistsException 
      */
     public String esteNombreExiste(String nombre) throws AlreadyExistsException{
-        for(Cliente c: clientes){
+        for(Cliente c: clientes.getClientes()){
             if(c.getNombre().equalsIgnoreCase(nombre))throw new AlreadyExistsException(nombre, "QUE CASUALIDAD!! Ya existe este nombre!");
         }
         return nombre;
@@ -317,9 +310,19 @@ public class Taller {
      * @throws AlreadyExistsException 
      */
     public String esteTelefonoExiste(String telefono) throws AlreadyExistsException{
-        for(Cliente c: clientes){
+        for(Cliente c: clientes.getClientes()){
             if(c.getTelefono().equals(telefono))throw new AlreadyExistsException(telefono,"Este teléfono ya existe."+telefono);
         }
         return telefono;
+    }
+    
+    public Set<Cliente> listaClientes(){
+        return new TreeSet<>(this.clientes.getClientes()); //devuelvo uno nuevo para mantener la lista original intacta (por seguridad)
+    }
+    
+    public Queue<Vehiculo> listaVehiculosOrdenados(){
+        Queue<Vehiculo> vehiculosOrdenados = new PriorityQueue<>(new ComparatorMatricula());
+        vehiculosOrdenados.addAll(this.colaPrincipal.getCola());
+        return vehiculosOrdenados;
     }
 }

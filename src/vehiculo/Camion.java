@@ -78,4 +78,5 @@ public class Camion extends TransporteCarga {
         if(cliente.isSOCIO())return cliente.descuentoSocio();
         return 1.;
     }
+
 }

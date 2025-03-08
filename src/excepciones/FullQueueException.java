@@ -11,40 +11,32 @@ import vehiculo.Vehiculo;
  * @author irene
  */
 public class FullQueueException extends Exception{
-    private Vehiculo vehiculoError;
-    private Vehiculo vehiculoCola;
+    private Object generaError;
+    private Object ultimoCola;
 
-    public FullQueueException(Vehiculo vehiculoFallo, Vehiculo vehiculoCola, String message) {
+    public FullQueueException(Object generaError, Object ultimoCola, String message) {
         super(message);
-        this.vehiculoError = vehiculoFallo;
-        this.vehiculoCola = vehiculoCola;
+        this.generaError = generaError;
+        this.ultimoCola = ultimoCola;
     }
 
-    public FullQueueException(Vehiculo vehiculoFallo, Vehiculo vehiculoCola) {
-        super("La cola está llena");
-        this.vehiculoError = vehiculoFallo;
-        this.vehiculoCola = vehiculoCola;
-    }
-    
-    public String getMatriculaError(){
-        return vehiculoError.getMatricula();
-    }
-    
-    public String getMatriculaCola(){
-        return vehiculoCola.getMatricula();
+    public FullQueueException(Object generaError, Object ultimoCola) {
+        this.generaError = generaError;
+        this.ultimoCola = ultimoCola;
     }
 
-    public Vehiculo getVehiculoError() {
-        return vehiculoError;
+
+    public Object getGeneraError() {
+        return generaError;
     }
 
-    public Vehiculo getVehiculoCola() {
-        return vehiculoCola;
+    public Object getUltimoCola() {
+        return ultimoCola;
     }
     
     @Override
     public String toString() {
-        return "FullQueueException{ \nEl vehiculo con matrícula "+ getMatriculaError() + ", no puede ser añadido a la cola.\nDebe salir el vehículo con la matrícula "+getMatriculaCola()+  '}';
+        return "FullQueueException{\nEl elemento: "+ getGeneraError().toString() + ", no puede ser añadido a la cola.\nDebe salir el elemento: "+getUltimoCola().toString()+ '}';
     }
 
     

@@ -20,6 +20,7 @@ public class MostrarBoxes extends OpcionTaller {
     /**
      * muestra el estado de todos los boxes
      */
+    @Override
     public void ejecutar(){
         taller.mostrarBoxes();
     }

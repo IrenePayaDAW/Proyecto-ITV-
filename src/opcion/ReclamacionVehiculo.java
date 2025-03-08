@@ -27,6 +27,7 @@ public class ReclamacionVehiculo extends OpcionTaller {
     /**
      * Reclama un vehiculo para introducirlo en un box.
      */
+    @Override
     public void ejecutar(){
         if(this.taller.colaEstaVacia()){
            teclado.out("No hay vehiculos en la cola principal\n");

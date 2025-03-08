@@ -23,6 +23,7 @@ public class PasarDeFase extends OpcionTaller {
     /**
      * Pasa de fase los vehiculos que están en los boxes
      */
+    @Override
     public void ejecutar() {
         
         teclado.out("Ingrese el número de box donde desea pasar los vehículos de fase: ");

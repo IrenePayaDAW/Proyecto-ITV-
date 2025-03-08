@@ -3,7 +3,7 @@ package opcion;
 import excepciones.FullQueueException;
 import excepciones.NotExistsException;
 import factura.Factura;
-import itv.Cola;
+import itv.GenericQueue;
 import itv.Taller;
 import java.util.Arrays;
 import java.util.logging.Level;

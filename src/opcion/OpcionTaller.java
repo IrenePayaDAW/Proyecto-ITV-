@@ -4,7 +4,8 @@
  */
 package opcion;
 
-import itv.Cola;
+import interfaces.Validable;
+import itv.GenericQueue;
 import itv.Taller;
 import util.GestorIO;
 import util.Interval;
@@ -13,7 +14,7 @@ import util.Interval;
  *
  * @author irene, alvaro, alejandro
  */
-public abstract class OpcionTaller extends Opcion {
+public abstract class OpcionTaller extends Opcion implements Validable {
 
     protected Taller taller ;
     private Interval OPCIONES = new Interval(1, 8);

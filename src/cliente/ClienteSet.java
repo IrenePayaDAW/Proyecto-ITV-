@@ -25,7 +25,7 @@ public class ClienteSet {
     
     public Cliente getCliente(String dni) {
         for (Cliente cliente : clientes) {
-            if(cliente.getDni().equals(dni))return cliente;
+            if(cliente.getDni().equalsIgnoreCase(dni))return cliente;
         }
         return null;
     }

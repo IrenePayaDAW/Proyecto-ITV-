@@ -2,6 +2,7 @@
 package opcion;
 
 import menu.Menu;
+import util.GestorIO;
 
 /**
  *
@@ -9,7 +10,7 @@ import menu.Menu;
  */
 
 public class Salir extends Opcion{
-
+    GestorIO teclado = new GestorIO();
     Menu menu;
     public Salir(Menu menu) {
         super("Salir");

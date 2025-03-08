@@ -64,4 +64,5 @@ public class Furgoneta extends TransporteCarga {
         if(cliente.isSOCIO())return cliente.descuentoSocio();
         return 1.;
     }
+
 }

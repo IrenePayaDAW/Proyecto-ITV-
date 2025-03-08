@@ -17,6 +17,7 @@ public class MostrarBox extends OpcionTaller {
     /**
      * muestra el estado del box que se solicita
      */
+    @Override
     public void ejecutar(){
         teclado.out("Introduce el box que quieres consultar (1-6): ");
         int opcion = validarOpcion(teclado.inInt(), 1, 6);

@@ -1,6 +1,7 @@
 package vehiculo;
 
 import cliente.Cliente;
+import java.util.Objects;
 import util.GestorIO;
 import util.Interval;
 
@@ -169,4 +170,26 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
     
     public abstract double getDescuento();
 
+    @Override
+    public int compareTo(Vehiculo o) {
+        return this.matricula.compareTo(o.matricula);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vehiculo other = (Vehiculo) obj;
+        return Objects.equals(this.matricula, other.matricula);
+    }
+
+    
+    
 }

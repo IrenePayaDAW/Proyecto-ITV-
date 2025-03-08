@@ -3,6 +3,7 @@ package opcion;
 import cliente.Cliente;
 import excepciones.AlreadyExistsException;
 import excepciones.NotExistsException;
+import interfaces.Validable;
 import itv.Taller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,11 +28,12 @@ public class RegistrarCliente extends OpcionTaller {
         String telefono = null;
         boolean vip = false;
         Matcher matcher;
-
+        
+        //INTRODUCCION DEL DNI
         teclado.out("\n---REGISTRA AL CLIENTE---");
         teclado.out("\nIntroduce el DNI: ");
         try {
-            dni = taller.estaEsteDNI(validarDNI(teclado.inString().toUpperCase().trim()));
+            dni = taller.estaEsteDNI(Validable.withPattern(teclado.inString(),"DNI"));
         } catch (AlreadyExistsException ex) {
             System.out.println(ex);//HAGO UN PRINT DE LA EXCEPCIÓN Y LUEGO UTILIZO EL ATRIBUTO QUE SE HA DADO
             try {
@@ -55,7 +57,7 @@ public class RegistrarCliente extends OpcionTaller {
                 System.out.println(ex);
                 System.out.println("¿Tan conocido es " + ex.getStringExistente() + " como nombre?");
                 System.out.println("¿Quieres guardar entonces este nombre?(SI / NO)");
-                if (getRespuestaSiNo(teclado.inString().toUpperCase().trim()).equals("SI")) {//AQUÍ PREGUNTO SI ES EL NOMBRE EXISTENTE EL QUE QUIERE GUARDAR COMO VÁLIDO
+                if (Validable.respuestaSiNo(teclado.inString().trim()).equalsIgnoreCase("SI")) {//AQUÍ PREGUNTO SI ES EL NOMBRE EXISTENTE EL QUE QUIERE GUARDAR COMO VÁLIDO
                     nombre = ex.getStringExistente();
                 } else {
                     error = true;
@@ -68,11 +70,7 @@ public class RegistrarCliente extends OpcionTaller {
         do {
             error = false;
             teclado.out("\nIntroduce el número de teléfono: ");
-            telefono = teclado.inString();
-            while (!validarConPatrones(Pattern.compile("^[0-9]{9}$"), telefono)) {
-                teclado.out("Error, introduce un teléfono solo con 9 números: ");
-                telefono = teclado.inString().toUpperCase().trim();
-            }
+            telefono = Validable.withPattern(teclado.inString(), "TELEFONO");
             try {
                 telefono = esteTelefonoExiste(telefono);
             } catch (AlreadyExistsException ex) {
@@ -83,31 +81,14 @@ public class RegistrarCliente extends OpcionTaller {
             
         }while(error);  
         
-        
+        //SI UN CLIENTE QUIERE SER VIP 
         teclado.out("\n¿El cliente quiere ser VIP? (Si / No):  ");
-        String respuesta = teclado.inString().toUpperCase().trim();
-        while (!respuesta.equals("SI") && !respuesta.equals("NO")) {
-            teclado.out("Error, tiene que ser un 'SI' o un 'NO': ");
-            respuesta = teclado.inString().toUpperCase().trim();
-        }
-        if (respuesta.equals("SI")) {
+        String respuesta = Validable.respuestaSiNo(teclado.inString());
+        if (respuesta.equalsIgnoreCase("SI")) {
             vip = true;
         }
-        teclado.out("\n---EL CLIENTE "+nombre+" HA SIDO REGISTRADO--\n");
+        teclado.out("\n---EL CLIENTE -"+nombre+"- HA SIDO REGISTRADO--\n");
         taller.añadirCliente(new Cliente(dni, nombre, telefono, vip));//INSERTAMOS EL CLIENTE
-    }
-
-    private String validarDNI(String dni) {
-        while (!validarConPatrones(Pattern.compile("^[0-9]{8}[A-Z]$"), dni)) {
-            teclado.out("\nError, el DNI debe ser 8 números y una letra: ");
-            dni = teclado.inString().toUpperCase().trim();
-        }
-        return dni;
-    }
-
-    private boolean validarConPatrones(Pattern patron, String telefono) {
-        Matcher matcher = patron.matcher(telefono);
-        return matcher.matches();
     }
 
     private String esteNombreExiste(String nombre) throws AlreadyExistsException {
@@ -118,13 +99,6 @@ public class RegistrarCliente extends OpcionTaller {
         return taller.esteTelefonoExiste(telefono);
     }
 
-    private String getRespuestaSiNo(String respuestaCliente) {
-        while (!respuestaCliente.equals("SI") && !respuestaCliente.equals("NO")) {
-            teclado.out("\nERROR. Lo siento está no es una respuesta válida\n");
-            teclado.out("La respuesta debe ser un SI o NO: ");
-            respuestaCliente = teclado.inString().toUpperCase().trim();
-        }
-        return respuestaCliente;
-    }
+    
 
 }
