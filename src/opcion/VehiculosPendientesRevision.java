@@ -6,6 +6,7 @@ package opcion;
 
 import excepciones.NotExistsException;
 import itv.Taller;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.GestorIO;
@@ -15,26 +16,26 @@ import vehiculo.Vehiculo;
  *
  * @author irene
  */
-public class VehiculoMatriculaNueva extends OpcionTaller {
-    
-    public VehiculoMatriculaNueva(Taller taller) {
-        super("Mostrar vehiculo con la matrícula más nueva", taller);
+public class VehiculosPendientesRevision extends OpcionTaller{
+
+    public VehiculosPendientesRevision(Taller taller) {
+        super("Mostrar vehiculos pendientes de revisión", taller);
     }
-    
+
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();
-        
-        Vehiculo vehiculo;
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         try {
-            vehiculo = Taller.encontrarMaximo(taller.getVehiculos());
-            teclado.out("EL VEHÍCULO CON LA MATRÍCULA MÁS NUEVA ES: " + vehiculo.getMatricula());
-        } catch (NotExistsException ex) {
-            teclado.out(ex.toString());
+            vehiculos.addAll(taller.getVehiculos());// son los vehiculos que aún no han entrado en ningun box, es la cola principal
+            for (Vehiculo vehiculo : vehiculos) {
+            vehiculo.mostrarTodo();
         }
+        } catch (NotExistsException ex) {
+            teclado.out(ex.getMessage());
+        }
+        
         
     }
     
 }
-
-

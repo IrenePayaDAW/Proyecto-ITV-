@@ -4,6 +4,7 @@
  */
 package opcion;
 
+import excepciones.AlreadyExistsException;
 import excepciones.NotExistsException;
 import itv.Taller;
 import java.util.logging.Level;
@@ -43,8 +44,11 @@ public class ReclamacionVehiculo extends OpcionTaller {
            }
             try {
                 taller.asignarVehiculoBox(opcion, taller.extraerVehiculoCola());
+                taller.eliminarVehiculoCola();
             } catch (NotExistsException ex) {
                 teclado.out("No ha sido posible realizar la operación ya que todavía no hay vehículos existentes.");
+            } catch (AlreadyExistsException ex) {
+                teclado.out(ex.getMessage());
             }
             
         }

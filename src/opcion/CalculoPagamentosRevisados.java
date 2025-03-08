@@ -32,8 +32,9 @@ public class CalculoPagamentosRevisados extends OpcionTaller {
        
         try{
             Vehiculo vehiculo = taller.extraerVehiculoPago();
-            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + vehiculo.calcularPrecio() + "\n");
-            taller.agregarFactura(new Factura(vehiculo));
+            double precio = vehiculo.calcularPrecio();
+            teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " tiene que pagar: " + precio + "\n");
+            taller.agregarFactura(new Factura(vehiculo, precio));
             teclado.out("Vehiculo con matrícula: " + vehiculo.getMatricula() + " se ha añadido al historial.\n");
         }catch(NotExistsException ex){
             System.out.println(ex.getMessage());

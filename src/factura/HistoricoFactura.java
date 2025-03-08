@@ -12,23 +12,23 @@ import vehiculo.Vehiculo;
  * @author irene, alvaro, alejandro
  */
 public class HistoricoFactura {
-    private Map<Vehiculo, TreeSet<Factura>> historico;
+    private Map<String, TreeSet<Factura>> historico;
 
     public HistoricoFactura() {
         historico = new HashMap<>();
     }
     
     public void agregarFactura(Factura factura){
-        TreeSet<Factura> facturasCliente = historico.get(factura.getVehiculo());
+        TreeSet<Factura> facturasCliente = historico.get(factura.getVehiculo().getMatricula());
         if (facturasCliente == null){
             facturasCliente = new TreeSet<>();
-            historico.put(factura.getVehiculo(), facturasCliente);
+            historico.put(factura.getVehiculo().getMatricula(), facturasCliente);
         }
         facturasCliente.add(factura);
     }
     
-    public TreeSet<Factura> obtenerFacturasPorVehiculo(Vehiculo vehiculo){
-        TreeSet<Factura> facturasCliente = historico.get(vehiculo);
+    public TreeSet<Factura> obtenerFacturasPorVehiculo(String matricula){
+        TreeSet<Factura> facturasCliente = historico.get(matricula);
         if (facturasCliente == null){
             facturasCliente = new TreeSet<>();
         }
@@ -36,22 +36,22 @@ public class HistoricoFactura {
     }
     
     public void mostrarFacturas(){
-        for (Vehiculo vehiculo : historico.keySet()) {
-            this.mostrarFacturas(vehiculo);
+        for (String matricula : historico.keySet()) {
+            this.mostrarFacturas(matricula);
         }
     }
     
-    public void mostrarFacturas(Vehiculo vehiculo) {
+    public void mostrarFacturas(String matricula) {
         System.out.println("-- FACTURAS DEL VEHICULO --");
-        for (Factura factura : historico.get(vehiculo)){
+        for (Factura factura : historico.get(matricula)){
             System.out.println(factura);
         }
     }
     
     public double calculoFacturas(){
         double resultado= 0.;
-        for (Vehiculo vehiculo : historico.keySet()) {
-            for (Factura factura : historico.get(vehiculo)) {
+        for (String matricula : historico.keySet()) {
+            for (Factura factura : historico.get(matricula)) {
                 resultado += factura.getPrecioPagado();
             }
         }
@@ -59,20 +59,12 @@ public class HistoricoFactura {
     }
     
     public boolean isEmpty(){
-        return this.isEmpty();
+        return historico.isEmpty();
     }
     
     public boolean isVehiculoIn(String matricula){
-        for(Vehiculo v : historico.keySet()){
-            if(v.getMatricula().equalsIgnoreCase(matricula))return true;
-        }
-        return false;
+        return historico.containsKey(matricula);
+        
     }
     
-    public Vehiculo getVehiculo(String matricula){
-        for(Vehiculo v : historico.keySet()){
-            if(v.getMatricula().equalsIgnoreCase(matricula))return v;
-        }
-        return null;
-    }
 }

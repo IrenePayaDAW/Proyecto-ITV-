@@ -26,7 +26,7 @@ public class InformeClientesVIP extends OpcionTaller{
             clientesVip = taller.getClientesVip();
             teclado.out("\n------ CLIENTES VIP ------\n");
             for (Cliente cliente : clientesVip) {
-                teclado.out("Cliente "+(i++)+""
+                teclado.out("Cliente "+(++i)+""
                             + "\nDNI: "+cliente.getDni()
                             +"\nNombre: "+cliente.getNombre()
                             +"\nTelefono: "+cliente.getTelefono()+"\n\n");

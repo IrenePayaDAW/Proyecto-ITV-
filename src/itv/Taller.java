@@ -9,14 +9,12 @@ import excepciones.AlreadyExistsException;
 import excepciones.FullQueueException;
 import factura.Factura;
 import factura.HistoricoFactura;
-import interfaces.ComparatorMatricula;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 import util.GestorIO;
 import util.Interval;
-import interfaces.ComparatorMatricula;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -24,8 +22,12 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import factura.HistoricoFactura;
+import interfaces.ComparatorModelo;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.GestorIO;
 import util.Interval;
 
@@ -38,10 +40,9 @@ import util.Interval;
 public class Taller {
 
     private GestorIO teclado = new GestorIO();
-    private Box[] boxes;
+    private GenericQueue<Box> boxes;
     private GenericQueue<Vehiculo> colaPrincipal;
     private GenericQueue<Vehiculo> colaDePago;
-    private String[] matriculasEnTaller;
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
     private ClienteSet clientes;
@@ -49,13 +50,19 @@ public class Taller {
     private static int contadorID = 0;
 
     public Taller()  {
-        boxes = new Box[6];
-        for (int i = 0; i < boxes.length; i++) {
-            boxes[i] = new Box();
+        boxes = new GenericQueue<>((int)NUMERO_BOXES.getSuperior());
+        
+        try {
+            for (int i = 0; i < NUMERO_BOXES.getSuperior(); i++) {
+            boxes.enqueue(new Box());
+            }
+        } catch (FullQueueException ex) {
+            teclado.out("No se han podido añadir todos los elementos");
         }
+        
+        
         colaPrincipal = new GenericQueue<>(20);
-        colaDePago = new GenericQueue<>(4);
-        matriculasEnTaller = new String[0];
+        colaDePago = new GenericQueue<>(4);       
         ingresosTotales = 0;
         clientes = new ClienteSet();
         historicoFacturas = new HistoricoFactura();
@@ -87,7 +94,7 @@ public class Taller {
     public void mostrarFacturas(String matricula) throws NotExistsException{
         if(historicoFacturas.isEmpty())throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
         if(historicoFacturas.isVehiculoIn(matricula)){
-            historicoFacturas.obtenerFacturasPorVehiculo(historicoFacturas.getVehiculo(matricula));
+            System.out.println(historicoFacturas.obtenerFacturasPorVehiculo(matricula));
         }else{
             teclado.out("El vehículo no tiene ninguna factura asociada.");
         }
@@ -156,7 +163,7 @@ public class Taller {
      * @return true si hay vehículos para pagar, false en caso contrario.
      */
     public boolean hayVehiculosParaPagar() {
-        return !this.colaDePago.estaVacia();
+        return !this.colaDePago.isEmpty();
     }
 
     /**
@@ -165,9 +172,9 @@ public class Taller {
      * @return el vehículo extraído.
      */
     public Vehiculo extraerVehiculoPago() throws NotExistsException {
-        if(this.colaDePago.estaVacia())
+        if(this.colaDePago.isEmpty())
             throw new NotExistsException("ERROR: No hay vehículos en la cola de pagos.");
-        return this.colaDePago.extraer();
+        return this.colaDePago.dequeue();
     }
 
     /**
@@ -176,11 +183,16 @@ public class Taller {
      * @return el vehículo extraído.
      */
     public Vehiculo extraerVehiculoCola() throws NotExistsException {
-        if(this.colaPrincipal.estaVacia())
+        if(this.colaPrincipal.isEmpty())
             throw new NotExistsException("ERROR: No hay vehículos en la cola principal.");
-        return this.colaPrincipal.extraer();
+        return this.colaPrincipal.peek();
     }
 
+    public Vehiculo eliminarVehiculoCola() throws NotExistsException {
+        if(this.colaPrincipal.isEmpty())
+            throw new NotExistsException("ERROR: No hay vehículos en la cola principal.");
+        return this.colaPrincipal.dequeue();
+    }
     /**
      * Si la matrícula ya está registrada en el taller NO será válida.
      * @param matricula la matrícula a validar.
@@ -188,7 +200,7 @@ public class Taller {
      */
     public void validarMatricula(String matricula) throws AlreadyExistsException {
         if (GenericQueue.matriculaValida(matricula,colaPrincipal)) {
-            for (Box box : boxes) {
+            for (Box box : boxes.getCola()) {
                 if (!box.matriculaValida(matricula)) {
                     throw new AlreadyExistsException("ERROR: La matricula ya está registrada");
                 }
@@ -204,7 +216,7 @@ public class Taller {
      * @param numeroBox el número del box.
      */
     public void avanzarVehiculos(int numeroBox) {
-        boxes[numeroBox - 1].avanzarVehiculos();
+        boxes.getCola().get(numeroBox-1).avanzarVehiculos();
     }
 
     /**
@@ -213,7 +225,7 @@ public class Taller {
      * @return true si la cola está vacía, false en caso contrario.
      */
     public boolean colaEstaVacia() {
-        return this.colaPrincipal.estaVacia();
+        return this.colaPrincipal.isEmpty();
     }
 
     /**
@@ -222,7 +234,7 @@ public class Taller {
      * @return true si hay algún box libre, false en caso contrario.
      */
     public boolean boxesVacios() {
-        for (Box box : boxes) {
+        for (Box box : boxes.getCola()) {
             if (box.boxLibre()) {
                 return true;
             }
@@ -236,7 +248,7 @@ public class Taller {
      * @param vehiculo el vehículo a insertar.
      */
     public void insertarVehiculo(Vehiculo vehiculo) throws FullQueueException {
-        this.colaPrincipal.insertarElemento(vehiculo);
+        this.colaPrincipal.enqueue(vehiculo);
     }
 
     /**
@@ -245,8 +257,8 @@ public class Taller {
      * @param numeroBox el número del box.
      * @param vehiculo el vehículo a asignar.
      */
-    public void asignarVehiculoBox(int numeroBox, Vehiculo vehiculo) {
-        boxes[numeroBox - 1].asignarVehiculo(vehiculo);
+    public void asignarVehiculoBox(int numeroBox, Vehiculo vehiculo) throws AlreadyExistsException {
+        boxes.getCola().get(numeroBox-1).asignarVehiculo(vehiculo);
     }
 
     /**
@@ -255,7 +267,7 @@ public class Taller {
      * @param box el número del box.
      */
     public void mostrarBox(int box) {
-        this.boxes[box - 1].mostrarEstado();
+        boxes.getCola().get(box-1).mostrarEstado();
     }
 
     /**
@@ -263,7 +275,7 @@ public class Taller {
      */
     public void mostrarBoxes() {
         int i = 1;
-        for (Box box : boxes) {
+        for (Box box : boxes.getCola()) {
             teclado.out("\nBOX " + i++ + "\n");
             box.mostrarEstado();
             teclado.out("\n");
@@ -277,7 +289,7 @@ public class Taller {
      * @return el vehículo extraído.
      */
     public Vehiculo extraerVehiculoBox(int numeroBox) throws NotExistsException {
-        return boxes[numeroBox - 1].copiarUltimoVehiculo();
+        return boxes.getCola().get(numeroBox-1).copiarUltimoVehiculo();
     }
 
     /**
@@ -287,7 +299,7 @@ public class Taller {
      * @return true si la última fase está ocupada, false en caso contrario.
      */
     public boolean ultimaFaseOcupada(int numeroBox) {
-        return boxes[numeroBox - 1].ultimaFaseOcupada();
+        return boxes.getCola().get(numeroBox-1).ultimaFaseOcupada();
     }
 
     /**
@@ -296,7 +308,7 @@ public class Taller {
      * @param vehiculo el vehículo a mover.
      */
     public void meterColaPago(Vehiculo vehiculo)throws FullQueueException {
-        this.colaDePago.insertarElemento(vehiculo);
+        this.colaDePago.enqueue(vehiculo);
     }
     /**
      * COMPRUEBA SI EXISTE EL NOMBRE, SI NO EXISTE LO RETORNA SI EXISTE LANZA UNA EXCEPCION
@@ -324,13 +336,20 @@ public class Taller {
     }
     
 
-    public Set<Cliente> listaClientes(){
-        return new TreeSet<>(this.clientes.getClientes()); //devuelvo uno nuevo para mantener la lista original intacta (por seguridad)
+    public List<Cliente> listaClientes() throws NotExistsException{
+        if(this.clientes.getClientes().isEmpty())throw new NotExistsException("NO HAY CLIENTES REGISTRADOS");
+        return new ArrayList<>(this.clientes.getClientes()); //devuelvo uno nuevo para mantener la lista original intacta (por seguridad)
     }
     
-    public Queue<Vehiculo> listaVehiculosOrdenados(){
-        Queue<Vehiculo> vehiculosOrdenados = new PriorityQueue<>(new ComparatorMatricula());
-        vehiculosOrdenados.addAll(this.colaPrincipal.getCola());
+    public List<Vehiculo> getVehiculos() throws NotExistsException{
+        if(this.colaPrincipal.isEmpty())throw new NotExistsException("NO HAY VEHICULOS EN LA COLA");
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        vehiculos.addAll(this.colaPrincipal.getCola());
+        return vehiculos;
+    }
+    public Set<Vehiculo> listaVehiculosOrdenadosModelo() throws NotExistsException{
+        Set<Vehiculo> vehiculosOrdenados = new TreeSet<>(new ComparatorModelo()); //uso el comparator para ordenar por matricula pero de forma real, revisando primero las letras y luego los números (de mat más nueva a más antigua)
+        vehiculosOrdenados.addAll(this.getVehiculos());
         return vehiculosOrdenados;
     }
 
@@ -338,6 +357,14 @@ public class Taller {
         return clientes.getClientesVip();
     }
     
-    
+    public static <E extends Comparable<E>> E encontrarMaximo(List<E> lista) throws NotExistsException{
+        if(lista.isEmpty())throw new NotExistsException("ERROR. ESTÁ VACÍA");
+
+        E maximo = lista.get(0);
+        for (E e : lista) {
+            if(e.compareTo(maximo)>0) maximo=e;
+        }
+        return maximo;       
+    }
 
 }

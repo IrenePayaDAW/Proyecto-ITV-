@@ -1,5 +1,6 @@
 package itv;
 
+import excepciones.AlreadyExistsException;
 import excepciones.FullQueueException;
 import excepciones.NotExistsException;
 import itv.FaseRevision;
@@ -23,7 +24,7 @@ public class Box {
         fases = new GenericQueue<>(NUM_FASES);
         for (int i = 0; i < NUM_FASES; i++) {
             try {
-                fases.insertarElemento(new FaseRevision(i));
+                fases.enqueue(new FaseRevision(i));
             } catch (FullQueueException ex) {
                 teclado.out("No se han podido añadir todos los elementos a la cola");
             }
@@ -36,7 +37,7 @@ public class Box {
      * @return true si el box está libre, false en caso contrario.
      */
     public boolean estaLibre() {
-        return !fases.getPrimero().tieneVehiculo();
+        return !fases.peek().tieneVehiculo();
     }
 
     /**
@@ -44,12 +45,12 @@ public class Box {
      * 
      * @param vehiculo el vehículo a asignar.
      */
-    public void asignarVehiculo(Vehiculo vehiculo){
+    public void asignarVehiculo(Vehiculo vehiculo) throws AlreadyExistsException{
         if (estaLibre()) {
-            fases.getPrimero().asignarVehiculoFase(vehiculo);
+            fases.peek().asignarVehiculoFase(vehiculo);
             teclado.out("Vehículo con matrícula " + vehiculo.getMatricula() + " asignado al box.");
         } else {
-            teclado.out("El box está ocupado.");
+            throw new AlreadyExistsException("El box está ocupado.");
         }
     }
     

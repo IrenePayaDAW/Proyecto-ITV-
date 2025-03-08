@@ -16,9 +16,9 @@ public class Factura implements Comparable<Factura>{
     private boolean VIP;
     private boolean socio;
 
-    public Factura(Vehiculo vehiculo) {
+    public Factura(Vehiculo vehiculo, Double precio) {
         this.vehiculo = vehiculo;
-        this.precioPagado = vehiculo.calcularPrecio();
+        this.precioPagado = precio;
         this.fecha = LocalDateTime.now();
         this.VIP = vehiculo.clienteIsVIP();
         this.socio = vehiculo.clienteIsSOCIO();
