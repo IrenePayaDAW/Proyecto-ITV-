@@ -74,6 +74,9 @@ public class ITV {
         programa.inicio();
     }
 
+    /**
+     * el programa principal
+     */
     public void inicio() {
         do {
             menu.mostrar();

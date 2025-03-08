@@ -22,6 +22,9 @@ public class VehiculosPendientesRevision extends OpcionTaller{
         super("Mostrar vehiculos pendientes de revisión", taller);
     }
 
+    /**
+     * muestra la lista de vehículos que están esperando a ser revisados
+     */
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();

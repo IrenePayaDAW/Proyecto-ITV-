@@ -16,6 +16,9 @@ public class DarDeBajaCliente extends OpcionTaller{
         super("Dar de baja al cliente", taller);
     }
 
+    /**
+     * da de baja a un cliente
+     */
     @Override
     public void ejecutar() {
         teclado.out("-- DAR DE BAJA AL CLIENTE --\n");

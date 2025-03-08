@@ -23,6 +23,9 @@ public class MostrarVehiculosPorModelo extends OpcionTaller{
         super("Mostrar vehiculos ordenados por modelo", taller);
     }
 
+    /**
+     * muestra todos los vehículos de la cola ordenados por modelo
+     */
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();

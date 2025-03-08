@@ -21,6 +21,9 @@ public class VehiculoMatriculaNueva extends OpcionTaller {
         super("Mostrar vehiculo con la matrícula más nueva", taller);
     }
     
+    /**
+     * muestra el vehículo con la matricula más nueva
+     */
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();

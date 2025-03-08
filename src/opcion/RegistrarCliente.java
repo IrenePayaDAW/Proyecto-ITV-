@@ -20,6 +20,9 @@ public class RegistrarCliente extends OpcionTaller {
         super("Resgistrar cliente", taller);
     }
 
+    /**
+     * registra a un nuevo cliente
+     */
     @Override
     public void ejecutar() {
         boolean error = false;
@@ -91,10 +94,22 @@ public class RegistrarCliente extends OpcionTaller {
         taller.añadirCliente(new Cliente(dni, nombre, telefono, vip));//INSERTAMOS EL CLIENTE
     }
 
+    /**
+     * 
+     * @param nombre
+     * @return devuelve el error
+     * @throws AlreadyExistsException 
+     */
     private String esteNombreExiste(String nombre) throws AlreadyExistsException {
         return taller.esteNombreExiste(nombre);
     }
     
+    /**
+     * 
+     * @param telefono
+     * @return devuelve el error
+     * @throws AlreadyExistsException 
+     */
     private String esteTelefonoExiste(String telefono) throws AlreadyExistsException{
         return taller.esteTelefonoExiste(telefono);
     }

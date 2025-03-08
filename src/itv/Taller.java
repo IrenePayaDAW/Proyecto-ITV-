@@ -65,17 +65,30 @@ public class Taller {
         return historicoFacturas.calculoFacturas();
     }
     
+    /**
+     * aumenta el contador de facturas y agrega la factura al histórico
+     * @param factura 
+     */
     public void agregarFactura(Factura factura) {
         factura.setID(contadorID);
         contadorID++;
         historicoFacturas.agregarFactura(factura);
     }
 
+    /**
+     * muestra el histórico de facturas
+     * @throws NotExistsException 
+     */
     public void mostrarFacturas() throws NotExistsException {
         if(historicoFacturas.isEmpty())throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
         historicoFacturas.mostrarFacturas();
     }
     
+    /**
+     * muestra las facturas de un vehículo en concreto
+     * @param matricula
+     * @throws NotExistsException 
+     */
     public void mostrarFacturas(String matricula) throws NotExistsException{
         if(historicoFacturas.isEmpty())throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
         if(historicoFacturas.isVehiculoIn(matricula)){
@@ -101,6 +114,11 @@ public class Taller {
             return clientes.getCliente(dni);
         }
     }
+    
+    /**
+     * elimina el cliente
+     * @param cliente 
+     */
     public void removeCliente(Cliente cliente){
         clientes.remove(cliente);
     }
@@ -127,6 +145,11 @@ public class Taller {
     }
 
 
+    /**
+     * 
+     * @param dni
+     * @return devuelve si está el dni registrado
+     */
     public boolean estaElDni(String dni) {
         if(clientes.getCliente(dni)!=null)return true;
         return false;
@@ -173,6 +196,11 @@ public class Taller {
         return this.colaPrincipal.peek();
     }
 
+    /**
+     * 
+     * @return elimina el sigueinte vehiculo en la cola
+     * @throws NotExistsException 
+     */
     public Vehiculo eliminarVehiculoCola() throws NotExistsException {
         if(this.colaPrincipal.isEmpty())
             throw new NotExistsException("ERROR: No hay vehículos en la cola principal.");
@@ -321,27 +349,55 @@ public class Taller {
     }
     
 
+    /**
+     * 
+     * @return devuelve la lista de clientes (devolverá una nueva para evitar problemas de modificación de datos)
+     * @throws NotExistsException 
+     */
     public List<Cliente> listaClientes() throws NotExistsException{
         if(this.clientes.getClientes().isEmpty())throw new NotExistsException("NO HAY CLIENTES REGISTRADOS\n");
         return new ArrayList<>(this.clientes.getClientes()); //devuelvo uno nuevo para mantener la lista original intacta (por seguridad)
     }
     
+    /**
+     * 
+     * @return devuelve la lista de vehiculos (pero una nueva para evitar problemas con la modificación de datos)
+     * @throws NotExistsException 
+     */
     public List<Vehiculo> getVehiculos() throws NotExistsException{
         if(this.colaPrincipal.isEmpty())throw new NotExistsException("NO HAY VEHICULOS EN LA COLA\n");
         List<Vehiculo> vehiculos = new ArrayList<>();
         vehiculos.addAll(this.colaPrincipal.getCola());
         return vehiculos;
     }
+    
+    /**
+     * 
+     * @return devuelve los vehículos ordenados por modelo (una nueva lista para evitar problemas de modificación de datos)
+     * @throws NotExistsException 
+     */
     public Set<Vehiculo> listaVehiculosOrdenadosModelo() throws NotExistsException{
         Set<Vehiculo> vehiculosOrdenados = new TreeSet<>(new ComparatorModelo()); //uso el comparator para ordenar por matricula pero de forma real, revisando primero las letras y luego los números (de mat más nueva a más antigua)
         vehiculosOrdenados.addAll(this.getVehiculos());
         return vehiculosOrdenados;
     }
 
+    /**
+     * 
+     * @return devuelve la lista de clientes vip
+     * @throws NotExistsException 
+     */
     public TreeSet<Cliente> getClientesVip() throws NotExistsException{
         return clientes.getClientesVip();
     }
     
+    /**
+     * 
+     * @param <E>
+     * @param lista
+     * @return devuelve el elemento máximo de cualquier lista que implemente comparable
+     * @throws NotExistsException 
+     */
     public static <E extends Comparable<E>> E encontrarMaximo(List<E> lista) throws NotExistsException{
         if(lista.isEmpty())throw new NotExistsException("ERROR. ESTÁ VACÍA\n");
 

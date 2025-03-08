@@ -25,9 +25,19 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
         this.modeloVehiculo = modeloVehiculo;
         this.cliente = cliente;
     }
+     
+     /**
+      * 
+      * @return devuelve si el cliente es VIP o no
+      */
     public boolean clienteIsVIP(){
        return cliente.isVIP();
     }
+    
+    /**
+     * 
+     * @return devuelve si el cliente es socio o no 
+     */
     public boolean clienteIsSOCIO(){
         return cliente.isSOCIO();
     }
@@ -167,9 +177,17 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
      */
     public abstract void registrarVehiculo();
     
-    
+    /**
+     * 
+     * @return devuelve el descuento 
+     */
     public abstract double getDescuento();
 
+    /**
+     * 
+     * @param o
+     * @return compara los vehículos por matricula como en la vida real, primero según las letras y si son iguales por los números
+     */
     @Override
     public int compareTo(Vehiculo o) {
         String mat1 = this.getMatricula().substring(3);
@@ -184,6 +202,11 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
        
     }
 
+    /**
+     * 
+     * @param obj
+     * @return compara los vehículos por matricula 
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -199,6 +222,10 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
         return Objects.equals(this.matricula, other.matricula);
     }
 
+    /**
+     * 
+     * @return devuelve la matrícula del vehículo
+     */
     @Override
     public String toString() {
         return " matricula:" + matricula;

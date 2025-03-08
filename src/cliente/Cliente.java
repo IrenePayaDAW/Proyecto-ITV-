@@ -32,17 +32,28 @@ public class Cliente implements Comparable<Cliente> {
     }
 
                 
-        
+    /**
+     * 
+     * @return cantidad de veces que ha estado aquí
+     */   
     public boolean esSuPrimeraVez() {
         return contVecesAqui == 0;
     }
 
+    /**
+     * 
+     * @return descuento primera vez
+     */
     public double descuentoPrimeraVez() {
         contVecesAqui++;
         return 0.7; //Es un 30% de descuento
 
     }
 
+    /**
+     * 
+     * @return descuento socio
+     */
     public double descuentoSocio() {
         if (this.contSiendoSocio() == 0) {
             contSiendoSocio++;
@@ -55,38 +66,73 @@ public class Cliente implements Comparable<Cliente> {
         return descuentoSocio;
     }
 
+    /**
+     * 
+     * @return devuelve el dni del cliente
+     */
     public String getDni() {
         return DNI;
     }
     
+    /**
+     * 
+     * @return devuelve el nombre del cliente
+     */
     public String getNombre(){
         return nombre;
     }
 
+    /**
+     * 
+     * @return devuelve el teléfono del cliente 
+     */
     public String getTelefono() {
         return telefono;
     }
 
+    /**
+     * 
+     * @return devuelve si el cliente es vip o no 
+     */
     public boolean isVIP() {
         return vip;
     }
 
+    /**
+     * 
+     * @return devuelve si es socio o no
+     */
     public boolean isSOCIO() {
         return socio;
     }
 
+    /**
+     * hace socio al cliente
+     */
     public void hacerSocio() {
         socio = true;
     }
 
+    /**
+     * 
+     * @return devuelve las veces que ha venido siendo socio 
+     */
     public int contSiendoSocio() {
         return contSiendoSocio;
     }
     
+    /**
+     * lleva la cuenta de cuantos vehículos tiene el cliente
+     */
     public void unVehiculoMas(){
         vehiculosTiene++;
     }
 
+    /**
+     *
+     * @param obj
+     * @return si son iguales o no
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -102,6 +148,10 @@ public class Cliente implements Comparable<Cliente> {
         return Objects.equals(this.DNI, other.DNI);
     }
 
+    /**
+     * 
+     * @return los datos del cliente en String
+     */
     @Override
     public String toString() {
         return "CLIENTE("+nombre+"){\n"
@@ -114,6 +164,11 @@ public class Cliente implements Comparable<Cliente> {
     
    
 
+    /**
+     * 
+     * @param t
+     * @return compara el cliente por dni
+     */
     @Override
     public int compareTo(Cliente t) {
         return this.DNI.compareTo(t.getDni());

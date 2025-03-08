@@ -17,6 +17,9 @@ public class HistoricoFacturasVehiculo extends OpcionTaller {
         super("Consultar histórico de revisiones por vehículo", taller);
     }
 
+    /**
+     * muestra el histórico de facturas de un vehículo en concreto
+     */
     @Override
     public void ejecutar() {
         teclado.out("-- CONSULTAR HISTÓRICO DE REVISIONES POR VEHÍCULO --\n");

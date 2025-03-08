@@ -32,10 +32,18 @@ public class GenericQueue<T> {
         this.cola.add(elemento);
     }
 
+    /**
+     * 
+     * @return devuelve el primer elemento de la cola
+     */
     public T peek(){
         return this.cola.getFirst();
     }
     
+    /**
+     * 
+     * @return devuelve el último elemento de la cola 
+     */
     public T getUltimo(){
         return this.cola.getLast();
     }
@@ -80,6 +88,13 @@ public class GenericQueue<T> {
         return this.cola;
     }
     
+    /**
+     * 
+     * @param <E>
+     * @param matricula
+     * @param vehiculos
+     * @return devuelve si la matrícula es válida o no 
+     */
     public static <E extends Vehiculo> boolean matriculaValida(String matricula, GenericQueue<E> vehiculos){
         for (E e : vehiculos.cola) {
             if(e.getMatricula().equalsIgnoreCase(matricula)) return false;

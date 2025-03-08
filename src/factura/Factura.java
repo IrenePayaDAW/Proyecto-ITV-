@@ -25,34 +25,66 @@ public class Factura implements Comparable<Factura>{
         this.ID = 0;
     }
 
+    /**
+     * 
+     * @return devuelve la ID de la factura 
+     */
     public int getID() {
         return ID;
     }
 
+    /**
+     * inserta la ID de la factura
+     * @param ID 
+     */
     public void setID(int ID) {
         this.ID = ID;
     }
 
+    /**
+     * 
+     * @return devuelve el precio que pagó el vehículo 
+     */
     public double getPrecioPagado() {
         return precioPagado;
     }
 
+    /**
+     * 
+     * @return devuelve el vehículo de ésta factura 
+     */
     public Vehiculo getVehiculo() {
         return vehiculo;
     }
 
+    /**
+     * 
+     * @return devuelve la fecha de la factura 
+     */
     public LocalDateTime getFecha() {
         return fecha;
     }
 
+    /**
+     * 
+     * @return devuelve si el cliente era vip en el momento en el que se hizo la factura 
+     */
     public boolean isVIP() {
         return VIP;
     }
 
+    /**
+     * 
+     * @return devuelve si el cliente era socio en el momento en el que se hizo la factura
+     */
     public boolean isSocio() {
         return socio;
     }
     
+    /**
+     * 
+     * @return devuelve en string los datos de la factura 
+     */
     @Override
     public String toString() {
         String clienteVip;
@@ -82,10 +114,18 @@ public class Factura implements Comparable<Factura>{
     }
 
 
+    /**
+     * muestra el String... (este método sobra)
+     */
     public void mostrar() {
         System.out.println(this.toString());
     }
     
+    /**
+     * 
+     * @param obj
+     * @return devuelve si los objetos que se están comparando son iguales 
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -116,6 +156,11 @@ public class Factura implements Comparable<Factura>{
         return Objects.equals(this.vehiculo, other.vehiculo);
     }
 
+    /**
+     * 
+     * @param o
+     * @return dcompara las facturas por fecha 
+     */
     @Override
     public int compareTo(Factura o) {
         return this.getFecha().compareTo(o.getFecha());

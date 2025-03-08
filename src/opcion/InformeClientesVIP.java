@@ -18,6 +18,9 @@ public class InformeClientesVIP extends OpcionTaller{
         super("Generar informe de clientes VIP", taller);
     }
 
+    /**
+     * muestra la lista de los clientes vip
+     */
     @Override
     public void ejecutar() {
         TreeSet<Cliente> clientesVip;

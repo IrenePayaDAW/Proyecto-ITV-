@@ -22,6 +22,9 @@ public class ClienteDNIAlto extends OpcionTaller{
         super("Cliente con el DNI más alto", taller);
     }
 
+    /**
+     * busca el dni más alto de los que están registrados y lo muestra
+     */
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();

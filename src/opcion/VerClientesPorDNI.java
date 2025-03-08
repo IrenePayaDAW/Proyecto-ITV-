@@ -22,6 +22,9 @@ public class VerClientesPorDNI extends OpcionTaller{
         super("Ver clientes ordenados por DNI", taller);
     }
 
+    /**
+     * muestra los clientes en orden por DNI
+     */
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();

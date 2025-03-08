@@ -20,6 +20,9 @@ public class AltaSocio extends OpcionTaller {
         super("Dar de alta como socio", taller);
     }
 
+    /**
+     * da de alta a un cliente como socio
+     */
     @Override
     public void ejecutar() {
         teclado.out("-- DAR DE ALTA COMO SOCIO --\n");

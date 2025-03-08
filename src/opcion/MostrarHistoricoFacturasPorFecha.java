@@ -13,6 +13,9 @@ public class MostrarHistoricoFacturasPorFecha extends OpcionTaller {
         super("Mostrar histórico facturas por fecha", taller);
     }
 
+    /**
+     * muestra todas las facturas organizadas por fecha
+     */
     @Override
     public void ejecutar() {
         teclado.out("-- MOSTRAR HISTÓRICO DE LAS FACTURAS POR FECHA --\n");
