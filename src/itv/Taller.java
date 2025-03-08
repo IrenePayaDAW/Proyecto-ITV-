@@ -8,6 +8,14 @@ import vehiculo.Vehiculo;
 import excepciones.AlreadyExistsException;
 import excepciones.FullQueueException;
 import factura.Factura;
+import factura.HistoricoFactura;
+import interfaces.ComparatorMatricula;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeSet;
+import util.GestorIO;
+import util.Interval;
 import interfaces.ComparatorMatricula;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,6 +23,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import factura.HistoricoFactura;
+import java.util.Arrays;
 import java.util.TreeSet;
 import util.GestorIO;
 import util.Interval;
@@ -35,7 +45,7 @@ public class Taller {
     private double ingresosTotales;
     public final Interval NUMERO_BOXES = new Interval(1, 6);
     private ClienteSet clientes;
-    private Factura[] facturas;
+    private HistoricoFactura historicoFacturas;
     private static int contadorID = 0;
 
     public Taller()  {
@@ -48,7 +58,7 @@ public class Taller {
         matriculasEnTaller = new String[0];
         ingresosTotales = 0;
         clientes = new ClienteSet();
-        facturas = new Factura[0];
+        historicoFacturas = new HistoricoFactura();
     }
     
     
@@ -59,33 +69,27 @@ public class Taller {
      * @throws NotExistsException 
      */
     public double calculoFacturas() throws NotExistsException{
-        if(facturas.length == 0)throw new NotExistsException("ERROR: Aun no hay facturas");
-        double resultado= 0.;
-        for(Factura f: facturas){
-            resultado += f.getPrecioPagado();
-        }
-        return resultado;
+        if(historicoFacturas.isEmpty())throw new NotExistsException("ERROR: Aun no hay facturas");
+        return historicoFacturas.calculoFacturas();
     }
     
     public void agregarFactura(Factura factura) {
         factura.setID(contadorID);
         contadorID++;
-        Factura[] arrayFacturas = new Factura[facturas.length + 1];
-
-        for (int i = 0; i < facturas.length; i++) {
-            arrayFacturas[i] = facturas[i];
-        }
-
-        arrayFacturas[facturas.length] = factura;
-        facturas = arrayFacturas;
+        historicoFacturas.agregarFactura(factura);
     }
 
     public void mostrarFacturas() throws NotExistsException {
-        if(facturas.length == 0)
-            throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
-        
-        for (Factura factura : facturas) {
-            System.out.println(factura);
+        if(historicoFacturas.isEmpty())throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
+        historicoFacturas.mostrarFacturas();
+    }
+    
+    public void mostrarFacturas(String matricula) throws NotExistsException{
+        if(historicoFacturas.isEmpty())throw new NotExistsException("ERROR: Aun no hay facturas registradas.");
+        if(historicoFacturas.isVehiculoIn(matricula)){
+            historicoFacturas.obtenerFacturasPorVehiculo(historicoFacturas.getVehiculo(matricula));
+        }else{
+            teclado.out("El vehículo no tiene ninguna factura asociada.");
         }
     }
 
@@ -104,6 +108,9 @@ public class Taller {
         }catch(AlreadyExistsException ex){
             return clientes.getCliente(dni);
         }
+    }
+    public void removeCliente(Cliente cliente){
+        clientes.remove(cliente);
     }
 
     /**
@@ -316,6 +323,7 @@ public class Taller {
         return telefono;
     }
     
+
     public Set<Cliente> listaClientes(){
         return new TreeSet<>(this.clientes.getClientes()); //devuelvo uno nuevo para mantener la lista original intacta (por seguridad)
     }
@@ -325,4 +333,11 @@ public class Taller {
         vehiculosOrdenados.addAll(this.colaPrincipal.getCola());
         return vehiculosOrdenados;
     }
+
+    public TreeSet<Cliente> getClientesVip() throws NotExistsException{
+        return clientes.getClientesVip();
+    }
+    
+    
+
 }

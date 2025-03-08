@@ -1,6 +1,6 @@
-
 package factura;
 
+import cliente.Cliente;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import vehiculo.Vehiculo;
@@ -8,7 +8,7 @@ import vehiculo.Vehiculo;
 /**
  * @author irene, alvaro, alejandro
  */
-public class Factura {
+public class Factura implements Comparable<Factura>{
     private Vehiculo vehiculo;
     private double precioPagado;
     private LocalDateTime fecha;
@@ -36,7 +36,22 @@ public class Factura {
     public double getPrecioPagado() {
         return precioPagado;
     }
-    
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public boolean isVIP() {
+        return VIP;
+    }
+
+    public boolean isSocio() {
+        return socio;
+    }
     
     @Override
     public String toString() {
@@ -100,7 +115,10 @@ public class Factura {
         }
         return Objects.equals(this.vehiculo, other.vehiculo);
     }
-    
-    
+
+    @Override
+    public int compareTo(Factura o) {
+        return this.getFecha().compareTo(o.getFecha());
+    }
     
 }

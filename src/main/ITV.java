@@ -12,6 +12,7 @@ import opcion.Opcion;
 import opcion.RegistroNuevoVehiculo;
 import opcion.CalculoIngresos;
 import opcion.ClientesPorDNI;
+import opcion.DarDeBajaCliente;
 import opcion.PasarDeFase;
 import opcion.ReclamacionVehiculo;
 import opcion.OpcionTaller;
@@ -35,6 +36,7 @@ public class ITV {
         //1.-Registrar Cliente
         //2.-Tarjeta de socio al cliente
         menu.añadirOpcion(new RegistrarCliente(taller));
+        menu.añadirOpcion(new DarDeBajaCliente(taller));
         menu.añadirOpcion(new RegistroNuevoVehiculo(taller));
         menu.añadirOpcion(new BuscarClientesPorDni(taller));
         menu.añadirOpcion(new VehiculoMatriculaNueva(taller));
