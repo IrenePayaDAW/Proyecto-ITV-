@@ -13,13 +13,14 @@ import util.GestorIO;
 public class DarDeBajaCliente extends OpcionTaller{
     GestorIO teclado = new GestorIO();
     public DarDeBajaCliente(Taller taller) {
-        super("Dar de cliente baja", taller);
+        super("Dar de baja al cliente", taller);
     }
 
     @Override
     public void ejecutar() {
+        teclado.out("-- DAR DE BAJA AL CLIENTE --\n");
         try {
-            teclado.out("\n-------------------------------------------------------");
+            
             teclado.out("\n-Inserta el DNI del cliente que quieres dar de baja: ");
             Cliente cliente = taller.getClientePorDNI(Validable.withPattern(teclado.inString().trim(),"DNI"));
             taller.removeCliente(cliente); //AQUÍ HACERLO CON EL REMOVE DE CLIENTE SET

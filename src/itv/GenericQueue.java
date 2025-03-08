@@ -92,7 +92,7 @@ public class GenericQueue<T> {
      */
     public void mostrarCola() {
         GestorIO teclado = new GestorIO();
-        teclado.out("\n-- Cola --\n");
+        teclado.out("\n-- COLA --\n");
         int i=0;
         for (T elemento : cola) {
             teclado.out("\nPosición " + ++i + ":\n");

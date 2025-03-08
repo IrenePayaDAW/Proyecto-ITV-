@@ -25,6 +25,7 @@ public class VehiculosPendientesRevision extends OpcionTaller{
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();
+        teclado.out("-- MOSTRAR VEHÍCULOS PENDIENTES DE REVISIÓN --\n");
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         try {
             vehiculos.addAll(taller.getVehiculos());// son los vehiculos que aún no han entrado en ningun box, es la cola principal

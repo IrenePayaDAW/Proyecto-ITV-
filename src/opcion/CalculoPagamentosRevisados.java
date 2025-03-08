@@ -29,7 +29,7 @@ public class CalculoPagamentosRevisados extends OpcionTaller {
      */
     @Override
     public void ejecutar() {
-       
+       teclado.out("-- CALCULAR Y PAGA VEHÍCULO REVISADO --\n");
         try{
             Vehiculo vehiculo = taller.extraerVehiculoPago();
             double precio = vehiculo.calcularPrecio();

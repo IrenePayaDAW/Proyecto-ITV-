@@ -36,7 +36,7 @@ public class FullQueueException extends Exception{
     
     @Override
     public String toString() {
-        return "FullQueueException{\nEl elemento: "+ getGeneraError().toString() + ", no puede ser añadido a la cola.\nDebe salir el elemento: "+getUltimoCola().toString()+ '}';
+        return "FullQueueException{\nEL ELEMENTO: "+ getGeneraError().toString() + ", NO PUEDE SER AÑADIDO A LA COLA.\nDEBE SALIR EL ELEMENTO: "+getUltimoCola().toString()+ "}\n";
     }
 
     

@@ -199,6 +199,11 @@ public abstract class Vehiculo implements Comparable<Vehiculo>{
         return Objects.equals(this.matricula, other.matricula);
     }
 
+    @Override
+    public String toString() {
+        return " matricula:" + matricula;
+    }
+
     
     
 }

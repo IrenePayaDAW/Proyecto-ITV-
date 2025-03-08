@@ -31,26 +31,8 @@ public class Cliente implements Comparable<Cliente> {
         this.contSiendoSocio = 0;
     }
 
-     public static void main(String[] args) {
-        Cliente cli = new Cliente("12345678a", "paco", "123456789", false);
-        cli.hacerSocio();
+                
         
-        Vehiculo vehiculo = new Coche(cli,"1111aaa","a");
-        vehiculo.insertarCc();
-        vehiculo.insertarCilindros();
-        vehiculo.registrarVehiculo();
-        Vehiculo vehiculo1 = new Coche(cli,"1112aaa","a");
-        vehiculo1.registrarVehiculo();
-        vehiculo1.insertarCc();
-        vehiculo1.insertarCilindros();
-         for (int i = 0; i < 20; i++) {
-             System.out.println(vehiculo.calcularPrecio());
-         
-         }
-         
-        
-        
-    }
     public boolean esSuPrimeraVez() {
         return contVecesAqui == 0;
     }
@@ -122,12 +104,12 @@ public class Cliente implements Comparable<Cliente> {
 
     @Override
     public String toString() {
-        return "Cliente("+nombre+"){\n"
+        return "CLIENTE("+nombre+"){\n"
                 + " DNI=" + DNI + "\n"
-                + " telefono=" + telefono + "\n"
+                + " TELEFONO=" + telefono + "\n"
                 + " VIP=" + vip + "\n"
                 + " SOCIO=" + socio + "\n"
-                + " Veces Aquí=" + (contVecesAqui==0?" Nunca":contVecesAqui) + "}\n";
+                + " VECES AQUÍ=" + (contVecesAqui==0?" NUNCA":contVecesAqui) + "}\n";
     }
     
    

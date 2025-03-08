@@ -2,32 +2,17 @@ package itv;
 
 import cliente.Cliente;
 import cliente.ClienteSet;
-import excepciones.AlreadyExistsException;
 import excepciones.NotExistsException;
 import vehiculo.Vehiculo;
 import excepciones.AlreadyExistsException;
 import excepciones.FullQueueException;
 import factura.Factura;
-import factura.HistoricoFactura;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
-import java.util.TreeSet;
-import util.GestorIO;
-import util.Interval;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
 import factura.HistoricoFactura;
 import interfaces.ComparatorModelo;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.GestorIO;
 import util.Interval;
 
@@ -330,19 +315,19 @@ public class Taller {
      */
     public String esteTelefonoExiste(String telefono) throws AlreadyExistsException{
         for(Cliente c: clientes.getClientes()){
-            if(c.getTelefono().equals(telefono))throw new AlreadyExistsException(telefono,"Este teléfono ya existe."+telefono);
+            if(c.getTelefono().equals(telefono))throw new AlreadyExistsException(telefono,"ESTE TELÉFONO YA EXISTE."+telefono+"\n");
         }
         return telefono;
     }
     
 
     public List<Cliente> listaClientes() throws NotExistsException{
-        if(this.clientes.getClientes().isEmpty())throw new NotExistsException("NO HAY CLIENTES REGISTRADOS");
+        if(this.clientes.getClientes().isEmpty())throw new NotExistsException("NO HAY CLIENTES REGISTRADOS\n");
         return new ArrayList<>(this.clientes.getClientes()); //devuelvo uno nuevo para mantener la lista original intacta (por seguridad)
     }
     
     public List<Vehiculo> getVehiculos() throws NotExistsException{
-        if(this.colaPrincipal.isEmpty())throw new NotExistsException("NO HAY VEHICULOS EN LA COLA");
+        if(this.colaPrincipal.isEmpty())throw new NotExistsException("NO HAY VEHICULOS EN LA COLA\n");
         List<Vehiculo> vehiculos = new ArrayList<>();
         vehiculos.addAll(this.colaPrincipal.getCola());
         return vehiculos;
@@ -358,7 +343,7 @@ public class Taller {
     }
     
     public static <E extends Comparable<E>> E encontrarMaximo(List<E> lista) throws NotExistsException{
-        if(lista.isEmpty())throw new NotExistsException("ERROR. ESTÁ VACÍA");
+        if(lista.isEmpty())throw new NotExistsException("ERROR. ESTÁ VACÍA\n");
 
         E maximo = lista.get(0);
         for (E e : lista) {

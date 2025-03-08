@@ -72,7 +72,7 @@ public class Factura implements Comparable<Factura>{
         }
         
         
-        return "-- Factura de vehículo--\n"
+        return "--FACTURA DEL VEHICULO--\n"
                 + "ID Factura = " + ID + "\n"
                 + "Matrícula de vehiculo = " + vehiculo.getMatricula() + "\n"
                 + "Fecha de pago = " + fecha + "\n"

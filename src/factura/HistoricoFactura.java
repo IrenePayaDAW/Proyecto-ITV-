@@ -42,7 +42,7 @@ public class HistoricoFactura {
     }
     
     public void mostrarFacturas(String matricula) {
-        System.out.println("-- FACTURAS DEL VEHICULO --");
+        System.out.println("-- FACTURAS DEL VEHICULO --\n");
         for (Factura factura : historico.get(matricula)){
             System.out.println(factura);
         }

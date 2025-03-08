@@ -25,6 +25,7 @@ public class VerClientesPorDNI extends OpcionTaller{
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();
+        teclado.out("-- VER CLIENTES ORDENADOS POR DNI --\n");
         try {
             TreeSet<Cliente> clientes = new TreeSet<>(taller.listaClientes());
             for (Cliente cliente : clientes) {

@@ -36,7 +36,7 @@ public class ClienteSet {
         for (Cliente cliente : clientes) {
             if(cliente.isVIP())vips.add(cliente);
         }
-        if(vips.isEmpty())throw new NotExistsException("ERROR, no hay clientes vip");
+        if(vips.isEmpty())throw new NotExistsException("ERROR, NO HAY CLIENTES VIP\n");
         return vips;
     }
     
@@ -50,6 +50,6 @@ public class ClienteSet {
     
     @Override
     public String toString() {
-        return "ClienteSet{" + "clientes=" + clientes + '}';
+        return "CLIENTES=" + clientes ;
     }
 }

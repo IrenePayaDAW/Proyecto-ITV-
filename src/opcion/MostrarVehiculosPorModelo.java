@@ -27,6 +27,7 @@ public class MostrarVehiculosPorModelo extends OpcionTaller{
     public void ejecutar() {
         GestorIO teclado = new GestorIO();
         TreeSet<Vehiculo> vehiculos = new TreeSet<>(new ComparatorModelo());
+        teclado.out("-- MOSTRAR VEHÍCULOS ORDENADOS POR MODELO --\n");
         try {
             vehiculos.addAll(taller.getVehiculos());
             for (Vehiculo vehiculo : vehiculos) {

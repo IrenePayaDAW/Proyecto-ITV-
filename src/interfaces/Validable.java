@@ -42,8 +42,5 @@ public interface Validable {
         return opcion;
         
     }
-    
-    public static void main(String[] args){
-        System.out.println(Validable.withPattern("12341", "telefono"));
-    }
+      
 }

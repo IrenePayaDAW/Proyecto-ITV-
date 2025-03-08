@@ -19,6 +19,7 @@ public class HistoricoFacturasVehiculo extends OpcionTaller {
 
     @Override
     public void ejecutar() {
+        teclado.out("-- CONSULTAR HISTÓRICO DE REVISIONES POR VEHÍCULO --\n");
         try {
             teclado.out("Inserta la matrícula del vehículo: ");
             String matricula = Validable.withPattern(teclado.inString(), "MATRICULA");

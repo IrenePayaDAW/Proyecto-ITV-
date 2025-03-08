@@ -15,6 +15,7 @@ public class MostrarHistoricoFacturasPorFecha extends OpcionTaller {
 
     @Override
     public void ejecutar() {
+        teclado.out("-- MOSTRAR HISTÓRICO DE LAS FACTURAS POR FECHA --\n");
         try {
             taller.mostrarFacturas();
         } catch (NotExistsException ex) {

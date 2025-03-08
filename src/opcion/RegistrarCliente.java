@@ -30,7 +30,7 @@ public class RegistrarCliente extends OpcionTaller {
         Matcher matcher;
         
         //INTRODUCCION DEL DNI
-        teclado.out("\n---REGISTRA AL CLIENTE---");
+        teclado.out("\n--- REGISTRAR CLIENTE ---");
         teclado.out("\nIntroduce el DNI: ");
         try {
             dni = taller.estaEsteDNI(Validable.withPattern(teclado.inString(),"DNI"));

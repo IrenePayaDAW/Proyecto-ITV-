@@ -17,6 +17,7 @@ public class BuscarClientesPorDni extends OpcionTaller{
     
     @Override
     public void ejecutar() {
+        teclado.out("-- BUSCAR CLIENTE POR DNI --\n");
         try {
             teclado.out("\nInserte el DNI del Cliente: ");
             System.out.println(taller.getClientePorDNI(Validable.withPattern(teclado.inString(), "DNI")));

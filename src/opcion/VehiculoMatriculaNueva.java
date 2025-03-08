@@ -24,11 +24,11 @@ public class VehiculoMatriculaNueva extends OpcionTaller {
     @Override
     public void ejecutar() {
         GestorIO teclado = new GestorIO();
-        
+        teclado.out("-- VEHÍCULO CON LA MATRÍCULA MÁS NUEVA --\n");
         Vehiculo vehiculo;
         try {
             vehiculo = Taller.encontrarMaximo(taller.getVehiculos());
-            teclado.out("EL VEHÍCULO CON LA MATRÍCULA MÁS NUEVA ES: " + vehiculo.getMatricula());
+            teclado.out(vehiculo.getMatricula()+"\n");
         } catch (NotExistsException ex) {
             teclado.out(ex.toString());
         }

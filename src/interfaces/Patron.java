@@ -32,7 +32,7 @@ public enum Patron {
                 return value.patron;
             }
         }
-        throw new IllegalArgumentException("No se encontró el patrón para: " + patron);
+        throw new IllegalArgumentException("NO SE ENCONTRÓ EL PATRÓN PARA: " + patron + "\n");
     }
 
     //RECOGO LA EXPRESIÓN REGULAR Y DEVUELVO EL CONTENDIO DEL ENUM 
@@ -47,7 +47,7 @@ public enum Patron {
     }
 
     private static String caracteristica(String definicionPatron) {
-        return "Error, debe seguir un patron igual a este: ("+definicionPatron+")\n";
+        return "ERROR. DEBE SEGUIR UN PATRÓN IGUAL A ÉSTE: ("+definicionPatron+")\n";
     }
     
     

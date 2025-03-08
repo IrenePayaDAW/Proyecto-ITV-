@@ -26,9 +26,10 @@ public class ClienteDNIAlto extends OpcionTaller{
     public void ejecutar() {
         GestorIO teclado = new GestorIO();
         Cliente cliente;
+        teclado.out("-- CLIENTE CON EL DNI MÁS ALTO --\n");
         try {
             cliente = Taller.encontrarMaximo(taller.listaClientes());
-            teclado.out("EL DNI MÁS ALTO ES: "+ cliente.getDni());
+            teclado.out("EL DNI MÁS ALTO ES: "+ cliente.getDni()+ "\n");
         } catch (NotExistsException ex) {
             teclado.out(ex.getMessage());
         }
